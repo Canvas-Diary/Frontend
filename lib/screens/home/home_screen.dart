@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -147,22 +148,26 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return EmotionSelectScreen();
-                    },
-                  ),
-                );
-              },
-              child: const Text("start writing"),
-            ),
-          ],
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return EmotionSelectScreen();
+                      },
+                    ),
+                  );
+                },
+                child: const Text("start writing"),
+              ),
+            ],
+          ),
         )
       ]),
     );
