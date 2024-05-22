@@ -14,21 +14,29 @@ const List<String> emotions = [
 ];
 
 class EmotionSelectScreen extends StatelessWidget {
-  const EmotionSelectScreen({super.key});
+  const EmotionSelectScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Select Emotion"),
+      ),
       body: SafeArea(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: emotions.map((e) {
-              return EmotionButton(
+        child: Center(
+          child: GridView(
+            shrinkWrap: true,
+            padding: EdgeInsets.all(16.0),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, // 3열로 설정
+              mainAxisSpacing: 16.0,
+              crossAxisSpacing: 16.0,
+              childAspectRatio: 2,
+            ),
+            children: emotions.map((emotion) {
+              return ElevatedButton(
                 onPressed: () => routeNextPage(context), // 익명 함수 사용
-                emotion: e,
+                child: Text(emotion),
               );
             }).toList(),
           ),
@@ -37,31 +45,13 @@ class EmotionSelectScreen extends StatelessWidget {
     );
   }
 
-  routeNextPage(context) {
+  void routeNextPage(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
           return WritingScreen();
         },
       ),
-    );
-  }
-}
-
-class EmotionButton extends StatelessWidget {
-  final String emotion;
-  final VoidCallback onPressed;
-  const EmotionButton({
-    required this.onPressed,
-    required this.emotion,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      child: Text(this.emotion),
     );
   }
 }

@@ -6,6 +6,9 @@ class ResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("result"),
+      ),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
