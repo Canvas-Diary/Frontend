@@ -1,5 +1,7 @@
-import 'package:canvas_diary/screens/home/diary_flow/diary_2_write.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:canvas_diary/models/diary_flow_model.dart';
+import 'package:canvas_diary/screens/home/diary_flow/diary_2_write.dart';
 
 const List<String> emotions = [
   "ANGER",
@@ -18,6 +20,7 @@ class EmotionSelectScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diaryData = Provider.of<DiaryFlowModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text("Select Emotion"),
@@ -35,7 +38,10 @@ class EmotionSelectScreen extends StatelessWidget {
             ),
             children: emotions.map((emotion) {
               return ElevatedButton(
-                onPressed: () => routeNextPage(context), // 익명 함수 사용
+                onPressed: () {
+                  diaryData.updateDiaryEmotion(emotion);
+                  routeNextPage(context);
+                },
                 child: Text(emotion),
               );
             }).toList(),
