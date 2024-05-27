@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:canvas_diary/models/diary_flow_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +11,30 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var diaryData = Provider.of<DiaryFlowModel>(context, listen: false);
     var _dio = Dio();
-    Future<String> _getImageURL() async{
-      Response response =  await _dio.get('/test', queryParameters: {'id': 12, 'name': 'wendu'});
-      return response.data.toString();
+    String? imageUrl;
+
+    Future<String> _getImageURL() async {
+      Response response = await _dio.post('/test', data: {
+        "description": diaryData.diaryContent,
+        "emotion": diaryData.emotion,
+        "style": diaryData.painting
+      });
+      Map<String, dynamic> URLData = response.data;
+      imageUrl = URLData["canvasImageUrl"][0];
+      return imageUrl!;
     }
 
+    Future<void> _storeData() async {
+      try {
+        await _dio.post('test', data: {
+          "imageUrl": imageUrl,
+          "content": diaryData.diaryContent,
+          "emotion": diaryData.emotion,
+        });
+      } catch (e) {
+        throw Exception('Failed to store data: $e');
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -44,6 +62,7 @@ class ResultScreen extends StatelessWidget {
           Center(
             child: ElevatedButton(
               onPressed: () {
+                _storeData();
                 diaryData.clear();
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
