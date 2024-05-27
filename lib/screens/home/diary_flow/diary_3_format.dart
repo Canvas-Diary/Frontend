@@ -1,5 +1,8 @@
 import 'package:canvas_diary/screens/home/diary_flow/diary_4_painting.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../models/diary_flow_model.dart';
 
 const List<String> formats = [
   "Illustration",
@@ -13,6 +16,7 @@ class FormatSelectScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diaryData = Provider.of<DiaryFlowModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text("select format"),
@@ -28,10 +32,14 @@ class FormatSelectScreen extends StatelessWidget {
               crossAxisSpacing: 16.0,
               childAspectRatio: 2,
             ),
-            children: formats.map((e) {
+            children: formats.map((format) {
               return ElevatedButton(
-                onPressed: () => routeNextPage(context), // 익명 함수 사용
-                child: Text(e),
+                onPressed: () {
+                  diaryData
+                      .updateDiaryFormat(format);
+                  routeNextPage(context);
+                }, // 익명 함수 사용
+                child: Text(format),
               );
             }).toList(),
           ),

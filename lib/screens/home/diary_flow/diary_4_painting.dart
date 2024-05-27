@@ -1,5 +1,8 @@
 import 'package:canvas_diary/screens/home/diary_flow/diary_5_result.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../models/diary_flow_model.dart';
 
 const List<String> paintings = [
   "Oil Painting",
@@ -19,6 +22,7 @@ class PaintingSelectScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diaryData = Provider.of<DiaryFlowModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text("select painting"),
@@ -34,10 +38,14 @@ class PaintingSelectScreen extends StatelessWidget {
               crossAxisSpacing: 16.0,
               childAspectRatio: 2,
             ),
-            children: paintings.map((e) {
+            children: paintings.map((painting) {
               return ElevatedButton(
-                onPressed: () => routeNextPage(context), // 익명 함수 사용
-                child: Text(e),
+                onPressed: () {
+                  diaryData
+                      .updateDiaryPainting(painting);
+                  routeNextPage(context);
+                },
+                child: Text(painting),
               );
             }).toList(),
           ),
