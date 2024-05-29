@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -12,12 +13,48 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var _dio = Dio();
+
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  Map<DateTime, List<Event>> Events = {
-    DateTime.utc(2024, 5, 5): [Event('title')],
-    DateTime.utc(2024, 5, 1): [Event('title3')],
-  };
+  Map<DateTime, List<Diary>> Events = {};
+
+  Future<List<dynamic>> _getDiaries() async {
+    _dio.options.baseUrl = "http://dev.simproject.kr:8080";
+    Response response = await _dio.get('/api/diaries/test', queryParameters: {
+      'from': null,
+      'to': null,
+      'content': null,
+      'emotion': null,
+    });
+
+    Map<String, dynamic> diaryData = response.data;
+    List<dynamic> diaries = diaryData['diaries'];
+    return diaries;
+  }
+
+  Future<void> _fetchAndSetDiaries() async {
+    List<dynamic> diaries = await _getDiaries();
+    Map<DateTime, List<Diary>> newEvents = {};
+
+    for (var element in diaries) {
+      DateTime date = DateTime.parse(element['date']);
+      Diary diary =
+          Diary(element['content'], element['imageUrl'], element['emotion']);
+
+      newEvents[date] = [diary];
+    }
+
+    setState(() {
+      Events = newEvents;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAndSetDiaries();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +103,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: hasEvent
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                'assets/images/image_1.jpeg',
+                              child: Image.network(
+                                Events[day]![0].imageUrl,
                                 fit: BoxFit.cover,
                               ),
                             )
@@ -101,8 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: hasEvent
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                'assets/images/image_1.jpeg',
+                              child: Image.network(
+                                Events[day]![0].imageUrl,
                                 fit: BoxFit.cover,
                               ),
                             )
@@ -132,8 +169,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: hasEvent
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                'assets/images/image_1.jpeg',
+                              child: Image.network(
+                                Events[day]![0].imageUrl,
                                 fit: BoxFit.cover,
                               ),
                             )
@@ -174,8 +211,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class Event {
-  String title;
+class Diary {
+  String content;
+  String imageUrl;
+  String emotion;
 
-  Event(this.title);
+  Diary(this.content, this.imageUrl, this.emotion);
 }
