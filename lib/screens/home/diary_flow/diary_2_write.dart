@@ -36,7 +36,7 @@ class _WritingScreenState extends State<WritingScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               Expanded(
