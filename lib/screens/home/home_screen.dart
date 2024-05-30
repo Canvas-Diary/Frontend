@@ -1,9 +1,8 @@
+import 'package:canvas_diary/screens/home/diary_flow/diary_routes.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import 'diary_flow/diary_1_emotion.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,8 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Map<DateTime, List<Diary>> Events = {};
 
   Future<List<dynamic>> _getDiaries() async {
-    _dio.options.baseUrl = "http://dev.simproject.kr:8080";
-    Response response = await _dio.get('/api/diaries/test', queryParameters: {
+    _dio.options.baseUrl = "http://54.180.145.19:8080";
+    Response response = await _dio.get('/api/diaries', queryParameters: {
       'from': null,
       'to': null,
       'content': null,
@@ -29,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     Map<String, dynamic> diaryData = response.data;
+    print(diaryData);
     List<dynamic> diaries = diaryData['diaries'];
     return diaries;
   }
@@ -48,6 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       Events = newEvents;
     });
+
+
   }
 
   @override
@@ -196,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return EmotionSelectScreen();
+                        return DiaryRoutes();
                       },
                     ),
                   );
