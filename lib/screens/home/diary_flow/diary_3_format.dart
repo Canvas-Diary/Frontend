@@ -20,7 +20,6 @@ class FormatSelectScreen extends StatelessWidget {
     return SafeArea(
       child: Center(
         child: GridView(
-          padding: EdgeInsets.all(16.0),
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
