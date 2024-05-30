@@ -27,7 +27,6 @@ class EmotionSelectScreen extends StatelessWidget {
     return Center(
       child: GridView(
         shrinkWrap: true,
-        padding: EdgeInsets.all(16.0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3, // 3열로 설정
           mainAxisSpacing: 16.0,

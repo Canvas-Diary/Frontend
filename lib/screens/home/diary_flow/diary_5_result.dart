@@ -18,7 +18,7 @@ class ResultScreen extends StatelessWidget {
     String? imageUrl;
 
     Future<String> _getImageURL() async {
-      Response response = await _dio.post('/api/diaries/test', data: {
+      Response response = await _dio.post('/api/diaries/images', data: {
         "description": diaryData.diaryContent,
         "emotion": diaryData.emotion,
         "style": diaryData.painting
@@ -61,6 +61,7 @@ class ResultScreen extends StatelessWidget {
                       log('${diaryData.diaryContent}', name: "diaryData");
                       log('${diaryData.format}', name: "diaryData");
                       log('${diaryData.painting}', name: "diaryData");
+                      diaryData.updateDiaryImageUrl(imageUrl!);
                       return Image.network(snapshot.data!);
                     }
                   },
@@ -73,7 +74,6 @@ class ResultScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     _storeData();
-                    diaryData.clear();
                     routeNextPage();
                   },
                   child: const Text("end"),

@@ -46,7 +46,7 @@ class _DiaryRoutesState extends State<DiaryRoutes> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: Column(
             children: [
               LinearProgressIndicator(
@@ -57,7 +57,7 @@ class _DiaryRoutesState extends State<DiaryRoutes> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(16),
                   child: PageView(
                     children: [
                       EmotionSelectScreen(routeNextPage: _routeNextPage),

@@ -1,8 +1,13 @@
+import 'dart:developer';
+
 import 'package:canvas_diary/screens/home/diary_flow/diary_routes.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import '../../models/diary_flow_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -48,8 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       Events = newEvents;
     });
-
-
   }
 
   @override
@@ -60,6 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var diaryData = Provider.of<DiaryFlowModel>(context, listen: false);
+    void _updateCalendar() {
+      setState(() {
+        Events[DateTime.utc(
+            DateTime.now().year, DateTime.now().month, DateTime.now().day)] = [
+          Diary(diaryData.diaryContent, diaryData.imageUrl, diaryData.emotion)
+        ];
+      });
+      diaryData.clear();
+      log('${Events[DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day)]}');
+    }
+
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Stack(children: [
@@ -158,6 +173,10 @@ class _HomeScreenState extends State<HomeScreen> {
               bool hasEvent = Events[day]?.isNotEmpty ?? false;
               return Container(
                 margin: const EdgeInsets.all(4.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.blueGrey[100],
+                ),
                 alignment: Alignment.topCenter,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -166,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: MediaQuery.of(context).size.height * 0.08,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
-                        color: Colors.blueGrey[300],
+                        color: Colors.grey[400],
                       ),
                       child: hasEvent
                           ? ClipRRect(
@@ -201,7 +220,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         return DiaryRoutes();
                       },
                     ),
-                  );
+                  ).then((value) {
+                    if (diaryData.imageUrl != '') _updateCalendar();
+                  });
                 },
                 child: const Text("start writing"),
               ),
