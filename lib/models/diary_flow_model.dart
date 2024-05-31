@@ -43,6 +43,7 @@ class DiaryFlowModel extends ChangeNotifier {
     _diaryContent = '';
     _format = '';
     _painting = '';
+    _imageUrl = '';
     notifyListeners();
   }
 }

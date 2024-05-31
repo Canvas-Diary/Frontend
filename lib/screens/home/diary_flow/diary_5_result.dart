@@ -18,13 +18,14 @@ class ResultScreen extends StatelessWidget {
     String? imageUrl;
 
     Future<String> _getImageURL() async {
-      Response response = await _dio.post('/api/diaries/images', data: {
+      Response response = await _dio.post('/api/diaries/test', data: {
         "description": diaryData.diaryContent,
         "emotion": diaryData.emotion,
         "style": diaryData.painting
       });
       Map<String, dynamic> URLData = response.data;
       imageUrl = URLData["canvasImageUrl"][0];
+      diaryData.updateDiaryImageUrl(imageUrl!);
       return imageUrl!;
     }
 
@@ -61,8 +62,23 @@ class ResultScreen extends StatelessWidget {
                       log('${diaryData.diaryContent}', name: "diaryData");
                       log('${diaryData.format}', name: "diaryData");
                       log('${diaryData.painting}', name: "diaryData");
-                      diaryData.updateDiaryImageUrl(imageUrl!);
-                      return Image.network(snapshot.data!);
+                      log('${diaryData.imageUrl}', name: "diaryData");
+                      return Image.network(snapshot.data!, loadingBuilder:
+                          (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        }
+                      });
                     }
                   },
                 ),
@@ -73,6 +89,7 @@ class ResultScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(15.0),
                 child: ElevatedButton(
                   onPressed: () {
+
                     _storeData();
                     routeNextPage();
                   },
