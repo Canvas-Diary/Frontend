@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:canvas_diary/screens/home/diary_flow/diary_routes.dart';
+import 'package:canvas_diary/screens/home/diary_view/diary_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'content': null,
       'emotion': null,
     });
+
 
     Map<String, dynamic> diaryData = response.data;
     print(diaryData);
@@ -93,6 +95,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 _focusedDay = focusedDay;
               });
             }
+            if(Events[_selectedDay!]?[0] != null) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return DiaryScreen(selectedDay: _selectedDay!,
+                      currentDiary: Events[_selectedDay!]![0],);
+                  },
+                ),
+              );
+            };
           },
           headerStyle: HeaderStyle(
             titleCentered: true,
