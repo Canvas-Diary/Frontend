@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../models/diary_flow_model.dart';
 
-const List<String> paintings = [
-  'OILPAINTING',
-  'WATERCOLOR',
-  'ACRYLICPAINTING',
-  'PENANDINK',
-  'PENCILDRAWING',
-  'CHARCOALDRAWING',
-  'DIGITALART',
-  'COMICSTYLE',
-  'ANIMATIONSTYLE',
-  'COLLAGE',
-];
+const Map<String, String> paintings = {
+  'OILPAINTING': '유화',
+  'WATERCOLOR': '수채화',
+  'ACRYLICPAINTING': '아크릴화',
+  'PENANDINK': '펜과 잉크',
+  'PENCILDRAWING': '연필 드로잉',
+  'CHARCOALDRAWING': '숯 드로잉',
+  'DIGITALART': '디지털 아트',
+  'COMICSTYLE': '만화',
+  'ANIMATIONSTYLE': '애니메이션',
+  'COLLAGE': '콜라주',
+};
+
 
 class PaintingSelectScreen extends StatelessWidget {
   final VoidCallback routeNextPage;
@@ -33,13 +33,13 @@ class PaintingSelectScreen extends StatelessWidget {
             crossAxisSpacing: 16.0,
             childAspectRatio: 2,
           ),
-          children: paintings.map((painting) {
+          children: paintings.entries.map((entry) {
             return ElevatedButton(
               onPressed: () {
-                diaryData.updateDiaryPainting(painting);
+                diaryData.updateDiaryPainting(entry.key);
                 routeNextPage();
               },
-              child: Text(painting),
+              child: Text(entry.value),
             );
           }).toList(),
         ),

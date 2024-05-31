@@ -3,12 +3,13 @@ import 'package:provider/provider.dart';
 
 import '../../../models/diary_flow_model.dart';
 
-const List<String> formats = [
-  'ILLUSTRATION',
-  '4-PANELCOMIC',
-  'POSTER',
-  'STORYBOARD',
-];
+const Map<String, String> formats = {
+  'ILLUSTRATION': '일러스트레이션',
+  '4-PANELCOMIC': '4컷 만화',
+  'POSTER': '포스터',
+  'STORYBOARD': '스토리보드',
+};
+
 
 class FormatSelectScreen extends StatelessWidget {
   final VoidCallback routeNextPage;
@@ -27,13 +28,13 @@ class FormatSelectScreen extends StatelessWidget {
             crossAxisSpacing: 16.0,
             childAspectRatio: 2,
           ),
-          children: formats.map((format) {
+          children: formats.entries.map((entry) {
             return ElevatedButton(
               onPressed: () {
-                diaryData.updateDiaryFormat(format);
+                diaryData.updateDiaryFormat(entry.key);
                 routeNextPage();
               }, // 익명 함수 사용
-              child: Text(format),
+              child: Text(entry.value),
             );
           }).toList(),
         ),
