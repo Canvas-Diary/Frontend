@@ -1,3 +1,4 @@
+import 'package:canvas_diary/screens/home/diary_flow/diary_1_emotion.dart';
 import 'package:canvas_diary/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -41,7 +42,7 @@ class DiaryScreen extends StatelessWidget {
                     );
                   }
                 }),
-                Text('Emotion : ${currentDiary.emotion}'),
+                Text('Emotion : ${emotions[currentDiary.emotion]}'),
                 Text('Content : ${currentDiary.content}'),
               ],
             ),
