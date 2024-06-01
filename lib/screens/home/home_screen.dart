@@ -116,8 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPageChanged: (focusedDay) {
             _focusedDay = focusedDay;
           },
-          rowHeight:
-              (MediaQuery.of(context).size.height - preferredSize * 2) * 0.13,
+          rowHeight: (MediaQuery.of(context).size.height-MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom -24) * 0.115,
           calendarBuilders: CalendarBuilders(
             defaultBuilder: (context, day, focusedDay) {
               bool hasEvent = Events[day]?.isNotEmpty ?? false;
