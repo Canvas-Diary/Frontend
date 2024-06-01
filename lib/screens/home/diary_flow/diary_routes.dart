@@ -6,6 +6,15 @@ import 'diary_3_format.dart';
 import 'diary_4_painting.dart';
 import 'diary_5_result.dart';
 
+
+const _titles = [
+  'select emotion',
+  'write diary',
+  'select format',
+  'select painting',
+  'result'
+];
+
 class DiaryRoutes extends StatefulWidget {
   const DiaryRoutes({super.key});
 
@@ -42,7 +51,7 @@ class _DiaryRoutesState extends State<DiaryRoutes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("select emotion"),
+        title: Text("${_titles[currentIndex]}"),
       ),
       body: SafeArea(
         child: Padding(
