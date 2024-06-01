@@ -42,8 +42,10 @@ class DiaryScreen extends StatelessWidget {
                     );
                   }
                 }),
-                Text('Emotion : ${emotions[currentDiary.emotion]}'),
-                Text('Content : ${currentDiary.content}'),
+                Text('Emotion',style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+                Text('${emotions[currentDiary.emotion]}',style: TextStyle(fontSize: 20),),
+                Text('Content', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+                Text('${currentDiary.content}', style: TextStyle(fontSize: 16),)
               ],
             ),
           ),

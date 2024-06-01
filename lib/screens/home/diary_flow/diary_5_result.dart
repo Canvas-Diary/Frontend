@@ -18,7 +18,7 @@ class ResultScreen extends StatelessWidget {
     String? imageUrl;
 
     Future<String> _getImageURL() async {
-      Response response = await _dio.post('/api/diaries/test', data: {
+      Response response = await _dio.post('/api/diaries/images', data: {
         "description": diaryData.diaryContent,
         "emotion": diaryData.emotion,
         "style": diaryData.painting

@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
       'emotion': null,
     });
 
-
     Map<String, dynamic> diaryData = response.data;
     print(diaryData);
     List<dynamic> diaries = diaryData['diaries'];
@@ -48,8 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
       DateTime date = DateTime.parse(element['date']);
       Diary diary =
           Diary(element['content'], element['imageUrl'], element['emotion']);
-
-      newEvents[date] = [diary];
+      newEvents[DateTime.utc(date.year, date.month, date.day)] = [diary];
     }
 
     setState(() {
@@ -95,16 +93,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 _focusedDay = focusedDay;
               });
             }
-            if(Events[_selectedDay!]?[0] != null) {
+            if (Events[_selectedDay!]?[0] != null) {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return DiaryScreen(selectedDay: _selectedDay!,
-                      currentDiary: Events[_selectedDay!]![0],);
+                    return DiaryScreen(
+                      selectedDay: _selectedDay!,
+                      currentDiary: Events[_selectedDay!]![0],
+                    );
                   },
                 ),
               );
-            };
+            }
+            ;
           },
           headerStyle: HeaderStyle(
             titleCentered: true,
