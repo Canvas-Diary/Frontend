@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../models/diary_flow_model.dart';
+import '../../routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
