@@ -44,6 +44,8 @@ const _navItems = [
   ),
 ];
 
+const preferredSize = 50.0;
+
 class Routes extends StatefulWidget {
   const Routes({super.key});
 
@@ -80,8 +82,11 @@ class _RoutesState extends State<Routes> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_navItems[_selectedIndex].label),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(preferredSize),
+        child: AppBar(
+          title: Text(_navItems[_selectedIndex].label),
+        ),
       ),
       body: SafeArea(
         child: TabBarView(
@@ -95,26 +100,29 @@ class _RoutesState extends State<Routes> with SingleTickerProviderStateMixin {
           ).toList(),
         ),
       ),
-      bottomNavigationBar: Theme(
-        data: ThemeData(
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: Colors.blueAccent,
-            showSelectedLabels: true,
-            showUnselectedLabels: false,
+      bottomNavigationBar: PreferredSize(
+        preferredSize: Size.fromHeight(preferredSize),
+        child: Theme(
+          data: ThemeData(
+            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              type: BottomNavigationBarType.fixed,
+              selectedItemColor: Colors.blueAccent,
+              showSelectedLabels: true,
+              showUnselectedLabels: false,
+            ),
           ),
-        ),
-        child: BottomNavigationBar(
-          items: _navItems.map(
-            (item) {
-              return BottomNavigationBarItem(
-                icon: Icon(item.activeIcon),
-                label: item.label,
-              );
-            },
-          ).toList(),
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
+          child: BottomNavigationBar(
+            items: _navItems.map(
+              (item) {
+                return BottomNavigationBarItem(
+                  icon: Icon(item.activeIcon),
+                  label: item.label,
+                );
+              },
+            ).toList(),
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+          ),
         ),
       ),
     );
