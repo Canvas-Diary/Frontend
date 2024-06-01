@@ -5,6 +5,7 @@ import 'package:canvas_diary/screens/home/diary_view/diary_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -114,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPageChanged: (focusedDay) {
             _focusedDay = focusedDay;
           },
-          rowHeight: MediaQuery.of(context).size.height * 0.115,
+          rowHeight: (MediaQuery.of(context).size.height-MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom -24) * 0.115,
           calendarBuilders: CalendarBuilders(
             defaultBuilder: (context, day, focusedDay) {
               bool hasEvent = Events[day]?.isNotEmpty ?? false;
@@ -124,21 +125,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.08,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: Colors.grey[300],
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: Colors.grey[300],
+                        ),
+                        child: hasEvent
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.network(
+                                  Events[day]![0].imageUrl,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : null,
                       ),
-                      child: hasEvent
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.network(
-                                Events[day]![0].imageUrl,
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          : null,
                     ),
                     Text(
                       '${day.day}',
@@ -159,21 +161,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.08,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: Colors.grey[400],
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: Colors.grey[400],
+                        ),
+                        child: hasEvent
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.network(
+                                  Events[day]![0].imageUrl,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : null,
                       ),
-                      child: hasEvent
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.network(
-                                Events[day]![0].imageUrl,
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          : null,
                     ),
                     Text(
                       '${day.day}',
@@ -194,21 +197,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.08,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: Colors.grey[400],
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: Colors.grey[400],
+                        ),
+                        child: hasEvent
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.network(
+                                  Events[day]![0].imageUrl,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : null,
                       ),
-                      child: hasEvent
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.network(
-                                Events[day]![0].imageUrl,
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          : null,
                     ),
                     Text(
                       '${day.day}',
