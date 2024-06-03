@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:async/async.dart';
 import 'package:canvas_diary/models/diary_flow_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,19 +15,23 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var diaryData = Provider.of<DiaryFlowModel>(context, listen: false);
     var _dio = Dio();
+    final AsyncMemoizer<String> _memoizer = AsyncMemoizer<String>();
     _dio.options.baseUrl = "http://54.180.145.19:8080";
     String? imageUrl;
 
-    Future<String> _getImageURL() async {
-      Response response = await _dio.post('/api/diaries/images', data: {
-        "description": diaryData.diaryContent,
-        "emotion": diaryData.emotion,
-        "style": diaryData.painting
+    Future<String> _getImageURL() {
+      return _memoizer.runOnce(() async {
+        Response response = await _dio.post('/api/diaries/images', data: {
+          "description": diaryData.diaryContent,
+          "emotion": diaryData.emotion,
+          "style": diaryData.painting
+        });
+        Map<String, dynamic> URLData = response.data;
+        imageUrl = URLData["canvasImageUrl"][0];
+        log("$imageUrl}", name: "그림 생성 api 호출");
+        diaryData.updateDiaryImageUrl(imageUrl!);
+        return imageUrl!;
       });
-      Map<String, dynamic> URLData = response.data;
-      imageUrl = URLData["canvasImageUrl"][0];
-      diaryData.updateDiaryImageUrl(imageUrl!);
-      return imageUrl!;
     }
 
     Future<void> _storeData() async {
@@ -65,7 +70,7 @@ class ResultScreen extends StatelessWidget {
                       log('${diaryData.imageUrl}', name: "diaryData");
                       return Image.network(snapshot.data!, loadingBuilder:
                           (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
+                              ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) {
                           return child;
                         } else {
@@ -73,7 +78,7 @@ class ResultScreen extends StatelessWidget {
                             child: CircularProgressIndicator(
                               value: loadingProgress.expectedTotalBytes != null
                                   ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
+                                      loadingProgress.expectedTotalBytes!
                                   : null,
                             ),
                           );
@@ -89,7 +94,6 @@ class ResultScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(15.0),
                 child: ElevatedButton(
                   onPressed: () {
-
                     _storeData();
                     routeNextPage();
                   },
