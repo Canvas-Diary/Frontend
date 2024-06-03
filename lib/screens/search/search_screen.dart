@@ -20,31 +20,23 @@ class _SearchScreenState extends State<SearchScreen> {
             hintText: "검색어를 입력하세요",
             elevation: MaterialStatePropertyAll(2),
           ),
+          SizedBox(
+            height: 20,
+          ),
           Expanded(
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverGrid(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return Container(
-                        alignment: Alignment.center,
-                        color: Colors.teal[100 * (index % 9)],
-                        child: Text(
-                          'Grid Item ${index + 1}',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      );
-                    },
-                    childCount: 10,
-                  ),
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200.0,
-                    mainAxisSpacing: 10.0,
-                    crossAxisSpacing: 10.0,
-                    childAspectRatio: 4.0,
-                  ),
+            child: SingleChildScrollView(
+              child: GridView(
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 16.0,
+                  crossAxisSpacing: 16.0,
+                  childAspectRatio: 2,
                 ),
-              ],
+                children: [
+                  Placeholder(),
+                ],
+              ),
             ),
           ),
         ],
