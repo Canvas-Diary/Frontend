@@ -23,6 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
+# Zero-Install
 .yarn/*
 !.yarn/cache
 !.yarn/patches
@@ -30,3 +31,4 @@ dist-ssr
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.vite
