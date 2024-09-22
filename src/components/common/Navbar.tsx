@@ -1,7 +1,7 @@
-import home from "../assets/images/home.png";
-import sns from "../assets/images/sns.png";
-import album from "../assets/images/album.png";
-import who from "../assets/images/who.png";
+import home from "../../assets/images/home.png";
+import sns from "../../assets/images/sns.png";
+import album from "../../assets/images/album.png";
+import who from "../../assets/images/who.png";
 
 const GNB = [
   { icon: home, name: "홈", path: "" },

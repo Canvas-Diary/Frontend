@@ -1,5 +1,5 @@
-import BackIcon from "../assets/svg/back-button.svg?react";
-import MenuIcon from "../assets/svg/menu-dots.svg?react";
+import BackIcon from "../../assets/svg/back-button.svg?react";
+import MenuIcon from "../../assets/svg/menu-dots.svg?react";
 
 const Appbar = () => {
   return (
