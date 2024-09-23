@@ -1,12 +1,17 @@
-const SIZE = {
-  big: "w-[20.4375rem]",
-  small: "w-[9.6875rem]",
-};
+interface ButtonProps {
+  size: "big" | "small";
+  active: boolean;
+  text: string;
+  onClickHandler: () => void;
+}
 
-const Button = () => {
+const Button = ({ size, active, text, onClickHandler }: ButtonProps) => {
   return (
-    <button className="bg-primary-light-2 text-primary-normal w-[20.4375rem] rounded-200 py-600 font-Binggrae text-body-1 font-regular">
-      오늘 일기 작성하기
+    <button
+      className={`${size === "big" ? "w-[20.4375rem]" : "w-[9.6875rem]"} ${active ? "bg-primary-light-2 text-primary-normal dark:bg-primary-normal dark:text-white" : "bg-primary-light-1 text-primary-light-3"} rounded-200 py-600 font-Binggrae text-body-1 font-regular`}
+      onClick={onClickHandler}
+    >
+      {text}
     </button>
   );
 };
