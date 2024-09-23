@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
+import { fn } from "@storybook/test";
 import Appbar from "./Appbar";
 
 const meta: Meta<typeof Appbar> = {
@@ -11,5 +11,9 @@ export default meta;
 type Story = StoryObj<typeof Appbar>;
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    text: "Text",
+    menuHandler: fn(),
+    backHandler: fn(),
+  },
 };
