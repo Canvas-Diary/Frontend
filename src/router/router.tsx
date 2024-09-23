@@ -3,6 +3,7 @@ import { createBrowserRouter, RouteObject } from "react-router-dom";
 import GlobalFallback from "../components/layout/fallback/GlobalFallback";
 import PageFallback from "../components/layout/fallback/PageFallback";
 import Layout from "../components/layout/Layout";
+import RoutePaths from "../constants/routePath";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
@@ -10,13 +11,6 @@ const AlbumPage = lazy(() => import("../pages/Album"));
 const Mypage = lazy(() => import("../pages/Mypage"));
 const ErrorPage = lazy(() => import("../pages/error/Error"));
 const NotFoundErrorPage = lazy(() => import("../pages/error/NotFoundError"));
-
-const RoutePaths = {
-  home: "/",
-  explore: "/explore",
-  album: "/album",
-  mypage: "/mypage",
-};
 
 const routes: RouteObject[] = [
   {
