@@ -6,7 +6,7 @@ import Who from "../../assets/svg/who.svg?react";
 
 const GNB = [
   { icon: <Home />, label: "홈", path: "/" },
-  { icon: <Sns />, label: "일기 공유", path: "/sns" },
+  { icon: <Sns />, label: "일기 공유", path: "/explore" },
   { icon: <Album />, label: "앨범", path: "/album" },
   { icon: <Who />, label: "마이페이지", path: "/mypage" },
 ];
