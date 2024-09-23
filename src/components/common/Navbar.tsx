@@ -1,23 +1,34 @@
-import home from "../../assets/images/home.png";
-import sns from "../../assets/images/sns.png";
-import album from "../../assets/images/album.png";
-import who from "../../assets/images/who.png";
+import { Link, useLocation } from "react-router-dom";
+import Home from "../../assets/svg/home.svg?react";
+import Sns from "../../assets/svg/sns.svg?react";
+import Album from "../../assets/svg/album.svg?react";
+import Who from "../../assets/svg/who.svg?react";
 
 const GNB = [
-  { icon: home, name: "홈", path: "" },
-  { icon: sns, name: "일기 공유", path: "" },
-  { icon: album, name: "앨범", path: "" },
-  { icon: who, name: "마이페이지", path: "" },
+  { icon: <Home />, label: "홈", path: "/" },
+  { icon: <Sns />, label: "일기 공유", path: "/sns" },
+  { icon: <Album />, label: "앨범", path: "/album" },
+  { icon: <Who />, label: "마이페이지", path: "/mypage" },
 ];
 
 const Navbar = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   return (
-    <nav className="border-t-[1px] border-gray-100">
-      <ul className="flex flex-row justify-center gap-600 px-800 pb-[1.3125rem] pt-500">
+    <nav className="h-[5.25rem] border-t-[1px] border-gray-100 bg-white">
+      <ul className="flex flex-row justify-center gap-600 px-800 pt-500">
         {GNB.map((element) => (
-          <li className="flex flex-col items-center gap-200">
-            <img src={element.icon} alt={element.name} className="h-7 w-7" />
-            <span className="font-Binggrae text-detail-2 font-regular">{element.name}</span>
+          <li
+            key={element.label}
+            className={`w-[4.375rem] ${
+              currentPath === element.path ? "text-primary-normal" : "text-gray-100"
+            }`}
+          >
+            <Link to={element.path} className="flex flex-col items-center justify-center gap-200">
+              <div className="flex h-7 w-7 items-center justify-center">{element.icon}</div>
+              <span className="font-Binggrae text-detail-2 font-regular">{element.label}</span>
+            </Link>
           </li>
         ))}
       </ul>
