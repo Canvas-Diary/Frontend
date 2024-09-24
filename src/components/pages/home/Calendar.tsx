@@ -89,7 +89,7 @@ const Calendar = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-7">
+      <div className="grid grid-cols-7 px-5">
         {daysOfWeek.map((day) => (
           <div className="flex justify-center py-[0.625rem]">
             <div
@@ -102,7 +102,7 @@ const Calendar = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-y-800">{calendarDays}</div>
+      <div className="grid grid-cols-7 gap-y-800 px-5">{calendarDays}</div>
     </div>
   );
 };
