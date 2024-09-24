@@ -76,7 +76,7 @@ const Calendar = () => {
   };
 
   return (
-    <div className="flex h-screen flex-col items-stretch gap-300">
+    <div className="flex flex-col items-stretch gap-300">
       <div className="flex items-center justify-center gap-600 bg-primary-normal py-300">
         <button onClick={handlePrevMonth} className="text-white">
           <ArrowLeft></ArrowLeft>
