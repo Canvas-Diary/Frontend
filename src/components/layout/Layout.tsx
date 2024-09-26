@@ -4,7 +4,7 @@ import Navbar from "../common/Navbar";
 const Layout = () => {
   return (
     <div className="flex h-screen w-screen flex-col">
-      <div className="flex-grow">
+      <div className="flex-grow overflow-scroll">
         <Outlet />
       </div>
       <Navbar />
