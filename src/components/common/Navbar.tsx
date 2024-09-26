@@ -17,7 +17,7 @@ const Navbar = () => {
   const currentPath = location.pathname;
 
   return (
-    <nav className="h-[5.25rem] border-t-[1px] border-gray-100 bg-white">
+    <nav className="h-[5.25rem] flex-shrink-0 border-t-[1px] border-gray-100 bg-white">
       <ul className="flex flex-row justify-center gap-600 px-800 pt-500">
         {GNB.map((element) => (
           <li
