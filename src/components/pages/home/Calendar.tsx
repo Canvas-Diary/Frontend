@@ -1,7 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import ArrowLeft from "../../../assets/svg/arrow_left.svg?react";
 import ArrowRight from "../../../assets/svg/arrow_right.svg?react";
-import RoutePaths from "../../../constants/routePath";
 
 const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 const months = [" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12"];
@@ -96,8 +95,8 @@ const Calendar = ({ onClickDate }: CalendarProps) => {
       </div>
 
       <div className="grid grid-cols-7 px-5">
-        {daysOfWeek.map((day) => (
-          <div className="flex justify-center py-[0.625rem]">
+        {daysOfWeek.map((day, index) => (
+          <div className="flex justify-center py-[0.625rem]" key={index}>
             <div
               key={day}
               className="flex h-8 w-10 items-center justify-center rounded-full bg-primary-light-2 font-Pretendard text-body-1 font-semibold text-primary-normal"
