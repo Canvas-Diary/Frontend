@@ -1,11 +1,16 @@
 import { ReactNode, useEffect, useState } from "react";
 import ArrowLeft from "../../../assets/svg/arrow_left.svg?react";
 import ArrowRight from "../../../assets/svg/arrow_right.svg?react";
+import RoutePaths from "../../../constants/routePath";
 
 const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 const months = [" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12"];
 
-const Calendar = () => {
+interface CalendarProps {
+  onClickDate: () => void;
+}
+
+const Calendar = ({ onClickDate }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState<ReactNode[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -59,6 +64,7 @@ const Calendar = () => {
       day: "numeric",
     };
     setSelectedDate(selected.toLocaleDateString(undefined, options));
+    onClickDate();
   };
 
   const handlePrevMonth = () => {
