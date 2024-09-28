@@ -9,6 +9,7 @@ const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
 const AlbumPage = lazy(() => import("../pages/Album"));
 const Mypage = lazy(() => import("../pages/Mypage"));
+const DiaryPage = lazy(() => import("../pages/diary/Diary"));
 const ErrorPage = lazy(() => import("../pages/error/Error"));
 const NotFoundErrorPage = lazy(() => import("../pages/error/NotFoundError"));
 
@@ -58,8 +59,17 @@ const routes: RouteObject[] = [
           </Suspense>
         ),
       },
+      {
+        path: `${RoutePaths.diary}/:diaryID`,
+        element: (
+          <Suspense fallback={<PageFallback />}>
+            <DiaryPage />
+          </Suspense>
+        ),
+      },
     ],
   },
+
   {
     path: "*",
     element: (
