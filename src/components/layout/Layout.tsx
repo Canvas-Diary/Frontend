@@ -22,6 +22,10 @@ const Layout = () => {
     return pathsWithAppBar.includes(location.pathname);
   };
 
+  const shouldDeleteNavBar = () => {
+    return location.pathname.startsWith(RoutePaths.diary);
+  };
+
   const getAppBarText = () => {
     switch (location.pathname) {
       case RoutePaths.explore:
@@ -41,7 +45,7 @@ const Layout = () => {
       <div className="flex-grow overflow-scroll">
         <Outlet />
       </div>
-      <Navbar NavList={GNB} />
+      {!shouldDeleteNavBar() && <Navbar NavList={GNB} />}
     </div>
   );
 };
