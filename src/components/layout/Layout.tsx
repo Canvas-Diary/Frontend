@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Home from "../../assets/svg/home.svg?react";
 import Sns from "../../assets/svg/sns.svg?react";
 import Album from "../../assets/svg/album.svg?react";
@@ -16,6 +16,7 @@ const GNB = [
 
 const Layout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const shouldDeleteAppBar = () => {
     const pathsWithAppBar = [RoutePaths.home, RoutePaths.album];
@@ -42,7 +43,13 @@ const Layout = () => {
   return (
     <div className="flex h-screen w-screen flex-col">
       {!shouldDeleteAppBar() && (
-        <Appbar text={getAppBarText()} backHandler={() => {}} menuHandler={() => {}} />
+        <Appbar
+          text={getAppBarText()}
+          backHandler={() => {
+            navigate(-1);
+          }}
+          menuHandler={() => {}}
+        />
       )}
       <div className="flex-grow overflow-scroll">
         <Outlet />
