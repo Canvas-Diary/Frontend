@@ -1,13 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 import Calendar from "../components/pages/home/Calendar";
 
 const Home = () => {
+  const navigate = useNavigate();
   const onClickCreateDiary = () => {
     //일기 작성하기
   };
 
   const onClickDate = () => {
-    //일기 조회 페이지
+    //작성된 일기가 없으면
+    navigate("diary/0");
   };
 
   return (
