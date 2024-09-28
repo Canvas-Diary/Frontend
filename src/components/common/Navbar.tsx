@@ -1,25 +1,22 @@
+import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Home from "../../assets/svg/home.svg?react";
-import Sns from "../../assets/svg/sns.svg?react";
-import Album from "../../assets/svg/album.svg?react";
-import Who from "../../assets/svg/who.svg?react";
-import RoutePaths from "../../constants/routePath";
 
-const GNB = [
-  { icon: <Home />, label: "홈", path: RoutePaths.home },
-  { icon: <Sns />, label: "일기 공유", path: RoutePaths.explore },
-  { icon: <Album />, label: "앨범", path: RoutePaths.album },
-  { icon: <Who />, label: "마이페이지", path: RoutePaths.mypage },
-];
+interface NavBarProps {
+  NavList: {
+    icon: ReactNode;
+    path: string;
+    label: string;
+  }[];
+}
 
-const Navbar = () => {
+const Navbar = ({ NavList }: NavBarProps) => {
   const location = useLocation();
   const currentPath = location.pathname;
 
   return (
     <nav className="h-[5.25rem] flex-shrink-0 border-t-[1px] border-gray-100 bg-white">
       <ul className="flex flex-row justify-center gap-600 px-800 pt-500">
-        {GNB.map((element) => (
+        {NavList.map((element) => (
           <li
             key={element.label}
             className={`w-[4.375rem] ${
