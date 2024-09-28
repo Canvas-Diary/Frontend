@@ -18,18 +18,18 @@ const Layout = () => {
   const location = useLocation();
 
   const shouldDeleteAppBar = () => {
-    const pathsWithAppBar = ["/", "/album"];
+    const pathsWithAppBar = [RoutePaths.home, RoutePaths.album];
     return pathsWithAppBar.includes(location.pathname);
   };
 
   const getAppBarText = () => {
     switch (location.pathname) {
-      case "/explore":
+      case RoutePaths.explore:
         return "explore";
-      case "/mypage":
+      case RoutePaths.mypage:
         return "마이페이지";
       default:
-        return "";
+        return;
     }
   };
 
