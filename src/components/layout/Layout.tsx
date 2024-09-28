@@ -32,6 +32,8 @@ const Layout = () => {
         return "explore";
       case RoutePaths.mypage:
         return "마이페이지";
+      case `${RoutePaths.diary}/0`:
+        return "내 일기";
       default:
         return;
     }
