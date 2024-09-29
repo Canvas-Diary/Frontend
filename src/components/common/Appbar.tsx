@@ -9,7 +9,7 @@ interface AppBarProps {
 
 const Appbar = ({ text, backHandler, menuHandler }: AppBarProps) => {
   return (
-    <div className="flex items-center justify-between px-800 py-300 text-black dark:text-white">
+    <div className="absolute flex w-full items-center justify-between bg-transparent px-800 py-300 text-black dark:text-white">
       <button className="h-7 w-8" onClick={backHandler}>
         <BackIcon />
       </button>
