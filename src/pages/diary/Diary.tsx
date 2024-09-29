@@ -1,6 +1,18 @@
 import { useParams } from "react-router-dom";
 import Button from "../../components/common/Button";
 import non from "../../assets/icon/non.png";
+import ImageCarousel from "../../components/pages/diary/ImageCarousel";
+
+//임시 더미 데이터
+const diaryData = {
+  content: "일기 내용",
+  emotion: "happy",
+  likedCount: 5,
+  isLiked: true,
+  images: [{ imageId: 1, imageUrl: "../../assets/dummy/_Image.png" }],
+  isPublic: true,
+  date: "2024-09-28",
+};
 
 const Diary = () => {
   const params = useParams();
@@ -8,7 +20,12 @@ const Diary = () => {
 
   if (diaryID === "0") return <NoDiary />;
 
-  return <div>Diary ID: {diaryID}</div>;
+  return (
+    <div className="flex h-full flex-col items-center">
+      <ImageCarousel />
+      <div>{/* 일기 영역 */}</div>
+    </div>
+  );
 };
 
 export default Diary;
