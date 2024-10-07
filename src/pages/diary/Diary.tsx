@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import Button from "../../components/common/Button";
 import non from "../../assets/icon/non.png";
 import ImageCarousel from "../../components/pages/diary/ImageCarousel";
+import Content from "../../components/pages/diary/Content";
+import { useState } from "react";
 
 //임시 더미 데이터
 const diaryData = {
@@ -17,13 +19,28 @@ const diaryData = {
 const Diary = () => {
   const params = useParams();
   const diaryID = params.diaryID;
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   if (diaryID === "0") return <NoDiary />;
 
+  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    console.log(event.currentTarget);
+    setScrollPosition(event.currentTarget.scrollTop);
+  };
+
   return (
-    <div className="flex h-full flex-col items-center">
-      <ImageCarousel />
-      <div>{/* 일기 영역 */}</div>
+    <div className="relative flex h-full flex-col items-center">
+      <div className="fixed top-0 w-full">
+        <ImageCarousel />
+      </div>
+
+      <div
+        className="absolute z-10 h-fit w-full"
+        onScroll={handleScroll}
+        style={{ top: `calc(98% - ${scrollPosition}px)` }}
+      >
+        <Content />
+      </div>
     </div>
   );
 };
