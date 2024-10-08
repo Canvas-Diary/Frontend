@@ -39,6 +39,7 @@ export default {
         100: "0.75rem",
         200: "1rem",
         300: "1.25rem",
+        400: "1.5rem",
       },
       boxShadow: {
         default: "0 0.125rem 8px 0 rgba(0, 0, 0, 0.08)",

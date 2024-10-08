@@ -1,4 +1,3 @@
-import Appbar from "../components/common/Appbar";
 import Tag from "../components/common/Tag";
 import SearchBar from "../components/pages/album/SearchBar";
 import ThumbnailGrid from "../components/pages/album/ThumbnailGrid";
@@ -6,7 +5,11 @@ import ThumbnailGrid from "../components/pages/album/ThumbnailGrid";
 const Album = () => {
   return (
     <div className="flex flex-col gap-400">
-      <Appbar text="앨범" backHandler={() => {}} menuHandler={() => {}} />
+      <div
+        className={`flex w-full items-center justify-center bg-transparent px-800 py-300 text-black dark:text-white`}
+      >
+        <span className="font-Binggrae text-body-1 font-regular">앨범</span>
+      </div>
       <div className="flex flex-col gap-800 px-700">
         <div className="flex flex-col gap-500">
           <SearchBar onEnter={() => {}}></SearchBar>

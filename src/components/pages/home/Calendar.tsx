@@ -1,18 +1,54 @@
 import { ReactNode, useEffect, useState } from "react";
 import ArrowLeft from "../../../assets/svg/arrow_left.svg?react";
 import ArrowRight from "../../../assets/svg/arrow_right.svg?react";
+import { diary } from "../../../types/types";
+import afraid from "../../../assets/icon/afraid.png";
+import angry from "../../../assets/icon/angry.png";
+import defaultIcon from "../../../assets/icon/defaultIcon.png";
+import dislike from "../../../assets/icon/dislike.png";
+import happy from "../../../assets/icon/happy.png";
+import non from "../../../assets/icon/non.png";
+import sad from "../../../assets/icon/sad.png";
+import shy from "../../../assets/icon/shy.png";
+import surprised from "../../../assets/icon/surprised.png";
+import wonder from "../../../assets/icon/wonder.png";
+
+const emotionImages: { [key: string]: string } = {
+  happy: happy,
+  sad: sad,
+  angry: angry,
+  afraid: afraid,
+  dislike: dislike,
+  non: non,
+  shy: shy,
+  surprised: surprised,
+  wonder: wonder,
+  default: defaultIcon,
+};
 
 const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 const months = [" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12"];
 
 interface CalendarProps {
-  onClickDate: () => void;
+  calendarData: {
+    diaries: diary[];
+  };
+  onClickDate: (id: number) => void;
 }
 
-const Calendar = ({ onClickDate }: CalendarProps) => {
+const Calendar = ({ onClickDate, calendarData }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState<ReactNode[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  const diaryMap = calendarData.diaries.reduce(
+    (acc, diary) => {
+      const day = new Date(diary.date).getDate();
+      acc[day] = { id: diary.diaryId, emotion: diary.emotion };
+      return acc;
+    },
+    {} as { [day: number]: { id: number; emotion: string } }
+  );
 
   useEffect(() => {
     generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
@@ -35,13 +71,20 @@ const Calendar = ({ onClickDate }: CalendarProps) => {
         year === new Date().getFullYear() &&
         month === new Date().getMonth() &&
         day === new Date().getDate();
+
+      const diary = diaryMap[day];
+      const emotionImage = diary ? emotionImages[diary.emotion] : emotionImages.default;
+      const id = diary ? diary.id : 0;
+
       days.push(
         <div
           key={day}
           className={`flex cursor-pointer flex-col items-center gap-300`}
-          onClick={() => handleDayClick(day)}
+          onClick={() => handleDayClick(day, id)}
         >
-          <div className="h-11 w-11 rounded-100 bg-black"></div>
+          <div className="flex h-11 w-11 items-center justify-center rounded-100">
+            <img src={emotionImage} alt={diary ? diary.emotion : "null"} />
+          </div>
           <div
             className={`text-center font-Binggrae text-detail-1 font-regular ${isToday && "w-10 rounded-300 bg-primary-normal font-bold text-white"}`}
           >
@@ -54,7 +97,7 @@ const Calendar = ({ onClickDate }: CalendarProps) => {
     setCalendarDays(days);
   };
 
-  const handleDayClick = (day: number) => {
+  const handleDayClick = (day: number, id: number) => {
     const selected = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
     const options: Intl.DateTimeFormatOptions = {
       weekday: "long",
@@ -63,7 +106,8 @@ const Calendar = ({ onClickDate }: CalendarProps) => {
       day: "numeric",
     };
     setSelectedDate(selected.toLocaleDateString(undefined, options));
-    onClickDate();
+
+    onClickDate(id);
   };
 
   const handlePrevMonth = () => {
