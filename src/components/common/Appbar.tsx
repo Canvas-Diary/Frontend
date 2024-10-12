@@ -7,6 +7,13 @@ interface AppBarProps {
   menuHandler: () => void;
 }
 
+/**
+ * 상단 AppBar
+ * @param text 가운데 글귀
+ * @param backHandler 뒤로가기 콜백 함수
+ * @param menuHandler 메뉴버튼 콜백 함수
+ * @returns
+ */
 const Appbar = ({ text, backHandler, menuHandler }: AppBarProps) => {
   return (
     <div className="absolute z-50 flex w-full items-center justify-between bg-transparent px-800 py-300 text-black dark:text-white">

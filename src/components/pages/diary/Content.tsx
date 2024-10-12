@@ -1,8 +1,12 @@
 import Tag from "../../common/Tag";
 
+/**
+ * 일기 화면 하단의 일기 정보
+ * @returns
+ */
 const Content = () => {
   return (
-    <div className="rounded-t-400 flex flex-col items-center gap-600 bg-white px-800 pb-10 pt-700">
+    <div className="flex flex-col items-center gap-600 rounded-t-400 bg-white px-800 pb-10 pt-700">
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-col gap-300">
           <div className="font-Binggrae text-title-2 font-bold">2024. 09. 14 (토)</div>

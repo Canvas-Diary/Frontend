@@ -4,6 +4,13 @@ interface TagProps {
   onClick?: () => void;
 }
 
+/**
+ * 감정 태그
+ * @param text 태그 글귀
+ * @param selected 선택된 여부
+ * @param onClick 태그 클릭 콜백 함수
+ * @returns
+ */
 const Tag = ({ text, selected, onClick }: TagProps) => {
   return (
     <button

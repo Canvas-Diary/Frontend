@@ -2,6 +2,10 @@ import Tag from "../components/common/Tag";
 import SearchBar from "../components/pages/album/SearchBar";
 import ThumbnailGrid from "../components/pages/album/ThumbnailGrid";
 
+/**
+ * 앨범 화면
+ * @returns
+ */
 const Album = () => {
   return (
     <div className="flex flex-col gap-400">

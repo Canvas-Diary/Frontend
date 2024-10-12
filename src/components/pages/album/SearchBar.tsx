@@ -10,6 +10,11 @@ interface SearchBarProps {
   onEnter: () => void;
 }
 
+/**
+ * 앨범 화면 검색창
+ * @param onEnter 엔터를 눌러 검색했을 때 실행할 콜백 함수
+ * @returns
+ */
 const SearchBar = ({ onEnter }: SearchBarProps) => {
   const [inputValue, setInputValue] = useState("");
 

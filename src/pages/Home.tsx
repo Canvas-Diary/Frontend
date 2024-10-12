@@ -88,6 +88,10 @@ const CalendarData = {
   ],
 };
 
+/**
+ * 메인 화면
+ * @returns
+ */
 const Home = () => {
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
