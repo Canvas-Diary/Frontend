@@ -9,6 +9,11 @@ interface NavBarProps {
   }[];
 }
 
+/**
+ * 하단 공통 NavBar
+ * @param NavList nav배열
+ * @returns
+ */
 const Navbar = ({ NavList }: NavBarProps) => {
   const location = useLocation();
   const currentPath = location.pathname;

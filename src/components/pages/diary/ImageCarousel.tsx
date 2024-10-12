@@ -4,6 +4,10 @@ const images = [img, img, img];
 
 import { useState, useRef, useEffect } from "react";
 
+/**
+ * 일기 화면의 생성된 이미지들 캐러셀
+ * @returns
+ */
 const ImageCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null); // 타입 지정

@@ -10,6 +10,10 @@ const diarys = [
   { diaryId: 6, imgURL: "6", day: "9월 26일" },
 ];
 
+/**
+ * 앨범 화면에서 보이는 썸내일 그리드
+ * @returns
+ */
 const ThumbnailGrid = () => {
   return (
     <div className="grid grid-cols-3 place-items-center gap-300">

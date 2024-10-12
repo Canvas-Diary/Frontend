@@ -14,6 +14,11 @@ const GNB = [
   { icon: <Who />, label: "마이페이지", path: RoutePaths.mypage },
 ];
 
+/**
+ * Appbar(선택) + Content + Navbar(선택) 로 이루어진 기본 layout
+ * location.pathname 으로 경로를 가져와 Appbar와 Navbar 렌더링 여부를 선택함
+ * @returns
+ */
 const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate();

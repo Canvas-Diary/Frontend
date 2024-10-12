@@ -16,6 +16,10 @@ const diaryData = {
   date: "2024-09-28",
 };
 
+/**
+ * 일기 화면
+ * @returns
+ */
 const Diary = () => {
   const params = useParams();
   const diaryID = params.diaryID;
@@ -54,6 +58,10 @@ const Diary = () => {
 
 export default Diary;
 
+/**
+ * 아직 작성한 일기가 없는 경우
+ * @returns
+ */
 const NoDiary = () => {
   return (
     <div className="flex h-full flex-col items-center">

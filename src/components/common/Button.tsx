@@ -5,6 +5,14 @@ interface ButtonProps {
   onClickHandler: () => void;
 }
 
+/**
+ * 공통 Button
+ * @param size  버튼 크기
+ * @param active 활성화 상태
+ * @param text 버튼 글귀
+ * @param onClickHandler 버튼 클릭 콜백 함수
+ * @returns
+ */
 const Button = ({ size, active, text, onClickHandler }: ButtonProps) => {
   return (
     <button
