@@ -36,10 +36,15 @@ interface CalendarProps {
   onClickDate: (id: number) => void;
 }
 
+/**
+ * 메인 화면의 일기 정보를 표시하는 달력
+ * @param calendarData 일기 정보
+ * @param onClickDate 날짜를 눌렀을 때 실행할 콜백 함수
+ * @returns
+ */
 const Calendar = ({ onClickDate, calendarData }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState<ReactNode[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   const diaryMap = calendarData.diaries.reduce(
     (acc, diary) => {
@@ -80,7 +85,7 @@ const Calendar = ({ onClickDate, calendarData }: CalendarProps) => {
         <div
           key={day}
           className={`flex cursor-pointer flex-col items-center gap-300`}
-          onClick={() => handleDayClick(day, id)}
+          onClick={() => handleDayClick(id)}
         >
           <div className="flex h-11 w-11 items-center justify-center rounded-100">
             <img src={emotionImage} alt={diary ? diary.emotion : "null"} />
@@ -97,16 +102,7 @@ const Calendar = ({ onClickDate, calendarData }: CalendarProps) => {
     setCalendarDays(days);
   };
 
-  const handleDayClick = (day: number, id: number) => {
-    const selected = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    setSelectedDate(selected.toLocaleDateString(undefined, options));
-
+  const handleDayClick = (id: number) => {
     onClickDate(id);
   };
 
