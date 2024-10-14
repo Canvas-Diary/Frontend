@@ -51,7 +51,13 @@ const Diary = () => {
         onScroll={handleScroll}
         style={{ top: `calc(${carouselHeight}px - ${scrollPosition}px - 50px)` }}
       >
-        <Content />
+        <Content
+          date={diaryData.date}
+          emotion={diaryData.emotion}
+          likedCount={diaryData.likedCount}
+          isLiked={diaryData.isLiked}
+          content={diaryData.content}
+        />
       </div>
     </div>
   );

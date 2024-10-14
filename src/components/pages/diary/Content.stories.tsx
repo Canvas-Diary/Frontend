@@ -11,5 +11,11 @@ export default meta;
 type Story = StoryObj<typeof Content>;
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    content: "일기 내용",
+    emotion: "happy",
+    likedCount: 5,
+    isLiked: true,
+    date: "2024-09-28",
+  },
 };
