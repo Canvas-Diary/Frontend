@@ -1,14 +1,18 @@
-import img from "../../../assets/dummy/_Image.png";
-
-const images = [img, img, img];
-
 import { useState, useRef, useEffect } from "react";
+
+interface ImageCarouselProps {
+  images: {
+    imageId: number;
+    imageUrl: string;
+  }[];
+}
 
 /**
  * 일기 화면의 생성된 이미지들 캐러셀
+ * @param images 이미지 {id, url} 배열
  * @returns
  */
-const ImageCarousel = () => {
+const ImageCarousel = ({ images }: ImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null); // 타입 지정
 
@@ -37,8 +41,13 @@ const ImageCarousel = () => {
   return (
     <div className="relative flex flex-col items-center justify-end">
       <div className="flex w-full snap-x snap-mandatory overflow-x-scroll" ref={containerRef}>
-        {images.map((img, index) => (
-          <img key={index} src={img} alt="" className="h-auto w-full flex-shrink-0 snap-start" />
+        {images.map((img) => (
+          <img
+            key={img.imageId}
+            src={img.imageUrl}
+            alt=""
+            className="h-auto w-full flex-shrink-0 snap-start"
+          />
         ))}
       </div>
       <ol className="absolute mb-[3.5rem] flex justify-center gap-2">

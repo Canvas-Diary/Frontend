@@ -12,5 +12,5 @@ export default meta;
 type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
-  args: { size: "big", active: true, text: "Text", onClickHandler: fn() },
+  args: { size: "big", active: true, text: "Text", onClickHandler: fn(), bgColor: "light" },
 };

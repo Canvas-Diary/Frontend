@@ -4,6 +4,7 @@ import non from "../../assets/icon/non.png";
 import ImageCarousel from "../../components/pages/diary/ImageCarousel";
 import Content from "../../components/pages/diary/Content";
 import { useState, useEffect, useRef } from "react";
+import img from "../../assets/dummy/_Image.png";
 
 //임시 더미 데이터
 const diaryData = {
@@ -11,7 +12,7 @@ const diaryData = {
   emotion: "happy",
   likedCount: 5,
   isLiked: true,
-  images: [{ imageId: 1, imageUrl: "../../assets/dummy/_Image.png" }],
+  images: [{ imageId: 1, imageUrl: img }],
   isPublic: true,
   date: "2024-09-28",
 };
@@ -42,7 +43,7 @@ const Diary = () => {
   return (
     <div className="relative flex h-full flex-col items-center">
       <div className="fixed top-0 w-full" ref={carouselRef}>
-        <ImageCarousel />
+        <ImageCarousel images={diaryData.images} />
       </div>
 
       <div
@@ -50,7 +51,13 @@ const Diary = () => {
         onScroll={handleScroll}
         style={{ top: `calc(${carouselHeight}px - ${scrollPosition}px - 50px)` }}
       >
-        <Content />
+        <Content
+          date={diaryData.date}
+          emotion={diaryData.emotion}
+          likedCount={diaryData.likedCount}
+          isLiked={diaryData.isLiked}
+          content={diaryData.content}
+        />
       </div>
     </div>
   );

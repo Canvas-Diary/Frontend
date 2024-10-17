@@ -111,6 +111,7 @@ const Home = () => {
           active={true}
           text="오늘 일기 작성하기"
           onClickHandler={onClickCreateDiary}
+          bgColor="dark"
         />
       </div>
     </div>
