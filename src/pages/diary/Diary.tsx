@@ -79,7 +79,13 @@ const NoDiary = () => {
         </div>
       </div>
       <div className="mb-[1.875rem]">
-        <Button size="big" active={true} text="일기 작성하기" onClickHandler={() => {}} />
+        <Button
+          size="big"
+          active={true}
+          text="일기 작성하기"
+          onClickHandler={() => {}}
+          bgColor="light"
+        />
       </div>
     </div>
   );
