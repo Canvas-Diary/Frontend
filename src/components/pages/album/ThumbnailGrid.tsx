@@ -1,24 +1,22 @@
 import Thumbnail from "./Thumbnail";
 
-//일기 더미 데이터
-const diarys = [
-  { diaryId: 1, imgURL: "1", day: "9월 21일" },
-  { diaryId: 2, imgURL: "2", day: "9월 22일" },
-  { diaryId: 3, imgURL: "3", day: "9월 23일" },
-  { diaryId: 4, imgURL: "4", day: "9월 24일" },
-  { diaryId: 5, imgURL: "5", day: "9월 25일" },
-  { diaryId: 6, imgURL: "6", day: "9월 26일" },
-];
+interface ThumbnailGridProps {
+  diaries: {
+    diaryId: number;
+    mainImgUrl: string;
+  }[];
+}
 
 /**
  * 앨범 화면에서 보이는 썸내일 그리드
+ * @param diaries diaryId, mainImgUrl 배열
  * @returns
  */
-const ThumbnailGrid = () => {
+const ThumbnailGrid = ({ diaries }: ThumbnailGridProps) => {
   return (
-    <div className="grid grid-cols-3 place-items-center gap-300">
-      {diarys.map((diary) => (
-        <Thumbnail src={diary.imgURL} alt={diary.day} key={diary.diaryId} />
+    <div className="grid grid-cols-3 place-items-center gap-300 overflow-scroll">
+      {diaries.map((diary) => (
+        <Thumbnail src={diary.mainImgUrl} alt={diary.mainImgUrl} key={diary.diaryId} />
       ))}
     </div>
   );
