@@ -115,7 +115,7 @@ const Album = () => {
         >
           <span className="font-Binggrae text-body-1 font-regular">앨범</span>
         </div>
-        <div className="flex flex-col gap-800 px-700">
+        <div className="flex flex-col px-700">
           <div className="sticky top-0 flex flex-col gap-500 bg-white py-400">
             <SearchBar onEnter={() => {}} />
             <div
