@@ -16,7 +16,12 @@ const ThumbnailGrid = ({ diaries }: ThumbnailGridProps) => {
   return (
     <div className="grid grid-cols-3 place-items-center gap-300 overflow-scroll py-800">
       {diaries.map((diary) => (
-        <Thumbnail src={diary.mainImgUrl} alt={diary.mainImgUrl} key={diary.diaryId} />
+        <Thumbnail
+          src={diary.mainImgUrl}
+          alt={diary.mainImgUrl}
+          diaryId={diary.diaryId}
+          key={diary.diaryId}
+        />
       ))}
     </div>
   );
