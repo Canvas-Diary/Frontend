@@ -56,9 +56,7 @@ const Layout = () => {
           menuHandler={() => {}}
         />
       )}
-      <div className="flex-grow overflow-scroll">
-        <Outlet />
-      </div>
+      <Outlet></Outlet>
       {!shouldDeleteNavBar() && <Navbar NavList={GNB} />}
     </div>
   );
