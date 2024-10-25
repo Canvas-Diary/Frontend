@@ -1,9 +1,9 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
-import GlobalFallback from "../components/layout/fallback/GlobalFallback";
-import PageFallback from "../components/layout/fallback/PageFallback";
-import Layout from "../components/layout/Layout";
 import RoutePaths from "../constants/routePath";
+import GlobalFallback from "../pages/fallback/GlobalFallback";
+import Layout from "../pages/Layout/Layout";
+import PageFallback from "../pages/fallback/PageFallback";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
