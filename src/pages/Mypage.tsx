@@ -3,7 +3,7 @@
  * @returns
  */
 const Mypage = () => {
-  return <div></div>;
+  return <div className="flex flex-grow flex-col overflow-scroll"></div>;
 };
 
 export default Mypage;

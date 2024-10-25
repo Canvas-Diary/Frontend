@@ -103,9 +103,9 @@ const Home = () => {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between">
+    <div className="flex h-full flex-grow flex-col justify-between overflow-scroll">
       <Calendar onClickDate={onClickDate} calendarData={CalendarData}></Calendar>
-      <div className="mb-4 flex justify-center">
+      <div className="my-4 flex justify-center">
         <Button
           size="big"
           active={true}
