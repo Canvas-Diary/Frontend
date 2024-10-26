@@ -2,7 +2,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Appbar from "../../../components/common/Appbar";
 import Button from "../../../components/common/Button";
 import RoutePaths from "../../../constants/routePath";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const pageOrder = [
   RoutePaths.diaryWrite,
@@ -60,7 +60,7 @@ const DiaryLayout = () => {
           navigate(-1);
         }}
       ></Appbar>
-      <div className="flex-grow px-800 py-300">
+      <div className="flex-grow overflow-scroll px-800 py-300">
         <Outlet context={{ diaryInfo, setDiaryInfo }} />
       </div>
       <div className="my-4 flex justify-center">
