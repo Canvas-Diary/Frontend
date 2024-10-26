@@ -5,6 +5,7 @@ import ImageCarousel from "../../components/pages/diary/ImageCarousel";
 import Content from "../../components/pages/diary/Content";
 import { useState, useEffect, useRef } from "react";
 import img from "../../assets/dummy/_Image.png";
+import Appbar from "../../components/common/Appbar";
 
 //임시 더미 데이터
 const diaryData = {
@@ -41,25 +42,28 @@ const Diary = () => {
   }, [carouselRef]);
 
   return (
-    <div className="relative flex h-full flex-col items-center">
-      <div className="fixed top-0 w-full" ref={carouselRef}>
-        <ImageCarousel images={diaryData.images} />
-      </div>
+    <>
+      <Appbar backHandler={() => {}} menuHandler={() => {}}></Appbar>
+      <div className="relative flex h-full flex-col items-center">
+        <div className="fixed top-0 w-full" ref={carouselRef}>
+          <ImageCarousel images={diaryData.images} />
+        </div>
 
-      <div
-        className="absolute z-10 h-fit w-full"
-        onScroll={handleScroll}
-        style={{ top: `calc(${carouselHeight}px - ${scrollPosition}px - 50px)` }}
-      >
-        <Content
-          date={diaryData.date}
-          emotion={diaryData.emotion}
-          likedCount={diaryData.likedCount}
-          isLiked={diaryData.isLiked}
-          content={diaryData.content}
-        />
+        <div
+          className="absolute z-10 h-fit w-full"
+          onScroll={handleScroll}
+          style={{ top: `calc(${carouselHeight}px - ${scrollPosition}px - 50px)` }}
+        >
+          <Content
+            date={diaryData.date}
+            emotion={diaryData.emotion}
+            likedCount={diaryData.likedCount}
+            isLiked={diaryData.isLiked}
+            content={diaryData.content}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -72,6 +76,7 @@ export default Diary;
 const NoDiary = () => {
   return (
     <div className="flex h-full flex-col items-center">
+      <Appbar backHandler={() => {}}></Appbar>
       <div className="flex flex-grow items-center justify-center">
         <div className="flex flex-col items-center gap-600">
           <img src={non} alt="non" className="h-[2.75rem] w-[2.75rem]" />
