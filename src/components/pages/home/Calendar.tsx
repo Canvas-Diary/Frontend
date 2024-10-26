@@ -91,7 +91,7 @@ const Calendar = ({ onClickDate, calendarData }: CalendarProps) => {
             <img src={emotionImage} alt={diary ? diary.emotion : "null"} />
           </div>
           <div
-            className={`text-center font-Binggrae text-detail-1 font-regular ${isToday && "w-10 rounded-300 bg-primary-normal font-bold text-white"}`}
+            className={`text-center text-detail-1 font-regular ${isToday && "font-BinggraeBold w-10 rounded-300 bg-primary-normal text-white"}`}
           >
             {day}
           </div>
@@ -127,7 +127,7 @@ const Calendar = ({ onClickDate, calendarData }: CalendarProps) => {
           <ArrowLeft></ArrowLeft>
         </button>
         <div className="px-600 py-200">
-          <h2 className="font-Binggrae text-heading-1 font-bold text-white">{`${currentDate.getFullYear()}.${months[currentDate.getMonth()]}`}</h2>
+          <h2 className="font-BinggraeBold text-heading-1 text-white">{`${currentDate.getFullYear()}.${months[currentDate.getMonth()]}`}</h2>
         </div>
         <button onClick={handleNextMonth} className="text-white">
           <ArrowRight></ArrowRight>

@@ -8,7 +8,7 @@ const DeleteSettings = () => {
         <div className="text-heading-2 font-regular">
           일기를 <span className="text-primary-medium">삭제</span>하시겠어요?
         </div>
-        <div className="text-body-1 font-bold">일기 날짜</div>
+        <div className="font-BinggraeBold text-body-1">일기 날짜</div>
         <div className="flex justify-between">
           <Button
             size="small"
