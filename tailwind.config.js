@@ -46,6 +46,7 @@ export default {
       },
       fontFamily: {
         Binggrae: ["Binggrae"],
+        BinggraeBold: ["BinggraeBold"],
         Pretendard: ["Pretendard"],
       },
       fontSize: {

@@ -5,3 +5,13 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+@font-face {
+  font-family: Binggrae;
+  src: url("./assets/fonts/Binggrae.otf");
+}
+
+@font-face {
+  font-family: BinggraeBold;
+  src: url("./assets/fonts/Binggrae-Bold.otf");
+}
