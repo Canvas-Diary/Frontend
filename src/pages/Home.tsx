@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 import Calendar from "../components/pages/home/Calendar";
 import RoutePaths from "../constants/routePath";
+import { getTodayDate } from "../utils/util";
 
 //임시 더미 데이터
 const CalendarData = {
@@ -96,8 +97,7 @@ const CalendarData = {
 const Home = () => {
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
-    //일기 작성하기
-    navigate(RoutePaths.diaryWrite);
+    navigate(RoutePaths.diaryWrite, { state: { date: getTodayDate() } });
   };
 
   const onClickDate = (id: number) => {

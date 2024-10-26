@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/common/Button";
 import non from "../../assets/icon/non.png";
 import ImageCarousel from "../../components/pages/diary/ImageCarousel";
@@ -6,6 +6,8 @@ import Content from "../../components/pages/diary/Content";
 import { useState, useEffect, useRef } from "react";
 import img from "../../assets/dummy/_Image.png";
 import Appbar from "../../components/common/Appbar";
+import RoutePaths from "../../constants/routePath";
+import { getTodayDate } from "../../utils/util";
 
 //임시 더미 데이터
 const diaryData = {
@@ -74,9 +76,15 @@ export default Diary;
  * @returns
  */
 const NoDiary = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex h-full flex-col items-center">
-      <Appbar backHandler={() => {}}></Appbar>
+      <Appbar
+        backHandler={() => {
+          navigate(-1);
+        }}
+      ></Appbar>
       <div className="flex flex-grow items-center justify-center">
         <div className="flex flex-col items-center gap-600">
           <img src={non} alt="non" className="h-[2.75rem] w-[2.75rem]" />
@@ -88,7 +96,9 @@ const NoDiary = () => {
           size="big"
           active={true}
           text="일기 작성하기"
-          onClickHandler={() => {}}
+          onClickHandler={() => {
+            navigate(RoutePaths.diaryWrite, { state: { date: getTodayDate() } });
+          }}
           bgColor="light"
         />
       </div>
