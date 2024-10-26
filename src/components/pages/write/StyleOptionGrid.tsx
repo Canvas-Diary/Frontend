@@ -11,14 +11,12 @@ const styles = [
 ];
 
 interface StyleOptionGridProps {
+  selectedStyle: string;
   onClickStyle: Function;
 }
 
-const StyleOptionGrid = ({ onClickStyle }: StyleOptionGridProps) => {
-  const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
-
+const StyleOptionGrid = ({ selectedStyle, onClickStyle }: StyleOptionGridProps) => {
   const handleClick = (styleText: string) => {
-    setSelectedStyle(styleText);
     onClickStyle(styleText);
   };
 

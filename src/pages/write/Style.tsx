@@ -14,6 +14,7 @@ const Style = () => {
         onClickStyle={(style: string) => {
           setDiaryInfo({ ...diaryInfo, style: style });
         }}
+        selectedStyle={diaryInfo.style}
       />
     </div>
   );
