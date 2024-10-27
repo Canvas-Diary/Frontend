@@ -27,6 +27,7 @@ const StyleOptionGrid = ({ selectedStyle, onClickStyle }: StyleOptionGridProps) 
           key={style.id}
           image={style.image}
           text={style.text}
+          index={style.id}
           isSelected={style.text === selectedStyle}
           onClick={() => handleClick(style.text)}
         />
