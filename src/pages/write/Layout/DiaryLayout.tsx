@@ -34,6 +34,8 @@ const DiaryLayout = () => {
     const currentIndex = pageOrder.indexOf(location.pathname);
     if (currentIndex !== -1 && currentIndex < pageOrder.length - 1) {
       navigate(pageOrder[currentIndex + 1]);
+    } else {
+      navigate(`${RoutePaths.diary}/newId`);
     }
   };
 
