@@ -1,4 +1,7 @@
 import Tag from "../../common/Tag";
+import ImageCarousel from "../diary/ImageCarousel";
+import img from "../../../assets/dummy/_Image.png";
+import HeartIcon from "../../../assets/svg/heart.svg?react";
 
 interface ContentProps {
   date: string;
@@ -17,9 +20,9 @@ interface ContentProps {
  * @param content 일기 내용
  * @returns
  */
-const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) => {
+const ReviewContent = ({ date, emotion, likedCount, isLiked, content }: ContentProps) => {
   return (
-    <div className="flex flex-col items-center gap-600 rounded-t-400 bg-white px-800 pb-10 pt-700 font-Binggrae shadow-default">
+    <div className="flex flex-col items-center gap-600 rounded-400 bg-white px-800 pb-10 pt-700 font-Binggrae shadow-default">
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-col gap-300">
           <div className="font-BinggraeBold text-title-2">{date}</div>
@@ -27,12 +30,22 @@ const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) 
             <Tag text={emotion} selected={true}></Tag>
           </div>
         </div>
-        <div>heart{likedCount}</div>
+        <div
+          className={`${isLiked ? "text-primary-normal" : ""} flex flex-col items-center justify-center`}
+        >
+          <HeartIcon />
+          <div className="text-detail-1">{likedCount}</div>
+        </div>
       </div>
-      <hr className="w-full border border-gray-100" />
+      <ImageCarousel
+        images={[
+          { imageId: 1, imageUrl: img },
+          { imageId: 2, imageUrl: img },
+        ]}
+      />
       <div className="text-body-2 font-regular">{content}</div>
     </div>
   );
 };
 
-export default Content;
+export default ReviewContent;

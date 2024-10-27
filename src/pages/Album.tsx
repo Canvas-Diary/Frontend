@@ -145,32 +145,28 @@ const Album = () => {
   }, [location.search]);
 
   return (
-    <div className="flex-grow overflow-scroll" ref={scrollContainerRef}>
-      <div className="flex flex-col">
-        <div
-          className={`flex w-full items-center justify-center bg-transparent px-800 py-300 text-black dark:text-white`}
-        >
-          <span className="font-Binggrae text-body-1 font-regular">앨범</span>
-        </div>
-        <div className="flex flex-col px-700">
-          <div className="sticky top-0 flex flex-col gap-500 bg-white py-400">
-            <SearchBar onEnter={() => {}} />
-            <div
-              className={`absolute flex w-full gap-400 overflow-scroll bg-white py-500 transition-all duration-300 ${isTagsVisible ? "top-14 opacity-100" : "top-10 opacity-0"}`}
-            >
-              {tags.map((tag, index) => (
-                <Tag
-                  key={index}
-                  text={tag}
-                  selected={selectedTag === tag}
-                  onClick={() => handleTagClick(tag)}
-                />
-              ))}
-            </div>
+    <div className="flex flex-grow flex-col overflow-scroll" ref={scrollContainerRef}>
+      <div className="flex w-full items-center justify-center bg-transparent px-800 py-300 text-black">
+        <span className="font-Binggrae text-body-1 font-regular">앨범</span>
+      </div>
+      <div className="flex flex-col px-700">
+        <div className="sticky top-0 flex flex-col gap-500 bg-white py-400">
+          <SearchBar onEnter={() => {}} />
+          <div
+            className={`absolute flex w-full gap-400 overflow-scroll bg-white py-500 transition-all duration-300 ${isTagsVisible ? "top-14 opacity-100" : "top-10 opacity-0"}`}
+          >
+            {tags.map((tag, index) => (
+              <Tag
+                key={index}
+                text={tag}
+                selected={selectedTag === tag}
+                onClick={() => handleTagClick(tag)}
+              />
+            ))}
           </div>
-          <div className="h-4"></div>
-          <ThumbnailGrid diaries={AlbumData.diaries} />
         </div>
+        <div className="h-4"></div>
+        <ThumbnailGrid diaries={AlbumData.diaries} />
       </div>
     </div>
   );

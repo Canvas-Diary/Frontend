@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 import Calendar from "../components/pages/home/Calendar";
+import RoutePaths from "../constants/routePath";
+import { getTodayDate } from "../utils/util";
 
 //임시 더미 데이터
 const CalendarData = {
@@ -95,7 +97,7 @@ const CalendarData = {
 const Home = () => {
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
-    //일기 작성하기
+    navigate(RoutePaths.diaryWrite, { state: { date: getTodayDate() } });
   };
 
   const onClickDate = (id: number) => {
@@ -103,9 +105,9 @@ const Home = () => {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between">
+    <div className="flex h-full flex-grow flex-col justify-between overflow-scroll">
       <Calendar onClickDate={onClickDate} calendarData={CalendarData}></Calendar>
-      <div className="mb-4 flex justify-center">
+      <div className="my-4 flex justify-center">
         <Button
           size="big"
           active={true}

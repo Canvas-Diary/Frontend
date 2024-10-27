@@ -3,7 +3,7 @@
  * @returns
  */
 const Explore = () => {
-  return <div></div>;
+  return <div className="flex flex-grow flex-col overflow-scroll"></div>;
 };
 
 export default Explore;

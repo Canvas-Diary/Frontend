@@ -46,6 +46,7 @@ export default {
       },
       fontFamily: {
         Binggrae: ["Binggrae"],
+        BinggraeBold: ["BinggraeBold"],
         Pretendard: ["Pretendard"],
       },
       fontSize: {
@@ -78,6 +79,24 @@ export default {
         1000: "2rem",
       },
     },
+    keyframes: {
+      fadeInSlideUp: {
+        "0%": { opacity: "0", transform: "translateY(1rem)" },
+        "100%": { opacity: "1", transform: "translateY(0)" },
+      },
+    },
+    animation: {
+      fadeInSlideUp: "fadeInSlideUp 0.5s ease-out forwards",
+    },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const animationDelays = Array.from({ length: 10 }, (_, i) => i + 1).reduce((acc, num) => {
+        acc[`.ani-delay-${num}00`] = { animationDelay: `${num * 100}ms`, opacity: 0 };
+        return acc;
+      }, {});
+
+      addUtilities(animationDelays);
+    },
+  ],
 };
