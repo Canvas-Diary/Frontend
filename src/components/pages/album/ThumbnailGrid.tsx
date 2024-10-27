@@ -14,7 +14,7 @@ interface ThumbnailGridProps {
  */
 const ThumbnailGrid = ({ diaries }: ThumbnailGridProps) => {
   return (
-    <div className="grid grid-cols-3 place-items-center gap-300 overflow-scroll py-800">
+    <div className="grid grid-cols-3 place-items-center gap-300 py-800">
       {diaries.map((diary) => (
         <Thumbnail
           src={diary.mainImgUrl}
