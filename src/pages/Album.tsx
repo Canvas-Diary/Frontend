@@ -4,6 +4,7 @@ import ThumbnailGrid from "../components/pages/album/ThumbnailGrid";
 import Dummy from "../assets/dummy/_Image.png";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Appbar from "../components/common/Appbar";
 
 const AlbumData = {
   diaries: [
@@ -103,25 +104,33 @@ const Album = () => {
   };
 
   useEffect(() => {
-    /**
-     * scrollContainerRef의 스크롤 상태 추적
-     */
+    let ticking = false;
+
     const handleScroll = () => {
-      if (scrollContainerRef.current) {
-        const currentScrollY = scrollContainerRef.current.scrollTop;
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (scrollContainerRef.current) {
+            const currentScrollY = scrollContainerRef.current.scrollTop;
+            console.log("Scroll");
 
-        if (currentScrollY > lastScrollY.current) {
-          setTagsVisible(false); // 아래로 스크롤 시 태그 숨기기
-        } else {
-          setTagsVisible(true); // 위로 스크롤 시 태그 보이기
-        }
+            if (currentScrollY > lastScrollY.current) {
+              setTagsVisible(false);
+            } else {
+              setTagsVisible(true);
+            }
 
-        sessionStorage.setItem("scrollPosition", currentScrollY.toString());
-        lastScrollY.current = currentScrollY; // 이전 스크롤 위치 업데이트
+            sessionStorage.setItem("scrollPosition", currentScrollY.toString());
+            lastScrollY.current = currentScrollY;
+
+            ticking = false;
+          }
+        });
+        ticking = true;
       }
     };
 
     scrollContainerRef.current?.addEventListener("scroll", handleScroll);
+
     return () => {
       scrollContainerRef.current?.removeEventListener("scroll", handleScroll);
     };
@@ -146,9 +155,7 @@ const Album = () => {
 
   return (
     <div className="flex flex-grow flex-col overflow-scroll" ref={scrollContainerRef}>
-      <div className="flex w-full items-center justify-center bg-transparent px-800 py-300 text-black">
-        <span className="font-Binggrae text-body-1 font-regular">앨범</span>
-      </div>
+      <Appbar text="앨범"></Appbar>
       <div className="flex flex-col px-700">
         <div className="sticky top-0 flex flex-col gap-500 bg-white py-400">
           <SearchBar onEnter={() => {}} />
