@@ -3,7 +3,7 @@ import Dummy from "../assets/dummy/_Image.png";
 import Appbar from "../components/common/Appbar";
 import { useState } from "react";
 
-const AlbumData = {
+const LatestData = {
   diaries: [
     {
       diaryId: 1,
@@ -45,6 +45,11 @@ const AlbumData = {
       diaryId: 10,
       mainImgUrl: Dummy,
     },
+  ],
+};
+
+const PopularData = {
+  diaries: [
     {
       diaryId: 11,
       mainImgUrl: Dummy,
@@ -112,7 +117,7 @@ const Explore = () => {
           </div>
           <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100" />
         </div>
-        <ThumbnailGrid diaries={AlbumData.diaries} />
+        <ThumbnailGrid diaries={selected === "latest" ? LatestData.diaries : PopularData.diaries} />
       </div>
     </div>
   );
