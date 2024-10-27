@@ -15,7 +15,10 @@ const diaryData = {
   emotion: "happy",
   likedCount: 5,
   isLiked: true,
-  images: [{ imageId: 1, imageUrl: img }],
+  images: [
+    { imageId: 1, imageUrl: img },
+    { imageId: 2, imageUrl: img },
+  ],
   isPublic: true,
   date: "2024-09-28",
 };
@@ -27,6 +30,7 @@ const diaryData = {
 const Diary = () => {
   const params = useParams();
   const diaryID = params.diaryID;
+  const navigate = useNavigate();
   const [scrollPosition, setScrollPosition] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [carouselHeight, setCarouselHeight] = useState(0);
@@ -45,7 +49,12 @@ const Diary = () => {
 
   return (
     <>
-      <Appbar backHandler={() => {}} menuHandler={() => {}}></Appbar>
+      <Appbar
+        backHandler={() => {
+          navigate(-1);
+        }}
+        menuHandler={() => {}}
+      ></Appbar>
       <div className="relative flex h-full flex-col items-center">
         <div className="fixed top-0 w-full" ref={carouselRef}>
           <ImageCarousel images={diaryData.images} />
