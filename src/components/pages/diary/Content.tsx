@@ -1,4 +1,5 @@
 import Tag from "../../common/Tag";
+import HeartIcon from "../../../assets/svg/heart.svg?react";
 
 interface ContentProps {
   date: string;
@@ -27,7 +28,12 @@ const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) 
             <Tag text={emotion} selected={true}></Tag>
           </div>
         </div>
-        <div>heart{likedCount}</div>
+        <div
+          className={`${isLiked ? "text-primary-normal" : ""} flex flex-col items-center justify-center`}
+        >
+          <HeartIcon />
+          <div className="text-detail-1">{likedCount}</div>
+        </div>
       </div>
       <hr className="w-full border border-gray-100" />
       <div className="text-body-2 font-regular">{content}</div>
