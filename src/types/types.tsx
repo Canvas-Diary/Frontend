@@ -1,5 +1,5 @@
 export type diary = {
-  diaryId: number;
+  diaryId: string;
   date: string;
   emotion: string;
 };
