@@ -4,24 +4,27 @@ import non from "../../assets/icon/non.png";
 import ImageCarousel from "../../components/pages/diary/ImageCarousel";
 import Content from "../../components/pages/diary/Content";
 import { useState, useEffect, useRef } from "react";
-import img from "../../assets/dummy/_Image.png";
 import Appbar from "../../components/common/Appbar";
 import RoutePaths from "../../constants/routePath";
-import { getTodayDate } from "../../utils/util";
+import { formatDateWithWeek, getTodayDate } from "../../utils/util";
+import { getDiaryInfoById } from "../../api/api";
 
-//임시 더미 데이터
-const diaryData = {
-  content: "일기 내용",
-  emotion: "happy",
-  likedCount: 5,
-  isLiked: true,
-  images: [
-    { imageId: 1, imageUrl: img },
-    { imageId: 2, imageUrl: img },
-  ],
-  isPublic: true,
-  date: "2024-09-28",
-};
+interface diaryInfo {
+  diaryId: string;
+  content: string;
+  emotion: string;
+  likedCount: number;
+  isLiked: boolean;
+  images: Image[];
+  isPublic: boolean;
+  date: string;
+}
+
+export interface Image {
+  imageId: string;
+  isMain: boolean;
+  imageUrl: string;
+}
 
 /**
  * 일기 화면
@@ -31,49 +34,66 @@ const Diary = () => {
   const params = useParams();
   const diaryID = params.diaryID;
   const navigate = useNavigate();
+
+  const [diaryInfo, setDiaryInfo] = useState<diaryInfo | null>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [carouselHeight, setCarouselHeight] = useState(0);
-
-  if (diaryID === "0") return <NoDiary />;
 
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     setScrollPosition(event.currentTarget.scrollTop);
   };
 
   useEffect(() => {
-    if (carouselRef.current) {
-      setCarouselHeight(carouselRef.current.clientHeight);
-    }
-  }, [carouselRef]);
+    const diaryInit = async (diaryId: string) => {
+      const diaryInfo = await getDiaryInfoById(diaryId);
+      setDiaryInfo(diaryInfo);
+    };
+
+    diaryInit(diaryID!);
+  }, []);
+
+  useEffect(() => {
+    const width = window.innerWidth;
+    const calculatedHeight = (width * 7) / 4;
+    setCarouselHeight(calculatedHeight);
+  }, []);
 
   return (
     <>
-      <Appbar
-        backHandler={() => {
-          navigate(-1);
-        }}
-        menuHandler={() => {}}
-      ></Appbar>
-      <div className="relative flex h-full flex-col items-center">
-        <div className="fixed top-0 w-full" ref={carouselRef}>
-          <ImageCarousel images={diaryData.images} />
-        </div>
+      {diaryInfo ? (
+        <>
+          <div className="fixed top-0 z-10 w-full">
+            <Appbar
+              backHandler={() => {
+                navigate(-1);
+              }}
+              menuHandler={() => {}}
+            ></Appbar>
+          </div>
+          <div className="relative flex h-full flex-col items-center">
+            <div className="fixed top-0 w-full" ref={carouselRef}>
+              <ImageCarousel images={diaryInfo.images} />
+            </div>
 
-        <div
-          className="absolute z-10 h-fit w-full"
-          onScroll={handleScroll}
-          style={{ top: `calc(${carouselHeight}px - ${scrollPosition}px - 50px)` }}
-        >
-          <Content
-            date={diaryData.date}
-            emotion={diaryData.emotion}
-            likedCount={diaryData.likedCount}
-            isLiked={diaryData.isLiked}
-            content={diaryData.content}
-          />
-        </div>
-      </div>
+            <div
+              className="absolute z-10 h-fit w-full"
+              onScroll={handleScroll}
+              style={{ top: `calc(${carouselHeight}px - ${scrollPosition}px - 50px)` }}
+            >
+              <Content
+                date={formatDateWithWeek(diaryInfo.date)}
+                emotion={diaryInfo.emotion}
+                likedCount={diaryInfo.likedCount}
+                isLiked={diaryInfo.isLiked}
+                content={diaryInfo.content}
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        <NoDiary />
+      )}
     </>
   );
 };
