@@ -7,14 +7,22 @@ export const getTodayDate = () => {
   return `${year}-${month}-${day}`;
 };
 
-export const formatDate = (date: string) => {
-  const dateObj = new Date(date);
-  const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
+export const formatDateWithWeek = (dateString: string) => {
+  const date = new Date(dateString);
 
-  const year = dateObj.getFullYear();
-  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-  const day = String(dateObj.getDate()).padStart(2, "0");
-  const dayName = dayNames[dateObj.getDay()];
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  const dayName = date.toLocaleDateString("ko-KR", { weekday: "short" }); // 요일 이름 (ex. Fri)
 
   return `${year}. ${month}. ${day} (${dayName})`;
+};
+
+export const formatDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 };
