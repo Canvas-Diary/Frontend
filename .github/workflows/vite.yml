@@ -15,15 +15,15 @@ jobs:
         with:
           node-version: 20.10.0
           cache: yarn
-      - run: npm ci
-      
+      - run: yarn install
+
       - name: Set Environment Variables
         run: |
           echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}"
           echo "KAKAO_REDIRECT_URL=${{secrets.KAKAO_REDIRECT_URL}}"
           echo "KAKAO_RESPONSE_TYPE=${{secrets.KAKAO_RESPONSE_TYPE}}"
           echo "KAKAO_CLIENT_SECRET=${{secrets.KAKAO_CLIENT_SECRET}}"
-          
+
       - run: npm run build
 
       - name: deploy to s3
