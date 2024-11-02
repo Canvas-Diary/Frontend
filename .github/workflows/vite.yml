@@ -24,7 +24,7 @@ jobs:
           echo "KAKAO_RESPONSE_TYPE=${{secrets.KAKAO_RESPONSE_TYPE}}"
           echo "KAKAO_CLIENT_SECRET=${{secrets.KAKAO_CLIENT_SECRET}}"
 
-      - run: npm run build
+      - run: yarn build
 
       - name: deploy to s3
         uses: jakejarvis/s3-sync-action@master
