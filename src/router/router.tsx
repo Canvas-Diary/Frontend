@@ -6,6 +6,7 @@ import Layout from "../pages/Layout/Layout";
 import PageFallback from "../pages/fallback/PageFallback";
 import DiaryLayout from "../pages/write/Layout/DiaryLayout";
 import { ErrorBoundary } from "react-error-boundary";
+import AlbumFallback from "../components/pages/album/fallback/AlbumFallback";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
@@ -53,7 +54,7 @@ const routes: RouteObject[] = [
       {
         path: RoutePaths.album,
         element: (
-          <Suspense fallback={<PageFallback />}>
+          <Suspense fallback={<AlbumFallback />}>
             <AlbumPage />
           </Suspense>
         ),
