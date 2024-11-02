@@ -1,9 +1,34 @@
 import axios from "axios";
 
+const BASE_URL = "http://api.canvas-diary.kro.kr";
+
+const getToken = () => {
+  return localStorage.getItem("access_token");
+};
+
+/**
+ * api 기본 설정
+ */
 const axiosInstance = axios.create({
   withCredentials: true,
-  baseURL: "http://api.canvas-diary.kro.kr",
+  baseURL: BASE_URL,
 });
+
+/**
+ * api interceptor
+ */
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export const createDiaryAndGetId = async (newDiaryInfo: NewDiaryInfo) => {
   try {
