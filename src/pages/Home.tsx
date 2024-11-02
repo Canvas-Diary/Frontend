@@ -53,16 +53,6 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate(RoutePaths.login);
-      return;
-    }
-
-    calendarInit(new Date());
-  }, [navigate]);
-
-  useEffect(() => {
     // URL의 쿼리 문자열에서 access_token과 refresh_token을 획득
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
@@ -70,16 +60,18 @@ const Home = () => {
     const accessToken = params.get("access");
     const refreshToken = params.get("refresh");
 
-    if (accessToken) {
+    if (accessToken && refreshToken) {
       localStorage.setItem("access_token", accessToken);
-    }
-    if (refreshToken) {
       localStorage.setItem("refresh_token", refreshToken);
+    } else {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate(RoutePaths.login);
+        return;
+      }
     }
 
-    if (!accessToken || !refreshToken) {
-      navigate("/login");
-    }
+    calendarInit(new Date());
   }, [navigate]);
 
   return (
