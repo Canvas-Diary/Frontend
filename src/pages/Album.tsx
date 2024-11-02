@@ -88,18 +88,43 @@ const Album = () => {
   const lastScrollY = useRef(0);
   const [isTagsVisible, setTagsVisible] = useState(true);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [searchContent, setSearchContent] = useState<string>("");
 
   /**
    * 선택된 태그를 파라미터로 검색, 이미 선택된 태그이면 파라미터 삭제
    * @param tag 선택된 태그
    */
   const handleTagClick = (tag: string) => {
+    // 태그가 선택된 상태에서 클릭하면 태그를 초기화
     if (selectedTag === tag) {
       setSelectedTag(null);
-      navigate("");
+      if (!searchContent) {
+        navigate(""); // 검색어와 태그가 모두 없으면 쿼리 파라미터를 없애고 기본 URL로 이동
+      } else {
+        navigate(`?search=${searchContent}`); // 검색어가 있으면 그에 맞춰 쿼리 업데이트
+      }
     } else {
+      // 새로운 태그를 선택한 경우
       setSelectedTag(tag);
-      navigate(`?tag=${tag}`);
+      // 태그와 검색어가 모두 있을 경우, 둘 다 쿼리 파라미터에 포함
+      if (searchContent) {
+        navigate(`?tag=${tag}&search=${searchContent}`);
+      } else {
+        navigate(`?tag=${tag}`); // 검색어가 없으면 태그만 쿼리 파라미터에 포함
+      }
+    }
+  };
+
+  const handleSearch = (content: string) => {
+    setSearchContent(content);
+    if (content && selectedTag) {
+      navigate(`?search=${content}&tag=${selectedTag}`);
+    } else if (content) {
+      navigate(`?search=${content}`);
+    } else if (selectedTag) {
+      navigate(`?tag=${selectedTag}`);
+    } else {
+      navigate("");
     }
   };
 
@@ -146,19 +171,23 @@ const Album = () => {
   }, []);
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search); // 쿼리 파라미터를 가져옴
+    const params = new URLSearchParams(location.search);
     const tagFromUrl = params.get("tag");
     if (tagFromUrl && tags.includes(tagFromUrl)) {
       setSelectedTag(tagFromUrl);
     }
   }, [location.search]);
 
+  useEffect(() => {
+    console.log(selectedTag, searchContent);
+  }, [selectedTag, searchContent]);
+
   return (
     <div className="flex flex-grow flex-col overflow-scroll" ref={scrollContainerRef}>
       <Appbar text="앨범"></Appbar>
       <div className="flex flex-col px-700">
-        <div className="sticky top-0 flex flex-col gap-500 bg-white py-400">
-          <SearchBar onEnter={() => {}} />
+        <div className="sticky top-0 z-10 flex flex-col gap-500 bg-white py-400">
+          <SearchBar onEnter={handleSearch} />
           <div
             className={`absolute flex w-full gap-400 overflow-scroll bg-white py-500 transition-all duration-300 ${isTagsVisible ? "top-14 opacity-100" : "top-10 opacity-0"}`}
           >
