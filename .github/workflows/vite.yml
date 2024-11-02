@@ -17,14 +17,12 @@ jobs:
           cache: yarn
       - run: yarn install
 
-      - name: Set Environment Variables
-        run: |
-          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}"
-          echo "KAKAO_REDIRECT_URL=${{secrets.KAKAO_REDIRECT_URL}}"
-          echo "KAKAO_RESPONSE_TYPE=${{secrets.KAKAO_RESPONSE_TYPE}}"
-          echo "KAKAO_CLIENT_SECRET=${{secrets.KAKAO_CLIENT_SECRET}}"
-
       - run: yarn build
+        env:
+          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+          KAKAO_REDIRECT_URL: ${{ secrets.KAKAO_REDIRECT_URL }}
+          KAKAO_RESPONSE_TYPE: ${{ secrets.KAKAO_RESPONSE_TYPE }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
 
       - name: deploy to s3
         uses: jakejarvis/s3-sync-action@master
