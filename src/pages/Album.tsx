@@ -1,81 +1,22 @@
 import Tag from "../components/common/Tag";
 import SearchBar from "../components/pages/album/SearchBar";
-import ThumbnailGrid from "../components/pages/album/ThumbnailGrid";
-import Dummy from "../assets/dummy/_Image.png";
+import ThumbnailGrid, {
+  ThumbnailGridProps,
+  ThumbnailProps,
+} from "../components/pages/album/ThumbnailGrid";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Appbar from "../components/common/Appbar";
-
-const AlbumData = {
-  diaries: [
-    {
-      diaryId: 1,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 2,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 3,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 4,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 5,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 6,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 7,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 8,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 9,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 10,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 11,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 21,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 12,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 23,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 14,
-      mainImgUrl: Dummy,
-    },
-    {
-      diaryId: 25,
-      mainImgUrl: Dummy,
-    },
-  ],
-};
+import { getSearchedDiaries } from "../api/api";
 
 const tags = ["기쁨", "슬픔", "분노", "공포", "혐오", "수치", "놀람", "궁금", "무난"];
+
+interface AlbumData {
+  content: ThumbnailProps[];
+  size: number;
+  number: number;
+  hasNext: boolean;
+}
 
 /**
  * 앨범 화면
@@ -89,32 +30,36 @@ const Album = () => {
   const [isTagsVisible, setTagsVisible] = useState(true);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [searchContent, setSearchContent] = useState<string>("");
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [albumData, setAlbumData] = useState<AlbumData | null>();
 
   /**
    * 선택된 태그를 파라미터로 검색, 이미 선택된 태그이면 파라미터 삭제
    * @param tag 선택된 태그
    */
   const handleTagClick = (tag: string) => {
-    // 태그가 선택된 상태에서 클릭하면 태그를 초기화
     if (selectedTag === tag) {
       setSelectedTag(null);
       if (!searchContent) {
-        navigate(""); // 검색어와 태그가 모두 없으면 쿼리 파라미터를 없애고 기본 URL로 이동
+        navigate("");
       } else {
-        navigate(`?search=${searchContent}`); // 검색어가 있으면 그에 맞춰 쿼리 업데이트
+        navigate(`?search=${searchContent}`);
       }
     } else {
-      // 새로운 태그를 선택한 경우
       setSelectedTag(tag);
-      // 태그와 검색어가 모두 있을 경우, 둘 다 쿼리 파라미터에 포함
       if (searchContent) {
         navigate(`?tag=${tag}&search=${searchContent}`);
       } else {
-        navigate(`?tag=${tag}`); // 검색어가 없으면 태그만 쿼리 파라미터에 포함
+        navigate(`?tag=${tag}`);
       }
     }
   };
 
+  /**
+   * 검색어에 따라 파라미터 설정
+   * @param content 검색어
+   */
   const handleSearch = (content: string) => {
     setSearchContent(content);
     if (content && selectedTag) {
@@ -128,6 +73,30 @@ const Album = () => {
     }
   };
 
+  // Intersection Observer 설정
+  const observer = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    observer.current = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (entry.isIntersecting && !loading) {
+        setLoading(true);
+        setPage((prevPage) => prevPage + 1);
+      }
+    });
+
+    if (loadMoreRef.current) {
+      observer.current.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      if (loadMoreRef.current) {
+        observer.current!.unobserve(loadMoreRef.current);
+      }
+    };
+  }, [loadMoreRef, loading]);
+
   useEffect(() => {
     let ticking = false;
 
@@ -136,8 +105,10 @@ const Album = () => {
         requestAnimationFrame(() => {
           if (scrollContainerRef.current) {
             const currentScrollY = scrollContainerRef.current.scrollTop;
-            console.log("Scroll");
+            const currentScrollBottom = currentScrollY + scrollContainerRef.current.clientHeight;
+            const scrollHeight = scrollContainerRef.current.scrollHeight;
 
+            // 태그 가시성 제어
             if (currentScrollY > lastScrollY.current) {
               setTagsVisible(false);
             } else {
@@ -145,7 +116,14 @@ const Album = () => {
             }
 
             sessionStorage.setItem("scrollPosition", currentScrollY.toString());
+            sessionStorage.setItem("currentPage", (page + 1).toString());
+
             lastScrollY.current = currentScrollY;
+
+            if (currentScrollBottom >= scrollHeight - 10 && !loading) {
+              setLoading(true);
+              setPage((prevPage) => prevPage + 1);
+            }
 
             ticking = false;
           }
@@ -159,28 +137,44 @@ const Album = () => {
     return () => {
       scrollContainerRef.current?.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [loading]);
 
-  useEffect(() => {
+  /**
+   * 페이지 진입 시 스크롤 위치 가져오는 함수 + 페이지도 가져와야 할듯
+   */
+  const getScrollPosition = () => {
     const savedScrollPosition = sessionStorage.getItem("scrollPosition");
 
     if (savedScrollPosition && scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = parseInt(savedScrollPosition, 10);
       lastScrollY.current = parseInt(savedScrollPosition, 10);
     }
-  }, []);
+  };
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const tagFromUrl = params.get("tag");
-    if (tagFromUrl && tags.includes(tagFromUrl)) {
-      setSelectedTag(tagFromUrl);
-    }
-  }, [location.search]);
+  /**
+   * 무한 스크롤 구현할 예정
+   */
+  useEffect(() => {}, [page]);
 
+  /**
+   * 태그와 검색어로 필터링해서 검색 결과 가져오기
+   */
   useEffect(() => {
     console.log(selectedTag, searchContent);
   }, [selectedTag, searchContent]);
+
+  /**
+   * 앨범 화면 최초 진입 시 데이터 가져오는 함수(임시)
+   */
+  const albumInit = async () => {
+    const response = await getSearchedDiaries({ page: 0, size: 18 });
+    setAlbumData(response);
+  };
+
+  useEffect(() => {
+    albumInit();
+    getScrollPosition();
+  }, []);
 
   return (
     <div className="flex flex-grow flex-col overflow-scroll" ref={scrollContainerRef}>
@@ -202,7 +196,8 @@ const Album = () => {
           </div>
         </div>
         <div className="h-4"></div>
-        <ThumbnailGrid diaries={AlbumData.diaries} />
+        {albumData && <ThumbnailGrid diaries={albumData.content} />}
+        <div ref={loadMoreRef} style={{ height: "20px", background: "transparent" }} />
       </div>
     </div>
   );

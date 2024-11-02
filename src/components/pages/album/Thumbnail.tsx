@@ -5,7 +5,7 @@ import RoutePaths from "../../../constants/routePath";
 interface ThumbnailProps {
   src: string;
   alt: string;
-  diaryId: number;
+  diaryId: string;
 }
 
 /**
