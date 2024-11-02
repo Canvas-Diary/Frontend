@@ -2,99 +2,22 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 import Calendar from "../components/pages/home/Calendar";
 import RoutePaths from "../constants/routePath";
-import { getTodayDate } from "../utils/util";
+import { formatDate, getTodayDate } from "../utils/util";
+import { useEffect, useState } from "react";
+import { getMonthlyDiariesByDate } from "../api/api";
+import { diary } from "../types/types";
 
-//임시 더미 데이터
-const CalendarData = {
-  diaries: [
-    {
-      diaryId: 1,
-      date: "2024-09-10",
-      emotion: "angry",
-    },
-    {
-      diaryId: 2,
-      date: "2024-09-11",
-      emotion: "afraid",
-    },
-    {
-      diaryId: 3,
-      date: "2024-09-12",
-      emotion: "dislike",
-    },
-    {
-      diaryId: 4,
-      date: "2024-09-13",
-      emotion: "happy",
-    },
-    {
-      diaryId: 5,
-      date: "2024-09-14",
-      emotion: "non",
-    },
-    {
-      diaryId: 6,
-      date: "2024-09-15",
-      emotion: "sad",
-    },
-    {
-      diaryId: 7,
-      date: "2024-09-16",
-      emotion: "shy",
-    },
-    {
-      diaryId: 8,
-      date: "2024-09-17",
-      emotion: "surprised",
-    },
-    {
-      diaryId: 9,
-      date: "2024-09-18",
-      emotion: "wonder",
-    },
-    {
-      diaryId: 10,
-      date: "2024-09-19",
-      emotion: "angry",
-    },
-    {
-      diaryId: 11,
-      date: "2024-09-20",
-      emotion: "afraid",
-    },
-    {
-      diaryId: 12,
-      date: "2024-09-21",
-      emotion: "dislike",
-    },
-    {
-      diaryId: 13,
-      date: "2024-09-22",
-      emotion: "happy",
-    },
-    {
-      diaryId: 14,
-      date: "2024-09-23",
-      emotion: "non",
-    },
-    {
-      diaryId: 15,
-      date: "2024-09-24",
-      emotion: "sad",
-    },
-    {
-      diaryId: 16,
-      date: "2024-09-25",
-      emotion: "shy",
-    },
-  ],
-};
+interface CalendarData {
+  diaries: diary[];
+}
 
 /**
  * 메인 화면
  * @returns
  */
 const Home = () => {
+  const [calendarData, setCalendarData] = useState<CalendarData>({ diaries: [] });
+  const [currentDate, setCurrentDate] = useState(new Date());
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
     navigate(RoutePaths.diaryWrite, { state: { date: getTodayDate() } });
@@ -104,9 +27,40 @@ const Home = () => {
     navigate(`diary/${id}`);
   };
 
+  const handlePrevMonth = () => {
+    setCurrentDate((prev) => {
+      const prevMonth = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
+      calendarInit(prevMonth);
+      return prevMonth;
+    });
+  };
+
+  const handleNextMonth = () => {
+    setCurrentDate((prev) => {
+      const nextMonth = new Date(prev.getFullYear(), prev.getMonth() + 1, 1);
+      calendarInit(nextMonth);
+      return nextMonth;
+    });
+  };
+
+  const calendarInit = async (currentDate: Date) => {
+    const diaries = await getMonthlyDiariesByDate(formatDate(currentDate));
+    setCalendarData(diaries);
+  };
+
+  useEffect(() => {
+    calendarInit(new Date());
+  }, []);
+
   return (
     <div className="flex h-full flex-grow flex-col justify-between overflow-scroll">
-      <Calendar onClickDate={onClickDate} calendarData={CalendarData}></Calendar>
+      <Calendar
+        onClickDate={onClickDate}
+        calendarData={calendarData}
+        currentDate={currentDate}
+        handlePrevMonth={handlePrevMonth}
+        handleNextMonth={handleNextMonth}
+      ></Calendar>
       <div className="my-4 flex justify-center">
         <Button
           size="big"

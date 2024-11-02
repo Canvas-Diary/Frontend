@@ -3,7 +3,7 @@ import dummy from "../../../assets/dummy/_Image.png";
 import { useState } from "react";
 
 const styles = [
-  { id: 1, image: dummy, text: "수채화1" },
+  { id: 1, image: dummy, text: "PHOTOREALISTIC" },
   { id: 2, image: dummy, text: "수채화2" },
   { id: 3, image: dummy, text: "수채화3" },
   { id: 4, image: dummy, text: "수채화4" },

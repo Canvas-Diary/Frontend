@@ -14,7 +14,7 @@ import surprised from "../../../assets/icon/surprised.png";
 import wonder from "../../../assets/icon/wonder.png";
 
 const emotionImages: { [key: string]: string } = {
-  happy: happy,
+  JOY: happy,
   sad: sad,
   angry: angry,
   afraid: afraid,
@@ -34,6 +34,9 @@ interface CalendarProps {
     diaries: diary[];
   };
   onClickDate: (id: number) => void;
+  currentDate: Date;
+  handlePrevMonth: () => void;
+  handleNextMonth: () => void;
 }
 
 /**
@@ -42,24 +45,29 @@ interface CalendarProps {
  * @param onClickDate 날짜를 눌렀을 때 실행할 콜백 함수
  * @returns
  */
-const Calendar = ({ onClickDate, calendarData }: CalendarProps) => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+const Calendar = ({
+  onClickDate,
+  calendarData,
+  currentDate,
+  handlePrevMonth,
+  handleNextMonth,
+}: CalendarProps) => {
   const [calendarDays, setCalendarDays] = useState<ReactNode[]>([]);
 
-  const diaryMap = calendarData.diaries.reduce(
-    (acc, diary) => {
-      const day = new Date(diary.date).getDate();
-      acc[day] = { id: diary.diaryId, emotion: diary.emotion };
-      return acc;
-    },
-    {} as { [day: number]: { id: number; emotion: string } }
-  );
-
   useEffect(() => {
-    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
-  }, [currentDate]);
+    const temp = calendarData.diaries.reduce(
+      (acc, diary) => {
+        const day = new Date(diary.date).getDate();
+        acc[day] = { id: diary.diaryId, emotion: diary.emotion };
+        return acc;
+      },
+      {} as { [day: number]: { id: string; emotion: string } }
+    );
 
-  const generateCalendar = (year: number, month: number) => {
+    generateCalendar(currentDate.getFullYear(), currentDate.getMonth(), temp);
+  }, [calendarData]);
+
+  const generateCalendar = (year: number, month: number, temp: any) => {
     const firstDayOfMonth = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstDayOfWeek = firstDayOfMonth.getDay();
@@ -77,9 +85,9 @@ const Calendar = ({ onClickDate, calendarData }: CalendarProps) => {
         month === new Date().getMonth() &&
         day === new Date().getDate();
 
-      const diary = diaryMap[day];
+      const diary = temp[day];
       const emotionImage = diary ? emotionImages[diary.emotion] : emotionImages.default;
-      const id = diary ? diary.id : 0;
+      const id = diary ? diary.id : "0";
 
       days.push(
         <div
@@ -91,7 +99,7 @@ const Calendar = ({ onClickDate, calendarData }: CalendarProps) => {
             <img src={emotionImage} alt={diary ? diary.emotion : "null"} />
           </div>
           <div
-            className={`text-center text-detail-1 font-regular ${isToday && "font-BinggraeBold w-10 rounded-300 bg-primary-normal text-white"}`}
+            className={`text-center text-detail-1 font-regular ${isToday && "w-10 rounded-300 bg-primary-normal font-BinggraeBold text-white"}`}
           >
             {day}
           </div>
@@ -104,20 +112,6 @@ const Calendar = ({ onClickDate, calendarData }: CalendarProps) => {
 
   const handleDayClick = (id: number) => {
     onClickDate(id);
-  };
-
-  const handlePrevMonth = () => {
-    setCurrentDate((prev) => {
-      const prevMonth = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
-      return prevMonth;
-    });
-  };
-
-  const handleNextMonth = () => {
-    setCurrentDate((prev) => {
-      const nextMonth = new Date(prev.getFullYear(), prev.getMonth() + 1, 1);
-      return nextMonth;
-    });
   };
 
   return (

@@ -5,6 +5,7 @@ import GlobalFallback from "../pages/fallback/GlobalFallback";
 import Layout from "../pages/Layout/Layout";
 import PageFallback from "../pages/fallback/PageFallback";
 import DiaryLayout from "../pages/write/Layout/DiaryLayout";
+import { ErrorBoundary } from "react-error-boundary";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
@@ -25,14 +26,11 @@ const routes: RouteObject[] = [
   {
     path: RoutePaths.home,
     element: (
-      <Suspense fallback={<GlobalFallback />}>
-        <Layout />
-      </Suspense>
-    ),
-    errorElement: (
-      <Suspense fallback={<GlobalFallback />}>
-        <ErrorPage />
-      </Suspense>
+      <ErrorBoundary FallbackComponent={ErrorPage}>
+        <Suspense fallback={<GlobalFallback />}>
+          <Layout />
+        </Suspense>
+      </ErrorBoundary>
     ),
     children: [
       {
@@ -80,14 +78,11 @@ const routes: RouteObject[] = [
   {
     path: RoutePaths.home,
     element: (
-      <Suspense fallback={<GlobalFallback />}>
-        <DiaryLayout />
-      </Suspense>
-    ),
-    errorElement: (
-      <Suspense fallback={<GlobalFallback />}>
-        <ErrorPage />
-      </Suspense>
+      <ErrorBoundary FallbackComponent={ErrorPage}>
+        <Suspense fallback={<GlobalFallback />}>
+          <DiaryLayout />
+        </Suspense>
+      </ErrorBoundary>
     ),
     children: [
       {
