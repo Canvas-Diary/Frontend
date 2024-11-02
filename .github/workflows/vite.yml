@@ -19,7 +19,7 @@ jobs:
 
       - run: yarn build
         env:
-          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
           KAKAO_REDIRECT_URL: ${{ secrets.KAKAO_REDIRECT_URL }}
           KAKAO_RESPONSE_TYPE: ${{ secrets.KAKAO_RESPONSE_TYPE }}
           KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
