@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   withCredentials: true,
-  baseURL: "/api",
+  baseURL: "http://api.canvas-diary.kro.kr",
 });
 
 export const createDiaryAndGetId = async (newDiaryInfo: NewDiaryInfo) => {
