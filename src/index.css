@@ -7,11 +7,13 @@
 }
 
 @font-face {
-  font-family: Binggrae;
-  src: url("./assets/fonts/Binggrae.otf");
+  font-family: "Binggrae";
+  src: url("./assets/fonts/Binggrae.otf") format("opentype");
+  font-display: swap;
 }
 
 @font-face {
-  font-family: BinggraeBold;
-  src: url("./assets/fonts/Binggrae-Bold.otf");
+  font-family: "BinggraeBold";
+  src: url("./assets/fonts/Binggrae-Bold.otf") format("opentype");
+  font-display: swap;
 }

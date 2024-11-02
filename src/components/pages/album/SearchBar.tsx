@@ -2,12 +2,12 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 import SearchIcon from "../../../assets/svg/search.svg?react";
 
 const SearchConst = {
-  minSearchLength: 2,
+  minSearchLength: 0,
   placeHolderText: "찾고 싶은 내용을 검색해주세요.",
 };
 
 interface SearchBarProps {
-  onEnter: () => void;
+  onEnter: (input: string) => void;
 }
 
 /**
@@ -22,9 +22,13 @@ const SearchBar = ({ onEnter }: SearchBarProps) => {
     setInputValue(event.target.value);
   };
 
+  /**
+   * Enter 눌렀을 경우 실행할 함수
+   * @param event
+   */
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && inputValue.length > SearchConst.minSearchLength) {
-      onEnter();
+    if (event.key === "Enter" && inputValue.length >= SearchConst.minSearchLength) {
+      onEnter(inputValue);
     }
   };
 

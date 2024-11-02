@@ -1,10 +1,12 @@
 import Thumbnail from "./Thumbnail";
 
-interface ThumbnailGridProps {
-  diaries: {
-    diaryId: number;
-    mainImgUrl: string;
-  }[];
+export interface ThumbnailGridProps {
+  diaries: ThumbnailProps[];
+}
+
+export interface ThumbnailProps {
+  diaryId: string;
+  mainImageUrl: string;
 }
 
 /**
@@ -17,8 +19,8 @@ const ThumbnailGrid = ({ diaries }: ThumbnailGridProps) => {
     <div className="grid grid-cols-3 place-items-center gap-300 py-800">
       {diaries.map((diary) => (
         <Thumbnail
-          src={diary.mainImgUrl}
-          alt={diary.mainImgUrl}
+          src={diary.mainImageUrl}
+          alt={diary.mainImageUrl}
           diaryId={diary.diaryId}
           key={diary.diaryId}
         />

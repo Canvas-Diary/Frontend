@@ -58,8 +58,37 @@ export const getMonthlyDiariesByDate = async (date: string) => {
   }
 };
 
+export interface DiarySearchParams {
+  page: number;
+  size: number;
+  tag?: string;
+  content?: string;
+}
+
+export const getSearchedDiaries = async ({ page, size, tag, content }: DiarySearchParams) => {
+  try {
+    const params: DiarySearchParams = { page, size };
+
+    if (tag) {
+      params.tag = tag;
+    }
+
+    if (content) {
+      params.content = content;
+    }
+
+    const response = await axiosInstance.get("/api/v1/diaries/search", {
+      params,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export interface NewDiaryInfo {
-  date: Date;
+  date: string;
   content: string;
   style: string;
   isPublic: boolean;
