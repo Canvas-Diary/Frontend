@@ -4,10 +4,10 @@ import kakao from "../assets/images/kakaoSymbol.png";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const clientId = import.meta.env.KAKAO_REST_API_KEY;
-const redirectUrl = import.meta.env.KAKAO_REDIRECT_URL;
-const responseType = import.meta.env.KAKAO_RESPONSE_TYPE;
-const clientSecret = import.meta.env.KAKAO_CLIENT_SECRET;
+const clientId = import.meta.env.VITE_KAKAO_REST_API_KEY;
+const redirectUrl = import.meta.env.VITE_KAKAO_REDIRECT_URL;
+const responseType = import.meta.env.VITE_KAKAO_RESPONSE_TYPE;
+const clientSecret = import.meta.env.VITE_KAKAO_CLIENT_SECRET;
 
 const Login = () => {
   const navigate = useNavigate();
