@@ -8,6 +8,7 @@ const RoutePaths = {
   diaryStyle: "/diary/style",
   diaryReview: "/diary/review",
   diaryDraw: "/diary/draw",
+  login: "/login",
 };
 
 export default RoutePaths;
