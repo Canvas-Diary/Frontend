@@ -1,0 +1,38 @@
+name: CI/CD
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  cicd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20.10.0
+          cache: yarn
+      - run: npm ci
+      
+      - name: Set Environment Variables
+        run: |
+          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}"
+          echo "KAKAO_REDIRECT_URL=${{secrets.KAKAO_REDIRECT_URL}}"
+          echo "KAKAO_RESPONSE_TYPE=${{secrets.KAKAO_RESPONSE_TYPE}}"
+          echo "KAKAO_CLIENT_SECRET=${{secrets.KAKAO_CLIENT_SECRET}}"
+          
+      - run: npm run build
+
+      - name: deploy to s3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: ${{ secrets.SOURCE_DIR }}
