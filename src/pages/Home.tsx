@@ -63,8 +63,9 @@ const Home = () => {
     if (accessToken && refreshToken) {
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
+      window.location.href = "/";
     } else {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("access_token");
       if (!token) {
         navigate(RoutePaths.login);
         return;
