@@ -26,10 +26,11 @@ jobs:
           KAKAO_RESPONSE_TYPE: ${{ secrets.KAKAO_RESPONSE_TYPE }}
           KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
         run: |
-          echo "KAKAO_REST_API_KEY=${KAKAO_REST_API_KEY}" >> .env
-          echo "KAKAO_REDIRECT_URL=${KAKAO_REDIRECT_URL}" >> .env
-          echo "KAKAO_RESPONSE_TYPE=${KAKAO_RESPONSE_TYPE}" >> .env
-          echo "KAKAO_CLIENT_SECRET=${KAKAO_CLIENT_SECRET}" >> .env
+          touch dist/.env
+          echo "KAKAO_REST_API_KEY=${KAKAO_REST_API_KEY}" >> dist/.env
+          echo "KAKAO_REDIRECT_URL=${KAKAO_REDIRECT_URL}" >> dist/.env
+          echo "KAKAO_RESPONSE_TYPE=${KAKAO_RESPONSE_TYPE}" >> dist/.env
+          echo "KAKAO_CLIENT_SECRET=${KAKAO_CLIENT_SECRET}" >> dist/.env
 
       - name: deploy to s3
         uses: jakejarvis/s3-sync-action@master
