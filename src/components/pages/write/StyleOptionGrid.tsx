@@ -1,6 +1,5 @@
 import StyleOption from "./StyleOption";
 import dummy from "../../../assets/dummy/_Image.png";
-import { useState } from "react";
 
 const styles = [
   { id: 1, image: dummy, text: "PHOTOREALISTIC" },

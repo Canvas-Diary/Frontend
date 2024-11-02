@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Home from "../../assets/svg/home.svg?react";
 import Sns from "../../assets/svg/sns.svg?react";
 import Album from "../../assets/svg/album.svg?react";

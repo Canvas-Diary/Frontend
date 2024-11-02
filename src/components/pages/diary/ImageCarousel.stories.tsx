@@ -13,6 +13,6 @@ type Story = StoryObj<typeof ImageCarousel>;
 
 export const Primary: Story = {
   args: {
-    images: [{ imageId: 1, imageUrl: img }],
+    images: [{ imageId: "1", isMain: true, imageUrl: img }],
   },
 };

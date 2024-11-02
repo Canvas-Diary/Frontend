@@ -39,8 +39,8 @@ const ReviewContent = ({ date, emotion, likedCount, isLiked, content }: ContentP
       </div>
       <ImageCarousel
         images={[
-          { imageId: 1, imageUrl: img },
-          { imageId: 2, imageUrl: img },
+          { imageId: "1", isMain: true, imageUrl: img },
+          { imageId: "2", isMain: false, imageUrl: img },
         ]}
       />
       <div className="text-body-2 font-regular">{content}</div>
