@@ -5,6 +5,9 @@ import svgr from "vite-plugin-svgr";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [svgr(), react()],
+  define: {
+    "process.env": {}, // 빈 객체로 정의
+  },
   // server: {
   //   proxy: {
   //     "/api": {
