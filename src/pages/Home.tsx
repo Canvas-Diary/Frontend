@@ -52,6 +52,16 @@ const Home = () => {
     calendarInit(new Date());
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate(RoutePaths.login);
+      return;
+    }
+
+    calendarInit(new Date());
+  }, [navigate]);
+
   return (
     <div className="flex h-full flex-grow flex-col justify-between overflow-scroll">
       <Calendar

@@ -11,6 +11,7 @@ const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
 const AlbumPage = lazy(() => import("../pages/Album"));
 const Mypage = lazy(() => import("../pages/Mypage"));
+const Login = lazy(() => import("../pages/Login"));
 
 const DiaryPage = lazy(() => import("../pages/diary/Diary"));
 
@@ -118,6 +119,14 @@ const routes: RouteObject[] = [
         ),
       },
     ],
+  },
+  {
+    path: RoutePaths.login,
+    element: (
+      <Suspense fallback={<PageFallback />}>
+        <Login />
+      </Suspense>
+    ),
   },
 
   {

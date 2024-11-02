@@ -5,6 +5,7 @@ import RoutePaths from "../../../constants/routePath";
 import { useState } from "react";
 import { createDiaryAndGetId, NewDiaryInfo } from "../../../api/api";
 import { useErrorBoundary } from "react-error-boundary";
+import MobileLayout from "../../Layout/MobileLayout";
 
 const pageOrder = [
   RoutePaths.diaryWrite,
@@ -76,7 +77,7 @@ const DiaryLayout = () => {
   };
 
   return (
-    <div className="flex h-screen w-screen flex-col">
+    <MobileLayout>
       <Appbar
         text="일기 작성"
         backHandler={() => {
@@ -95,7 +96,7 @@ const DiaryLayout = () => {
           bgColor="dark"
         />
       </div>
-    </div>
+    </MobileLayout>
   );
 };
 
