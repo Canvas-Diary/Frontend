@@ -1,8 +1,6 @@
 import MobileLayout from "./Layout/MobileLayout";
 import bgImg from "../assets/images/loginBackground.png";
 import kakao from "../assets/images/kakaoSymbol.png";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const clientId = import.meta.env.VITE_KAKAO_REST_API_KEY;
 const redirectUrl = import.meta.env.VITE_KAKAO_REDIRECT_URL;
@@ -10,28 +8,7 @@ const responseType = import.meta.env.VITE_KAKAO_RESPONSE_TYPE;
 const clientSecret = import.meta.env.VITE_KAKAO_CLIENT_SECRET;
 
 const Login = () => {
-  const navigate = useNavigate();
   const url = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=${responseType}&client_secret=${clientSecret}`;
-
-  useEffect(() => {
-    // URL의 쿼리 문자열에서 access_token과 refresh_token을 획득
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
-
-    const accessToken = params.get("access");
-    const refreshToken = params.get("refresh");
-
-    if (accessToken) {
-      localStorage.setItem("access_token", accessToken);
-    }
-    if (refreshToken) {
-      localStorage.setItem("refresh_token", refreshToken);
-    }
-
-    if (accessToken || refreshToken) {
-      navigate("/");
-    }
-  }, [navigate]);
 
   return (
     <MobileLayout>

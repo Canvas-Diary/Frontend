@@ -62,6 +62,26 @@ const Home = () => {
     calendarInit(new Date());
   }, [navigate]);
 
+  useEffect(() => {
+    // URL의 쿼리 문자열에서 access_token과 refresh_token을 획득
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+
+    const accessToken = params.get("access");
+    const refreshToken = params.get("refresh");
+
+    if (accessToken) {
+      localStorage.setItem("access_token", accessToken);
+    }
+    if (refreshToken) {
+      localStorage.setItem("refresh_token", refreshToken);
+    }
+
+    if (!accessToken || !refreshToken) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
   return (
     <div className="flex h-full flex-grow flex-col justify-between overflow-scroll">
       <Calendar
