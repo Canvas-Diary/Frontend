@@ -60,6 +60,7 @@ export type Styles = {
 export type Style = {
   name: string;
   koreanName: string;
+  imageUrl: string;
 };
 
 //감정 목록
