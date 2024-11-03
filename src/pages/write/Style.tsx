@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import StyleOptionGrid from "../../components/pages/write/StyleOptionGrid";
-import { ContextProps } from "./Layout/DiaryLayout";
+import { ContextProps } from "./Layout/DiaryWriteFlowLayout";
 import { FADEINANIMATION } from "../../styles/animations";
 
 const Style = () => {

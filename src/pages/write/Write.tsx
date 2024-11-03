@@ -1,6 +1,6 @@
 import { useLocation, useOutletContext } from "react-router-dom";
 import { formatDateWithWeek } from "../../utils/util";
-import { ContextProps } from "./Layout/DiaryLayout";
+import { ContextProps } from "./Layout/DiaryWriteFlowLayout";
 import { FADEINANIMATION } from "../../styles/animations";
 
 const Write = () => {
