@@ -1,22 +1,14 @@
 import Tag from "../components/common/Tag";
 import SearchBar from "../components/pages/album/SearchBar";
-import ThumbnailGrid, {
-  ThumbnailGridProps,
-  ThumbnailProps,
-} from "../components/pages/album/ThumbnailGrid";
+
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Appbar from "../components/common/Appbar";
 import { getSearchedDiaries } from "../api/api";
+import ThumbnailGrid from "../components/pages/album/ThumbnailGrid";
+import { SearchedDiaries } from "../types/types";
 
 const tags = ["기쁨", "슬픔", "분노", "공포", "혐오", "수치", "놀람", "궁금", "무난"];
-
-interface AlbumData {
-  content: ThumbnailProps[];
-  size: number;
-  number: number;
-  hasNext: boolean;
-}
 
 /**
  * 앨범 화면
@@ -24,7 +16,6 @@ interface AlbumData {
  */
 const Album = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const lastScrollY = useRef(0);
   const [isTagsVisible, setTagsVisible] = useState(true);
@@ -32,7 +23,7 @@ const Album = () => {
   const [searchContent, setSearchContent] = useState<string>("");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [albumData, setAlbumData] = useState<AlbumData | null>();
+  const [albumData, setAlbumData] = useState<SearchedDiaries | null>();
 
   /**
    * 선택된 태그를 파라미터로 검색, 이미 선택된 태그이면 파라미터 삭제

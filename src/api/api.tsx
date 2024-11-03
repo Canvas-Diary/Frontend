@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Diaries, DiaryInfo, NewDiaryInfo, SearchedDiaries } from "../types/types";
 
 const BASE_URL = "http://api.canvas-diary.kro.kr";
 
@@ -30,7 +31,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-export const createDiaryAndGetId = async (newDiaryInfo: NewDiaryInfo) => {
+export const createDiaryAndGetId = async (newDiaryInfo: NewDiaryInfo): Promise<string> => {
   try {
     const response = await axiosInstance.post("/api/v1/diaries", newDiaryInfo);
     return response.data.diaryId;
@@ -39,7 +40,7 @@ export const createDiaryAndGetId = async (newDiaryInfo: NewDiaryInfo) => {
   }
 };
 
-export const getDiaryInfoById = async (diaryId: string) => {
+export const getDiaryInfoById = async (diaryId: string): Promise<DiaryInfo> => {
   try {
     const response = await axiosInstance.get(`/api/v1/diaries/${diaryId}/my`);
     return response.data;
@@ -48,7 +49,7 @@ export const getDiaryInfoById = async (diaryId: string) => {
   }
 };
 
-export const getMonthlyDiariesByDate = async (date: string) => {
+export const getMonthlyDiariesByDate = async (date: string): Promise<Diaries> => {
   try {
     const params = { date: date };
     const response = await axiosInstance.get(`/api/v1/diaries`, { params });
@@ -58,16 +59,21 @@ export const getMonthlyDiariesByDate = async (date: string) => {
   }
 };
 
-export interface DiarySearchParams {
+interface DiarySearchProps {
   page: number;
   size: number;
   tag?: string;
   content?: string;
 }
 
-export const getSearchedDiaries = async ({ page, size, tag, content }: DiarySearchParams) => {
+export const getSearchedDiaries = async ({
+  page,
+  size,
+  tag,
+  content,
+}: DiarySearchProps): Promise<SearchedDiaries> => {
   try {
-    const params: DiarySearchParams = { page, size };
+    const params: DiarySearchProps = { page, size };
 
     if (tag) {
       params.tag = tag;
@@ -86,10 +92,3 @@ export const getSearchedDiaries = async ({ page, size, tag, content }: DiarySear
     throw error;
   }
 };
-
-export interface NewDiaryInfo {
-  date: string;
-  content: string;
-  style: string;
-  isPublic: boolean;
-}

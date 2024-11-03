@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import { Image } from "../../../pages/diary/Diary";
+import { DiaryImage } from "../../../types/types";
 
 interface ImageCarouselProps {
-  images: Image[];
+  images: DiaryImage[];
 }
 
 /**
