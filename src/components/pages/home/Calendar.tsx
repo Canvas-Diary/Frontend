@@ -15,14 +15,14 @@ import { Diaries } from "../../../types/types";
 
 const emotionImages: { [key: string]: string } = {
   JOY: happy,
-  sad: sad,
-  angry: angry,
-  afraid: afraid,
-  dislike: dislike,
-  non: non,
-  shy: shy,
-  surprised: surprised,
-  wonder: wonder,
+  SADNESS: sad,
+  ANGER: angry,
+  FEAR: afraid,
+  DISGUST: dislike,
+  NONE: non,
+  SHAMEhy: shy,
+  SURPRISE: surprised,
+  CURIOSITY: wonder,
   default: defaultIcon,
 };
 
