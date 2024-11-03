@@ -25,7 +25,7 @@ const bgColorStyle = {
 const Button = ({ size, active, text, bgColor, onClickHandler }: ButtonProps) => {
   return (
     <button
-      className={`${size === "big" ? "w-[20.4375rem]" : "w-[9.6875rem]"} ${active ? bgColorStyle[bgColor] : `${bgColorStyle.non} pointer-events-none`} rounded-200 py-600 font-Binggrae text-body-1 font-regular`}
+      className={`${size === "big" ? "w-[20.4375rem]" : "w-[9.6875rem]"} ${active ? bgColorStyle[bgColor] : `${bgColorStyle.non} pointer-events-none`} rounded-200 py-600 font-Binggrae text-body-1 font-regular transition duration-200`}
       onClick={onClickHandler}
     >
       {text}
