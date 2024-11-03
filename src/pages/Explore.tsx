@@ -2,6 +2,8 @@ import ThumbnailGrid from "../components/pages/album/ThumbnailGrid";
 import Dummy from "../assets/dummy/_Image.png";
 import Appbar from "../components/common/Appbar";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import RoutePaths from "../constants/routePath";
 
 const LatestData = {
   diaries: [
@@ -88,6 +90,11 @@ const buttonPositions = {
  */
 const Explore = () => {
   const [selected, setSelected] = useState<"latest" | "popular">("latest");
+  const navigate = useNavigate();
+
+  const onClickThumbnail = (diaryId: string) => {
+    navigate(`${RoutePaths.diary}/${diaryId}`);
+  };
 
   return (
     <div className="flex flex-grow flex-col overflow-scroll">
@@ -117,7 +124,10 @@ const Explore = () => {
           </div>
           <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100" />
         </div>
-        <ThumbnailGrid diaries={selected === "latest" ? LatestData.diaries : PopularData.diaries} />
+        <ThumbnailGrid
+          diaries={selected === "latest" ? LatestData.diaries : PopularData.diaries}
+          onClickThumbnail={onClickThumbnail}
+        />
       </div>
     </div>
   );

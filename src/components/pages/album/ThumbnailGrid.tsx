@@ -3,6 +3,7 @@ import Thumbnail from "./Thumbnail";
 
 interface ThumbnailGridProps {
   diaries: SearchedDiary[];
+  onClickThumbnail: (diaryId: string) => void;
 }
 
 /**
@@ -10,14 +11,14 @@ interface ThumbnailGridProps {
  * @param diaries diaryId, mainImgUrl 배열
  * @returns
  */
-const ThumbnailGrid = ({ diaries }: ThumbnailGridProps) => {
+const ThumbnailGrid = ({ diaries, onClickThumbnail }: ThumbnailGridProps) => {
   return (
     <div className="grid grid-cols-3 place-items-center gap-300 py-800">
       {diaries.map((diary) => (
         <Thumbnail
           src={diary.mainImageUrl}
           alt={diary.mainImageUrl}
-          diaryId={diary.diaryId}
+          onClickHandler={() => onClickThumbnail(diary.diaryId)}
           key={diary.diaryId}
         />
       ))}

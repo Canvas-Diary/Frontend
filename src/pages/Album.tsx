@@ -7,6 +7,7 @@ import Appbar from "../components/common/Appbar";
 import { getSearchedDiaries } from "../api/api";
 import ThumbnailGrid from "../components/pages/album/ThumbnailGrid";
 import { SearchedDiaries } from "../types/types";
+import RoutePaths from "../constants/routePath";
 
 const tags = ["기쁨", "슬픔", "분노", "공포", "혐오", "수치", "놀람", "궁금", "무난"];
 
@@ -162,6 +163,10 @@ const Album = () => {
     setAlbumData(response);
   };
 
+  const onClickThumbnail = (diaryId: string) => {
+    navigate(`${RoutePaths.diary}/${diaryId}?type=my`);
+  };
+
   useEffect(() => {
     albumInit();
     getScrollPosition();
@@ -187,7 +192,9 @@ const Album = () => {
           </div>
         </div>
         <div className="h-4"></div>
-        {albumData && <ThumbnailGrid diaries={albumData.content} />}
+        {albumData && (
+          <ThumbnailGrid diaries={albumData.content} onClickThumbnail={onClickThumbnail} />
+        )}
         <div ref={loadMoreRef} style={{ height: "20px", background: "transparent" }} />
       </div>
     </div>

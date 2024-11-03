@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DiaryInfo } from "../../../types/types";
-import { getDiaryInfoById } from "../../../api/api";
+import { getDiaryInfoById, getMyDiaryInfoById } from "../../../api/api";
 import Diary from "../Diary";
 import NoDiary from "../NoDiary";
 import MobileLayout from "../../Layout/MobileLayout";
@@ -15,6 +15,8 @@ import useMediaQuery from "../../../hooks/useMediaQuery";
  */
 const DiaryLayout = () => {
   const { diaryID } = useParams<{ diaryID: string }>();
+  const queryParams = new URLSearchParams(location.search);
+  const type = queryParams.get("type");
   const [diaryInfo, setDiaryInfo] = useState<DiaryInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const { calculatedHeight } = useMediaQuery();
@@ -23,7 +25,12 @@ const DiaryLayout = () => {
     const fetchDiary = async () => {
       if (!diaryID) return;
       try {
-        const data = await getDiaryInfoById(diaryID);
+        let data;
+        if (type === "my") {
+          data = await getMyDiaryInfoById(diaryID);
+        } else {
+          data = await getDiaryInfoById(diaryID);
+        }
         setDiaryInfo(data);
       } catch (error) {
         setDiaryInfo(null);
@@ -33,7 +40,7 @@ const DiaryLayout = () => {
     };
 
     fetchDiary();
-  }, [diaryID]);
+  }, []);
 
   return (
     <MobileLayout>
