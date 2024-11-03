@@ -9,7 +9,7 @@ const Error = ({ error, resetErrorBoundary }: FallbackProps) => {
     <div>
       <h1>Something went wrong!</h1>
       <p>{error.message || "An unexpected error occurred."}</p>
-      <button onClick={resetErrorBoundary}>Try Again</button>
+      <button onClick={() => window.location.replace("/")}>홈으로</button>
     </div>
   );
 };

@@ -19,6 +19,7 @@ const pageOrder = [
 export interface ContextProps {
   diaryInfo: NewDiaryInfo;
   setDiaryInfo: Function;
+  diaryId: string;
 }
 
 const DiaryWriteFlowLayout = () => {
@@ -50,7 +51,20 @@ const DiaryWriteFlowLayout = () => {
         navigate(pageOrder[currentIndex + 1]);
       }
     } else {
-      navigate(`${RoutePaths.diary}/${diaryId}`);
+      navigate(`${RoutePaths.diary}/${diaryId}`, { state: { from: RoutePaths.diaryDraw } });
+    }
+  };
+
+  const handleBack = () => {
+    const currentIndex = pageOrder.indexOf(location.pathname);
+
+    switch (currentIndex) {
+      case 2:
+        //do nothing
+        break;
+      default:
+        navigate(-1);
+        break;
     }
   };
 
@@ -74,14 +88,9 @@ const DiaryWriteFlowLayout = () => {
 
   return (
     <MobileLayout>
-      <Appbar
-        text="일기 작성"
-        backHandler={() => {
-          navigate(-1);
-        }}
-      ></Appbar>
+      <Appbar text="일기 작성" backHandler={handleBack}></Appbar>
       <div className="flex-grow overflow-scroll px-800 py-300">
-        <Outlet context={{ diaryInfo, setDiaryInfo }} />
+        <Outlet context={{ diaryInfo, setDiaryInfo, diaryId }} />
       </div>
       <div className="my-4 flex justify-center">
         <Button

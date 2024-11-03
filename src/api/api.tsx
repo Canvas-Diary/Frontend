@@ -1,5 +1,12 @@
 import axios from "axios";
-import { Diaries, DiaryInfo, NewDiaryInfo, SearchedDiaries } from "../types/types";
+import {
+  Diaries,
+  DiaryInfo,
+  Emotions,
+  NewDiaryInfo,
+  SearchedDiaries,
+  Styles,
+} from "../types/types";
 
 const BASE_URL = "http://api.canvas-diary.kro.kr";
 
@@ -131,6 +138,24 @@ export const addLike = async (diaryId: string) => {
 export const removeLike = async (diaryId: string) => {
   try {
     await axiosInstance.delete(`/api/v1/diaries/${diaryId}/like`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getStyles = async (): Promise<Styles> => {
+  try {
+    const response = await axiosInstance.get(`/api/resources/styles`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getEmotions = async (): Promise<Emotions> => {
+  try {
+    const response = await axiosInstance.get(`/api/resources/emotions`);
+    return response.data;
   } catch (error) {
     throw error;
   }

@@ -50,3 +50,26 @@ export type SearchedDiary = {
   diaryId: string;
   mainImageUrl: string;
 };
+
+//화풍 목록
+export type Styles = {
+  styles: Style[];
+};
+
+//화풍 정보
+export type Style = {
+  name: string;
+  koreanName: string;
+  imageUrl: string;
+};
+
+//감정 목록
+export type Emotions = {
+  emotions: Emotion[];
+};
+
+//감정 정보
+export type Emotion = {
+  name: string;
+  koreanName: string;
+};

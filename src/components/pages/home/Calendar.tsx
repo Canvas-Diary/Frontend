@@ -31,7 +31,7 @@ const months = [" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11"
 
 interface CalendarProps {
   calendarData: Diaries;
-  onClickDate: (id: number) => void;
+  onClickDate: (id: string) => void;
   currentDate: Date;
   handlePrevMonth: () => void;
   handleNextMonth: () => void;
@@ -85,7 +85,7 @@ const Calendar = ({
 
       const diary = temp[day];
       const emotionImage = diary ? emotionImages[diary.emotion] : emotionImages.default;
-      const id = diary ? diary.id : `${year}-${month + 1}-${day}`;
+      const id = diary ? diary.id : `${year}-${month + 1}-${String(day).padStart(2, "0")}`;
 
       days.push(
         <div
@@ -108,7 +108,7 @@ const Calendar = ({
     setCalendarDays(days);
   };
 
-  const handleDayClick = (id: number) => {
+  const handleDayClick = (id: string) => {
     onClickDate(id);
   };
 

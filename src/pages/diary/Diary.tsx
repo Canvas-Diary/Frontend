@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ImageCarousel from "../../components/pages/diary/ImageCarousel";
 import Content from "../../components/pages/diary/Content";
 import { useState, useRef } from "react";
 import Appbar from "../../components/common/Appbar";
 import { formatDateWithWeek } from "../../utils/util";
 import { DiaryInfo } from "../../types/types";
+import RoutePaths from "../../constants/routePath";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
@@ -17,6 +18,7 @@ interface DiaryProps {
  */
 const Diary = ({ diaryInfo, carouselHeight }: DiaryProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [scrollPosition, setScrollPosition] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -30,7 +32,11 @@ const Diary = ({ diaryInfo, carouselHeight }: DiaryProps) => {
       <div className="fixed top-0 z-10 w-full">
         <Appbar
           backHandler={() => {
-            navigate(-1);
+            if (location.state?.from === RoutePaths.diaryDraw) {
+              navigate("/");
+            } else {
+              navigate(-1);
+            }
           }}
           menuHandler={() => {}}
         ></Appbar>
