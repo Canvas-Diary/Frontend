@@ -85,7 +85,7 @@ const Calendar = ({
 
       const diary = temp[day];
       const emotionImage = diary ? emotionImages[diary.emotion] : emotionImages.default;
-      const id = diary ? diary.id : "0";
+      const id = diary ? diary.id : `${year}-${month}-${day}`;
 
       days.push(
         <div

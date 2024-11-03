@@ -42,7 +42,7 @@ const DiaryLayout = () => {
         (diaryInfo ? (
           <Diary diaryInfo={diaryInfo} carouselHeight={calculatedHeight} />
         ) : (
-          <NoDiary date="" />
+          <NoDiary date={diaryID!} />
         ))}
     </MobileLayout>
   );
