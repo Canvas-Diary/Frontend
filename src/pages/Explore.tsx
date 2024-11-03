@@ -100,7 +100,7 @@ const Explore = () => {
     <div className="flex flex-grow flex-col overflow-scroll">
       <Appbar text="일기 공유"></Appbar>
       <div className="flex flex-col px-700">
-        <div className="sticky top-0 flex w-full justify-around gap-500 bg-white font-BinggraeBold text-body-2">
+        <div className="sticky top-0 z-10 flex w-full justify-around gap-500 bg-white font-BinggraeBold text-body-2">
           <button
             className="flex w-full items-center justify-center py-400"
             onClick={() => setSelected("latest")}
