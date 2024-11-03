@@ -1,5 +1,8 @@
 import Tag from "../../common/Tag";
 import HeartIcon from "../../../assets/svg/heart.svg?react";
+import { useEffect, useRef, useState } from "react";
+import { addLike, removeLike } from "../../../api/api";
+import { useParams } from "react-router-dom";
 
 interface ContentProps {
   date: string;
@@ -8,6 +11,8 @@ interface ContentProps {
   isLiked: boolean;
   content: string;
 }
+
+const debounceDelay = 300;
 
 /**
  * 일기 화면 하단의 일기 정보
@@ -19,6 +24,34 @@ interface ContentProps {
  * @returns
  */
 const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) => {
+  const [currentIsLiked, setCurrentIsLiked] = useState(isLiked);
+  const [currentLikedCount, setCurrentLikedCount] = useState(likedCount);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { diaryID } = useParams<{ diaryID: string }>();
+
+  const handleOnClick = () => {
+    setCurrentIsLiked((prev) => !prev);
+    setCurrentLikedCount((prev) => prev + (currentIsLiked ? -1 : 1));
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      //업데이트 이전임
+      if (currentIsLiked) removeLike(diaryID!);
+      else addLike(diaryID!);
+    }, debounceDelay);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="flex flex-col items-center gap-600 rounded-t-400 bg-white px-800 pb-10 pt-700 font-Binggrae shadow-default">
       <div className="flex w-full items-center justify-between">
@@ -29,10 +62,11 @@ const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) 
           </div>
         </div>
         <div
-          className={`${isLiked ? "text-primary-normal" : ""} flex flex-col items-center justify-center`}
+          className={`${currentIsLiked ? "text-primary-normal" : ""} flex flex-col items-center justify-center`}
+          onClick={handleOnClick}
         >
           <HeartIcon />
-          <div className="text-detail-1">{likedCount}</div>
+          <div className="text-detail-1">{currentLikedCount}</div>
         </div>
       </div>
       <hr className="w-full border border-gray-100" />
