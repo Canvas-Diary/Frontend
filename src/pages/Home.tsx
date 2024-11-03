@@ -5,18 +5,14 @@ import RoutePaths from "../constants/routePath";
 import { formatDate, getTodayDate } from "../utils/util";
 import { useEffect, useState } from "react";
 import { getMonthlyDiariesByDate } from "../api/api";
-import { diary } from "../types/types";
-
-interface CalendarData {
-  diaries: diary[];
-}
+import { Diaries } from "../types/types";
 
 /**
  * 메인 화면
  * @returns
  */
 const Home = () => {
-  const [calendarData, setCalendarData] = useState<CalendarData>({ diaries: [] });
+  const [calendarData, setCalendarData] = useState<Diaries>({ diaries: [] });
   const [currentDate, setCurrentDate] = useState(new Date());
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
@@ -52,28 +48,28 @@ const Home = () => {
     calendarInit(new Date());
   }, []);
 
-  useEffect(() => {
-    // URL의 쿼리 문자열에서 access_token과 refresh_token을 획득
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
+  // useEffect(() => {
+  //   // URL의 쿼리 문자열에서 access_token과 refresh_token을 획득
+  //   const queryString = window.location.search;
+  //   const params = new URLSearchParams(queryString);
 
-    const accessToken = params.get("access");
-    const refreshToken = params.get("refresh");
+  //   const accessToken = params.get("access");
+  //   const refreshToken = params.get("refresh");
 
-    if (accessToken && refreshToken) {
-      localStorage.setItem("access_token", accessToken);
-      localStorage.setItem("refresh_token", refreshToken);
-      window.location.href = "/";
-    } else {
-      const token = localStorage.getItem("access_token");
-      if (!token) {
-        navigate(RoutePaths.login);
-        return;
-      }
-    }
+  //   if (accessToken && refreshToken) {
+  //     localStorage.setItem("access_token", accessToken);
+  //     localStorage.setItem("refresh_token", refreshToken);
+  //     window.location.href = "/";
+  //   } else {
+  //     const token = localStorage.getItem("access_token");
+  //     if (!token) {
+  //       navigate(RoutePaths.login);
+  //       return;
+  //     }
+  //   }
 
-    calendarInit(new Date());
-  }, [navigate]);
+  //   calendarInit(new Date());
+  // }, [navigate]);
 
   return (
     <div className="flex h-full flex-grow flex-col justify-between overflow-scroll">

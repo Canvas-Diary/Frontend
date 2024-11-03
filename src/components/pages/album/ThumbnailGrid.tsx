@@ -1,12 +1,8 @@
+import { SearchedDiary } from "../../../types/types";
 import Thumbnail from "./Thumbnail";
 
-export interface ThumbnailGridProps {
-  diaries: ThumbnailProps[];
-}
-
-export interface ThumbnailProps {
-  diaryId: string;
-  mainImageUrl: string;
+interface ThumbnailGridProps {
+  diaries: SearchedDiary[];
 }
 
 /**

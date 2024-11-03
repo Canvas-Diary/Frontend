@@ -6,44 +6,44 @@ import { useState } from "react";
 const LatestData = {
   diaries: [
     {
-      diaryId: 1,
-      mainImgUrl: Dummy,
+      diaryId: "1",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 2,
-      mainImgUrl: Dummy,
+      diaryId: "2",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 3,
-      mainImgUrl: Dummy,
+      diaryId: "3",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 4,
-      mainImgUrl: Dummy,
+      diaryId: "4",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 5,
-      mainImgUrl: Dummy,
+      diaryId: "5",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 6,
-      mainImgUrl: Dummy,
+      diaryId: "6",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 7,
-      mainImgUrl: Dummy,
+      diaryId: "7",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 8,
-      mainImgUrl: Dummy,
+      diaryId: "8",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 9,
-      mainImgUrl: Dummy,
+      diaryId: "9",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 10,
-      mainImgUrl: Dummy,
+      diaryId: "10",
+      mainImageUrl: Dummy,
     },
   ],
 };
@@ -51,28 +51,28 @@ const LatestData = {
 const PopularData = {
   diaries: [
     {
-      diaryId: 11,
-      mainImgUrl: Dummy,
+      diaryId: "11",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 21,
-      mainImgUrl: Dummy,
+      diaryId: "21",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 12,
-      mainImgUrl: Dummy,
+      diaryId: "12",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 23,
-      mainImgUrl: Dummy,
+      diaryId: "23",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 14,
-      mainImgUrl: Dummy,
+      diaryId: "14",
+      mainImageUrl: Dummy,
     },
     {
-      diaryId: 25,
-      mainImgUrl: Dummy,
+      diaryId: "25",
+      mainImageUrl: Dummy,
     },
   ],
 };

@@ -23,8 +23,8 @@ export const Primary: Story = {
   args: {
     diaries: [
       {
-        diaryId: 1,
-        mainImgUrl: dummy,
+        diaryId: "1",
+        mainImageUrl: dummy,
       },
     ],
   },

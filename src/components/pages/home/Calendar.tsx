@@ -1,7 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import ArrowLeft from "../../../assets/svg/arrow_left.svg?react";
 import ArrowRight from "../../../assets/svg/arrow_right.svg?react";
-import { diary } from "../../../types/types";
 import afraid from "../../../assets/icon/afraid.png";
 import angry from "../../../assets/icon/angry.png";
 import defaultIcon from "../../../assets/icon/defaultIcon.png";
@@ -12,6 +11,7 @@ import sad from "../../../assets/icon/sad.png";
 import shy from "../../../assets/icon/shy.png";
 import surprised from "../../../assets/icon/surprised.png";
 import wonder from "../../../assets/icon/wonder.png";
+import { Diaries } from "../../../types/types";
 
 const emotionImages: { [key: string]: string } = {
   JOY: happy,
@@ -30,9 +30,7 @@ const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 const months = [" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12"];
 
 interface CalendarProps {
-  calendarData: {
-    diaries: diary[];
-  };
+  calendarData: Diaries;
   onClickDate: (id: number) => void;
   currentDate: Date;
   handlePrevMonth: () => void;

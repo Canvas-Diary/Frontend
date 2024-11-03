@@ -8,23 +8,7 @@ import Appbar from "../../components/common/Appbar";
 import RoutePaths from "../../constants/routePath";
 import { formatDateWithWeek, getTodayDate } from "../../utils/util";
 import { getDiaryInfoById } from "../../api/api";
-
-interface diaryInfo {
-  diaryId: string;
-  content: string;
-  emotion: string;
-  likedCount: number;
-  isLiked: boolean;
-  images: Image[];
-  isPublic: boolean;
-  date: string;
-}
-
-export interface Image {
-  imageId: string;
-  isMain: boolean;
-  imageUrl: string;
-}
+import { DiaryInfo } from "../../types/types";
 
 /**
  * 일기 화면
@@ -35,7 +19,7 @@ const Diary = () => {
   const diaryID = params.diaryID;
   const navigate = useNavigate();
 
-  const [diaryInfo, setDiaryInfo] = useState<diaryInfo | null>(null);
+  const [diaryInfo, setDiaryInfo] = useState<DiaryInfo | null>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [carouselHeight, setCarouselHeight] = useState(0);
