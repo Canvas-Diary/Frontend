@@ -1,87 +1,14 @@
 import ThumbnailGrid from "../components/pages/album/ThumbnailGrid";
-import Dummy from "../assets/dummy/_Image.png";
 import Appbar from "../components/common/Appbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RoutePaths from "../constants/routePath";
-
-const LatestData = {
-  diaries: [
-    {
-      diaryId: "1",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "2",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "3",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "4",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "5",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "6",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "7",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "8",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "9",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "10",
-      mainImageUrl: Dummy,
-    },
-  ],
-};
-
-const PopularData = {
-  diaries: [
-    {
-      diaryId: "11",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "21",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "12",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "23",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "14",
-      mainImageUrl: Dummy,
-    },
-    {
-      diaryId: "25",
-      mainImageUrl: Dummy,
-    },
-  ],
-};
+import { getExploreDiaries } from "../api/api";
+import { SearchedDiaries } from "../types/types";
 
 const buttonPositions = {
-  latest: "left-0",
-  popular: "left-1/2",
+  LATEST: "left-0",
+  POPULARITY: "left-1/2",
 };
 
 /**
@@ -89,12 +16,26 @@ const buttonPositions = {
  * @returns
  */
 const Explore = () => {
-  const [selected, setSelected] = useState<"latest" | "popular">("latest");
+  const [selected, setSelected] = useState<"LATEST" | "POPULARITY">("LATEST");
+  const [diaries, setDiaries] = useState<SearchedDiaries | null>(null);
   const navigate = useNavigate();
 
   const onClickThumbnail = (diaryId: string) => {
     navigate(`${RoutePaths.diary}/${diaryId}`);
   };
+
+  const fetchDiaries = async () => {
+    try {
+      const data = await getExploreDiaries({ page: 0, size: 18, order: selected });
+      setDiaries(data);
+    } catch (error) {
+      console.error("Failed to fetch diaries:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDiaries();
+  }, [selected]); // selected 값이 변경될 때마다 데이터 재요청
 
   return (
     <div className="flex flex-grow flex-col overflow-scroll">
@@ -103,17 +44,17 @@ const Explore = () => {
         <div className="sticky top-0 z-10 flex w-full justify-around gap-500 bg-white font-BinggraeBold text-body-2">
           <button
             className="flex w-full items-center justify-center py-400"
-            onClick={() => setSelected("latest")}
+            onClick={() => setSelected("LATEST")}
           >
-            <div className={selected === "latest" ? "text-primary-normal" : "text-gray-400"}>
+            <div className={selected === "LATEST" ? "text-primary-normal" : "text-gray-400"}>
               최신순
             </div>
           </button>
           <button
             className="flex w-full items-center justify-center py-400"
-            onClick={() => setSelected("popular")}
+            onClick={() => setSelected("POPULARITY")}
           >
-            <div className={selected === "popular" ? "text-primary-normal" : "text-gray-400"}>
+            <div className={selected === "POPULARITY" ? "text-primary-normal" : "text-gray-400"}>
               인기순
             </div>
           </button>
@@ -124,10 +65,7 @@ const Explore = () => {
           </div>
           <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100" />
         </div>
-        <ThumbnailGrid
-          diaries={selected === "latest" ? LatestData.diaries : PopularData.diaries}
-          onClickThumbnail={onClickThumbnail}
-        />
+        {diaries && <ThumbnailGrid diaries={diaries.content} onClickThumbnail={onClickThumbnail} />}
       </div>
     </div>
   );

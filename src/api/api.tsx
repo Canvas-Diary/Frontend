@@ -175,3 +175,28 @@ export const getEmotions = async (): Promise<Emotions> => {
     throw error;
   }
 };
+
+interface DiaryExploreProps {
+  page: number;
+  size: number;
+  order: "LATEST" | "POPULARITY";
+}
+
+/**
+ * 탐색 화면 일기 목록 가져오기
+ * @param param0
+ * @returns
+ */
+export const getExploreDiaries = async ({
+  page,
+  size,
+  order,
+}: DiaryExploreProps): Promise<SearchedDiaries> => {
+  try {
+    const params = { page, size, order };
+    const response = await axiosInstance.get(`/api/v1/diaries/explore`, { params });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
