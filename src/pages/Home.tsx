@@ -19,7 +19,7 @@ const Home = () => {
     navigate(RoutePaths.diaryWrite, { state: { date: getTodayDate() } });
   };
 
-  const onClickDate = (id: number) => {
+  const onClickDate = (id: string) => {
     navigate(`diary/${id}`);
   };
 
