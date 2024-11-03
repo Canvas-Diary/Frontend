@@ -1,34 +1,27 @@
 import StyleOption from "./StyleOption";
-import dummy from "../../../assets/dummy/_Image.png";
-
-const styles = [
-  { id: 1, image: dummy, text: "PHOTOREALISTIC" },
-  { id: 2, image: dummy, text: "수채화2" },
-  { id: 3, image: dummy, text: "수채화3" },
-  { id: 4, image: dummy, text: "수채화4" },
-  { id: 5, image: dummy, text: "수채화5" },
-];
+import { Style } from "../../../types/types";
 
 interface StyleOptionGridProps {
   selectedStyle: string;
   onClickStyle: Function;
+  styles: Style[];
 }
 
-const StyleOptionGrid = ({ selectedStyle, onClickStyle }: StyleOptionGridProps) => {
+const StyleOptionGrid = ({ selectedStyle, onClickStyle, styles }: StyleOptionGridProps) => {
   const handleClick = (styleText: string) => {
     onClickStyle(styleText);
   };
 
   return (
     <div className="grid grid-cols-3 place-items-center gap-900 overflow-scroll">
-      {styles.map((style) => (
+      {styles.map((style, index) => (
         <StyleOption
-          key={style.id}
-          image={style.image}
-          text={style.text}
-          index={style.id}
-          isSelected={style.text === selectedStyle}
-          onClick={() => handleClick(style.text)}
+          key={style.name}
+          image={style.imageUrl}
+          text={style.koreanName}
+          index={index}
+          isSelected={style.name === selectedStyle}
+          onClick={() => handleClick(style.name)}
         />
       ))}
     </div>
