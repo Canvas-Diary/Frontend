@@ -18,6 +18,18 @@ export type NewDiaryInfo = {
   isPublic: boolean;
 };
 
+//내 일기 조회 정보
+export type MyDiaryInfo = {
+  diaryId: string;
+  content: string;
+  emotion: string;
+  likedCount: number;
+  isLiked: boolean;
+  isPublic: boolean;
+  date: string;
+  images: DiaryImage[];
+};
+
 //일기 조회 정보
 export type DiaryInfo = {
   diaryId: string;
@@ -25,7 +37,6 @@ export type DiaryInfo = {
   emotion: string;
   likedCount: number;
   isLiked: boolean;
-  isPublic: boolean;
   date: string;
   images: DiaryImage[];
 };

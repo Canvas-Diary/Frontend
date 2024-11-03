@@ -3,6 +3,7 @@ import {
   Diaries,
   DiaryInfo,
   Emotions,
+  MyDiaryInfo,
   NewDiaryInfo,
   SearchedDiaries,
   Styles,
@@ -53,13 +54,27 @@ export const createDiaryAndGetId = async (newDiaryInfo: NewDiaryInfo): Promise<s
 };
 
 /**
+ * 내 일기 정보 가져오기
+ * @param diaryId
+ * @returns
+ */
+export const getMyDiaryInfoById = async (diaryId: string): Promise<MyDiaryInfo> => {
+  try {
+    const response = await axiosInstance.get(`/api/v1/diaries/${diaryId}/my`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
  * 일기 정보 가져오기
  * @param diaryId
  * @returns
  */
 export const getDiaryInfoById = async (diaryId: string): Promise<DiaryInfo> => {
   try {
-    const response = await axiosInstance.get(`/api/v1/diaries/${diaryId}/my`);
+    const response = await axiosInstance.get(`/api/v1/diaries/${diaryId}`);
     return response.data;
   } catch (error) {
     throw error;
