@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import SearchIcon from "../../../assets/svg/search.svg?react";
 
 const SearchConst = {
@@ -8,6 +8,7 @@ const SearchConst = {
 
 interface SearchBarProps {
   onEnter: (input: string) => void;
+  content: string;
 }
 
 /**
@@ -15,8 +16,12 @@ interface SearchBarProps {
  * @param onEnter 엔터를 눌러 검색했을 때 실행할 콜백 함수
  * @returns
  */
-const SearchBar = ({ onEnter }: SearchBarProps) => {
-  const [inputValue, setInputValue] = useState("");
+const SearchBar = ({ onEnter, content }: SearchBarProps) => {
+  const [inputValue, setInputValue] = useState(content);
+
+  useEffect(() => {
+    setInputValue(content);
+  }, [content]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);

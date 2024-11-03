@@ -99,8 +99,8 @@ export const getMonthlyDiariesByDate = async (date: string): Promise<Diaries> =>
 interface DiarySearchProps {
   page: number;
   size: number;
-  tag?: string;
-  content?: string;
+  tag?: string | null;
+  content?: string | null;
 }
 
 /**

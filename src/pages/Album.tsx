@@ -11,6 +11,18 @@ import RoutePaths from "../constants/routePath";
 
 const tags = ["기쁨", "슬픔", "분노", "공포", "혐오", "수치", "놀람", "궁금", "무난"];
 
+const tagsMap: { [key: string]: string } = {
+  기쁨: "JOY",
+  슬픔: "SADNESS",
+  분노: "ANGER",
+  공포: "FEAR",
+  혐오: "DISGUST",
+  수치: "SHAME",
+  놀람: "SURPRISE",
+  궁금: "CURIOSITY",
+  무난: "NONE",
+};
+
 /**
  * 앨범 화면
  * @returns
@@ -152,32 +164,47 @@ const Album = () => {
    * 태그와 검색어로 필터링해서 검색 결과 가져오기
    */
   useEffect(() => {
-    console.log(selectedTag, searchContent);
-  }, [selectedTag, searchContent]);
+    const params = new URLSearchParams(window.location.search);
+    const tag = params.get("tag");
+    const search = params.get("search");
 
-  /**
-   * 앨범 화면 최초 진입 시 데이터 가져오는 함수(임시)
-   */
-  const albumInit = async () => {
-    const response = await getSearchedDiaries({ page: 0, size: 18 });
-    setAlbumData(response);
-  };
+    if (tag) {
+      setSelectedTag(tag);
+    } else {
+      setSelectedTag(null);
+    }
+
+    if (search) {
+      setSearchContent(search);
+    } else {
+      setSearchContent("");
+    }
+
+    // 검색 함수 정의 및 호출
+    const searchDiaries = async () => {
+      const response = await getSearchedDiaries({
+        page: 0,
+        size: 18,
+        tag: tag ? tagsMap[tag] : null,
+        content: search,
+      });
+      setAlbumData(response);
+    };
+
+    searchDiaries();
+    getScrollPosition();
+  }, [searchContent, selectedTag]);
 
   const onClickThumbnail = (diaryId: string) => {
     navigate(`${RoutePaths.diary}/${diaryId}?type=my`);
   };
-
-  useEffect(() => {
-    albumInit();
-    getScrollPosition();
-  }, []);
 
   return (
     <div className="flex flex-grow flex-col overflow-scroll" ref={scrollContainerRef}>
       <Appbar text="앨범"></Appbar>
       <div className="flex flex-col px-700">
         <div className="sticky top-0 z-10 flex flex-col gap-500 bg-white py-400">
-          <SearchBar onEnter={handleSearch} />
+          <SearchBar onEnter={handleSearch} content={searchContent} />
           <div
             className={`absolute flex w-full gap-400 overflow-scroll bg-white py-500 transition-all duration-300 ${isTagsVisible ? "top-14 opacity-100" : "top-10 opacity-0"}`}
           >
