@@ -23,6 +23,6 @@ export const Primary: Story = {
   args: {
     src: dummy,
     alt: "1",
-    diaryId: "1",
+    onClickHandler: () => {},
   },
 };
