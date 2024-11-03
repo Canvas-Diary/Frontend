@@ -21,7 +21,7 @@ export interface ContextProps {
   setDiaryInfo: Function;
 }
 
-const DiaryLayout = () => {
+const DiaryWriteFlowLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { showBoundary } = useErrorBoundary();
@@ -97,4 +97,4 @@ const DiaryLayout = () => {
   );
 };
 
-export default DiaryLayout;
+export default DiaryWriteFlowLayout;

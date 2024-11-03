@@ -4,9 +4,10 @@ import RoutePaths from "../constants/routePath";
 import GlobalFallback from "../pages/fallback/GlobalFallback";
 import Layout from "../pages/Layout/Layout";
 import PageFallback from "../pages/fallback/PageFallback";
-import DiaryLayout from "../pages/write/Layout/DiaryLayout";
+import DiaryWriteFlowLayout from "../pages/write/Layout/DiaryWriteFlowLayout";
 import { ErrorBoundary } from "react-error-boundary";
 import AlbumFallback from "../components/pages/album/fallback/AlbumFallback";
+import DiaryFallback from "../pages/diary/Fallback/DiaryFallback";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
@@ -14,7 +15,7 @@ const AlbumPage = lazy(() => import("../pages/Album"));
 const Mypage = lazy(() => import("../pages/Mypage"));
 const Login = lazy(() => import("../pages/Login"));
 
-const DiaryPage = lazy(() => import("../pages/diary/Diary"));
+const DiaryLayout = lazy(() => import("../pages/diary/Layout/DiaryLayout"));
 
 const Draw = lazy(() => import("../pages/write/Draw"));
 const Review = lazy(() => import("../pages/write/Review"));
@@ -67,22 +68,22 @@ const routes: RouteObject[] = [
           </Suspense>
         ),
       },
-      {
-        path: `${RoutePaths.diary}/:diaryID`,
-        element: (
-          <Suspense fallback={<PageFallback />}>
-            <DiaryPage />
-          </Suspense>
-        ),
-      },
     ],
+  },
+  {
+    path: `${RoutePaths.diary}/:diaryID`,
+    element: (
+      <Suspense fallback={<DiaryFallback />}>
+        <DiaryLayout />
+      </Suspense>
+    ),
   },
   {
     path: RoutePaths.home,
     element: (
       <ErrorBoundary FallbackComponent={ErrorPage}>
         <Suspense fallback={<GlobalFallback />}>
-          <DiaryLayout />
+          <DiaryWriteFlowLayout />
         </Suspense>
       </ErrorBoundary>
     ),

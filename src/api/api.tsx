@@ -31,6 +31,11 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+/**
+ * 일기 생성하기
+ * @param newDiaryInfo
+ * @returns
+ */
 export const createDiaryAndGetId = async (newDiaryInfo: NewDiaryInfo): Promise<string> => {
   try {
     const response = await axiosInstance.post("/api/v1/diaries", newDiaryInfo);
@@ -40,6 +45,11 @@ export const createDiaryAndGetId = async (newDiaryInfo: NewDiaryInfo): Promise<s
   }
 };
 
+/**
+ * 일기 정보 가져오기
+ * @param diaryId
+ * @returns
+ */
 export const getDiaryInfoById = async (diaryId: string): Promise<DiaryInfo> => {
   try {
     const response = await axiosInstance.get(`/api/v1/diaries/${diaryId}/my`);
@@ -49,6 +59,11 @@ export const getDiaryInfoById = async (diaryId: string): Promise<DiaryInfo> => {
   }
 };
 
+/**
+ * 달력 일기 목록 가져오기
+ * @param date
+ * @returns
+ */
 export const getMonthlyDiariesByDate = async (date: string): Promise<Diaries> => {
   try {
     const params = { date: date };
@@ -66,6 +81,11 @@ interface DiarySearchProps {
   content?: string;
 }
 
+/**
+ * 앨범 화면 일기 목록 가져오기
+ * @param param0 DiarySearchProps
+ * @returns SearchedDiaries
+ */
 export const getSearchedDiaries = async ({
   page,
   size,
@@ -88,6 +108,29 @@ export const getSearchedDiaries = async ({
     });
 
     return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * 좋아요 추가
+ */
+export const addLike = async (diaryId: string) => {
+  try {
+    await axiosInstance.post(`/api/v1/diaries/${diaryId}/like`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * 좋아요 삭제
+ * @param diaryId
+ */
+export const removeLike = async (diaryId: string) => {
+  try {
+    await axiosInstance.delete(`/api/v1/diaries/${diaryId}/like`);
   } catch (error) {
     throw error;
   }
