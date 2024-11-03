@@ -2,11 +2,17 @@ import { useLocation, useOutletContext } from "react-router-dom";
 import { formatDateWithWeek } from "../../utils/util";
 import { ContextProps } from "./Layout/DiaryWriteFlowLayout";
 import { FADEINANIMATION } from "../../styles/animations";
+import { useEffect } from "react";
+import Toggle from "../../components/common/Toggle";
 
 const Write = () => {
   const location = useLocation();
   const date = location.state.date;
   const { diaryInfo, setDiaryInfo } = useOutletContext<ContextProps>();
+
+  useEffect(() => {
+    setDiaryInfo({ ...diaryInfo, date: date });
+  }, []);
 
   return (
     <div className="flex h-full flex-col gap-600 font-Binggrae text-gray-900">
@@ -18,14 +24,12 @@ const Write = () => {
         <div className="flex items-center justify-center rounded-50 bg-primary-light-2 px-300 py-200">
           {diaryInfo.isPublic ? "공개" : "비공개"}
         </div>
-        <button
-          className="ml-auto"
-          onClick={() => {
-            setDiaryInfo({ ...diaryInfo, isPublic: !diaryInfo.isPublic });
-          }}
-        >
-          토글
-        </button>
+        <div className="ml-auto">
+          <Toggle
+            onClickHandler={() => setDiaryInfo({ ...diaryInfo, isPublic: !diaryInfo.isPublic })}
+            isChecked={diaryInfo.isPublic}
+          ></Toggle>
+        </div>
       </div>
       <hr className={`${FADEINANIMATION[2]} w-full border border-gray-100`} />
       <textarea
