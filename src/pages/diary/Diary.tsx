@@ -52,7 +52,7 @@ const Diary = ({ diaryInfo, carouselHeight }: DiaryProps) => {
           style={{ top: `calc(${carouselHeight}px - ${scrollPosition}px - 50px)` }}
         >
           <Content
-            date={formatDateWithWeek(diaryInfo!.date)}
+            date={formatDateWithWeek(diaryInfo.date)}
             emotion={diaryInfo.emotion}
             likedCount={diaryInfo.likedCount}
             isLiked={diaryInfo.isLiked}

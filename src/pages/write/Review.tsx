@@ -3,6 +3,7 @@ import ReviewContent from "../../components/pages/write/ReviewContent";
 import { FADEINANIMATION } from "../../styles/animations";
 import { DiaryInfo } from "../../types/types";
 import { getMyDiaryInfoById } from "../../api/api";
+import { formatDateWithWeek } from "../../utils/util";
 
 const dummyId = "0192f5d7-c29d-5b55-4b74-f1c412201dea";
 
@@ -31,7 +32,7 @@ const Review = () => {
       <div className={`${FADEINANIMATION[1]} flex-grow pb-[2rem]`}>
         {diaryInfo && (
           <ReviewContent
-            date={diaryInfo.date}
+            date={formatDateWithWeek(diaryInfo.date)}
             emotion={diaryInfo.emotion}
             content={diaryInfo.content}
             likedCount={diaryInfo.likedCount}
