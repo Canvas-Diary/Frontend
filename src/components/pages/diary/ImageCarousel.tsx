@@ -42,12 +42,12 @@ const ImageCarousel = ({ images }: ImageCarouselProps) => {
     <div className="relative flex flex-col items-center justify-end">
       <div className="flex w-full snap-x snap-mandatory overflow-x-scroll" ref={containerRef}>
         {images.map((img) => (
-          <div key={img.imageId}>
+          <div key={img.imageId} className="h-auto w-full flex-shrink-0 snap-start">
             {!isLoaded && <div className="absolute left-0 top-0 h-full w-full bg-gray-100"></div>}
             <img
               src={img.imageUrl}
               alt={img.imageId}
-              className="h-auto w-full flex-shrink-0 snap-start"
+              className="h-full w-full"
               onLoad={() => setIsLoaded(true)}
             />
           </div>
