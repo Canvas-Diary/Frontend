@@ -3,6 +3,7 @@ import HeartIcon from "../../../assets/svg/heart.svg?react";
 import { useEffect, useRef, useState } from "react";
 import { addLike, removeLike } from "../../../api/api";
 import { useParams } from "react-router-dom";
+import Divider from "../../common/Divider";
 
 interface ContentProps {
   date: string;
@@ -69,7 +70,7 @@ const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) 
           <div className="text-detail-1">{currentLikedCount}</div>
         </div>
       </div>
-      <hr className="w-full border border-gray-100" />
+      <Divider />
       <div className="text-body-2 font-regular">{content}</div>
     </div>
   );

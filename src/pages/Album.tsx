@@ -206,7 +206,7 @@ const Album = () => {
         <div className="sticky top-0 z-10 flex flex-col gap-500 bg-white py-400">
           <SearchBar onEnter={handleSearch} content={searchContent} />
           <div
-            className={`absolute flex w-full gap-400 overflow-scroll bg-white py-500 transition-all duration-300 ${isTagsVisible ? "top-14 opacity-100" : "top-10 opacity-0"}`}
+            className={`absolute flex w-full gap-400 overflow-scroll bg-white py-500 transition-all duration-300 ${isTagsVisible ? "top-[3.3rem] opacity-100" : "top-10 opacity-0"}`}
           >
             {tags.map((tag, index) => (
               <Tag
