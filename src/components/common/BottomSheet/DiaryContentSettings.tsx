@@ -2,6 +2,7 @@ import BottomSheet from "./BottomSheet";
 import PeopleIcon from "../../../assets/svg/people.svg?react";
 import EditIcon from "../../../assets/svg/edit.svg?react";
 import DeleteIcon from "../../../assets/svg/delete.svg?react";
+import Divider from "../Divider";
 
 //토글 버튼 구현해야 함
 
@@ -19,7 +20,7 @@ const DiaryContentSettings = () => {
           <span className="text-primary-medium">공개</span>
           <button className="ml-auto">토글버튼</button>
         </div>
-        <hr className="w-full border border-gray-100" />
+        <Divider />
         <div className="flex h-full flex-col gap-900">
           <button className="flex gap-500 text-start">
             <EditIcon />

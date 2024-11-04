@@ -4,6 +4,7 @@ import { ContextProps } from "./Layout/DiaryWriteFlowLayout";
 import { FADEINANIMATION } from "../../styles/animations";
 import { useEffect } from "react";
 import Toggle from "../../components/common/Toggle";
+import Divider from "../../components/common/Divider";
 
 const Write = () => {
   const location = useLocation();
@@ -31,7 +32,7 @@ const Write = () => {
           ></Toggle>
         </div>
       </div>
-      <hr className={`${FADEINANIMATION[2]} w-full border border-gray-100`} />
+      <Divider style={FADEINANIMATION[2]} />
       <textarea
         className={`${FADEINANIMATION[3]} flex-grow font-Binggrae text-body-2`}
         value={diaryInfo.content}
