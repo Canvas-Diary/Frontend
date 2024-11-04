@@ -36,6 +36,7 @@ const Review = () => {
             content={diaryInfo.content}
             likedCount={diaryInfo.likedCount}
             isLiked={diaryInfo.isLiked}
+            images={diaryInfo.images}
           ></ReviewContent>
         )}
       </div>

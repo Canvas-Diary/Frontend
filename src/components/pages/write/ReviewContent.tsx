@@ -1,6 +1,5 @@
 import Tag from "../../common/Tag";
 import ImageCarousel from "../diary/ImageCarousel";
-import img from "../../../assets/dummy/_Image.png";
 import HeartIcon from "../../../assets/svg/heart.svg?react";
 import { DiaryImage } from "../../../types/types";
 
