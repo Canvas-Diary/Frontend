@@ -63,7 +63,7 @@ const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) 
           </div>
         </div>
         <div
-          className={`${currentIsLiked ? "text-primary-normal" : ""} flex flex-col items-center justify-center`}
+          className={`${currentIsLiked ? "text-primary-normal" : "text-gray-200"} flex flex-col items-center justify-center`}
           onClick={handleOnClick}
         >
           <HeartIcon />
