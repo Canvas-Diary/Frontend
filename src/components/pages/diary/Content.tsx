@@ -15,6 +15,18 @@ interface ContentProps {
 
 const debounceDelay = 300;
 
+const tagsMap: { [key: string]: string } = {
+  JOY: "기쁨",
+  SADNESS: "슬픔",
+  ANGER: "분노",
+  FEAR: "공포",
+  DISGUST: "혐오",
+  NONE: "NONE",
+  SHAMEhy: "수치",
+  SURPRISE: "놀람",
+  CURIOSITY: "궁금",
+};
+
 /**
  * 일기 화면 하단의 일기 정보
  * @param date 일기 날짜
@@ -59,7 +71,7 @@ const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) 
         <div className="flex flex-col gap-300">
           <div className="font-BinggraeBold text-title-2">{date}</div>
           <div>
-            <Tag text={emotion} selected={true}></Tag>
+            <Tag text={tagsMap[emotion]} selected={true}></Tag>
           </div>
         </div>
         <div
