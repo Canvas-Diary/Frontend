@@ -15,6 +15,18 @@ const getToken = () => {
   return localStorage.getItem("access_token");
 };
 
+const storeToken = (accessToken: string) => {
+  localStorage.setItem("access_token", accessToken);
+};
+
+const getRefreshToken = () => {
+  return localStorage.getItem("refresh_token");
+};
+
+const storeRefreshToken = (refreshToken: string) => {
+  localStorage.setItem("refresh_token", refreshToken);
+};
+
 /**
  * api 기본 설정
  */
@@ -24,7 +36,7 @@ const axiosInstance = axios.create({
 });
 
 /**
- * api interceptor
+ * api request interceptor
  */
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -38,6 +50,40 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+/**
+ * api response interceptor
+ */
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    if (error.response.status === 401) {
+      try {
+        await getNewAccessToken();
+
+        error.config.headers.Authorization = `Bearer ${getToken()}`;
+        return axiosInstance.request(error.config);
+      } catch (tokenError) {
+        storeToken("");
+        storeRefreshToken("");
+        return Promise.reject(tokenError);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+export const getNewAccessToken = async () => {
+  try {
+    const refreshToken = getRefreshToken();
+    const response = await axiosInstance.post("/api/v1/auth/reissue", { refreshToken });
+    storeToken(response.data.accessToken);
+  } catch (error) {
+    throw error;
+  }
+};
 
 /**
  * 일기 생성하기
