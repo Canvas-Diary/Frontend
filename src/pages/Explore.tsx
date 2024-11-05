@@ -1,4 +1,4 @@
-import ThumbnailGrid from "../components/pages/album/ThumbnailGrid";
+import ThumbnailGrid from "../components/common/ThumbnailGrid";
 import Appbar from "../components/common/Appbar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
