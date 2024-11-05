@@ -5,10 +5,9 @@ import kakao from "../assets/images/kakaoSymbol.png";
 const clientId = import.meta.env.VITE_KAKAO_REST_API_KEY;
 const redirectUrl = import.meta.env.VITE_KAKAO_REDIRECT_URL;
 const responseType = import.meta.env.VITE_KAKAO_RESPONSE_TYPE;
-const clientSecret = import.meta.env.VITE_KAKAO_CLIENT_SECRET;
 
 const Login = () => {
-  const url = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=${responseType}&client_secret=${clientSecret}`;
+  const url = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=${responseType}`;
 
   return (
     <MobileLayout>
