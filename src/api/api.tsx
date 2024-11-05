@@ -9,7 +9,7 @@ import {
   Styles,
 } from "../types/types";
 
-// const BASE_URL = "http://api.canvas-diary.kro.kr";
+const BASE_URL = "http://api.canvas-diary.kro.kr";
 
 const getToken = () => {
   return localStorage.getItem("access_token");
@@ -32,7 +32,7 @@ const storeRefreshToken = (refreshToken: string) => {
  */
 const axiosInstance = axios.create({
   withCredentials: true,
-  baseURL: "/api",
+  baseURL: BASE_URL,
 });
 
 /**
