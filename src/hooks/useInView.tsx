@@ -34,7 +34,7 @@ const useInView = <T extends Element>(threshold: number, onViewEscape?: () => vo
         observer.unobserve(elementRef.current);
       }
     };
-  }, [threshold]);
+  }, [elementRef.current]);
 
   return { isInView, elementRef };
 };
