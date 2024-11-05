@@ -40,7 +40,7 @@ const Album = () => {
   const [isEnd, setIsEnd] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [albumData, setAlbumData] = useState<SearchedDiary[]>([]);
-  const { isInView, elementRef } = useInView<HTMLDivElement>(0.9);
+  const { isInView, elementRef } = useInView<HTMLDivElement>(0.7);
 
   /**
    * 선택된 태그를 파라미터로 검색, 이미 선택된 태그이면 파라미터 삭제
