@@ -1,12 +1,11 @@
 import ThumbnailGrid from "../components/common/ThumbnailGrid";
 import Appbar from "../components/common/Appbar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RoutePaths from "../constants/routePath";
 import { getExploreDiaries } from "../api/api";
-import { SearchedDiaries, SearchedDiary } from "../types/types";
+import { SearchedDiary } from "../types/types";
 import useInView from "../hooks/useInView";
-import useScrollPosition from "../hooks/useScrollPosition";
 
 const buttonPositions = {
   LATEST: "left-0",
@@ -19,7 +18,7 @@ const buttonPositions = {
  */
 const Explore = () => {
   const [selected, setSelected] = useState<"LATEST" | "POPULARITY">("LATEST");
-  const { currentY, scrollContainerRef } = useScrollPosition<HTMLDivElement>();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { isInView, elementRef } = useInView<HTMLDivElement>(0.7);
   const [page, setPage] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
