@@ -1,13 +1,16 @@
 import Tag from "../components/common/Tag";
 import SearchBar from "../components/pages/album/SearchBar";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Appbar from "../components/common/Appbar";
 import { getSearchedDiaries } from "../api/api";
-import ThumbnailGrid from "../components/pages/album/ThumbnailGrid";
-import { SearchedDiaries } from "../types/types";
+import ThumbnailGrid from "../components/common/ThumbnailGrid";
+import { SearchedDiary } from "../types/types";
 import RoutePaths from "../constants/routePath";
+import useInView from "../hooks/useInView";
+import useScrollPosition from "../hooks/useScrollPosition";
+import { createQueryParams } from "../utils/util";
 
 const tags = ["기쁨", "슬픔", "분노", "공포", "혐오", "수치", "놀람", "궁금", "무난"];
 
@@ -29,35 +32,30 @@ const tagsMap: { [key: string]: string } = {
  */
 const Album = () => {
   const navigate = useNavigate();
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const lastScrollY = useRef(0);
+  const { currentY, lastY, scrollContainerRef } = useScrollPosition<HTMLDivElement>();
   const [isTagsVisible, setTagsVisible] = useState(true);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [searchContent, setSearchContent] = useState<string>("");
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [albumData, setAlbumData] = useState<SearchedDiaries | null>();
+  const [page, setPage] = useState(0);
+  const [isEnd, setIsEnd] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const [albumData, setAlbumData] = useState<SearchedDiary[]>([]);
+  const { isInView, elementRef } = useInView<HTMLDivElement>(0.7);
 
   /**
    * 선택된 태그를 파라미터로 검색, 이미 선택된 태그이면 파라미터 삭제
    * @param tag 선택된 태그
    */
   const handleTagClick = (tag: string) => {
-    if (selectedTag === tag) {
-      setSelectedTag(null);
-      if (!searchContent) {
-        navigate("");
-      } else {
-        navigate(`?search=${searchContent}`);
-      }
-    } else {
-      setSelectedTag(tag);
-      if (searchContent) {
-        navigate(`?tag=${tag}&search=${searchContent}`);
-      } else {
-        navigate(`?tag=${tag}`);
-      }
-    }
+    const newTag = selectedTag === tag ? null : tag;
+    setSelectedTag(newTag);
+
+    const params = {
+      tag: newTag,
+      search: searchContent || undefined,
+    };
+
+    navigate(`?${createQueryParams(params)}`);
   };
 
   /**
@@ -66,134 +64,100 @@ const Album = () => {
    */
   const handleSearch = (content: string) => {
     setSearchContent(content);
-    if (content && selectedTag) {
-      navigate(`?search=${content}&tag=${selectedTag}`);
-    } else if (content) {
-      navigate(`?search=${content}`);
-    } else if (selectedTag) {
-      navigate(`?tag=${selectedTag}`);
+
+    const params = {
+      search: content || undefined,
+      tag: selectedTag || undefined,
+    };
+
+    navigate(`?${createQueryParams(params)}`);
+  };
+
+  /**
+   * 스크롤 상태에 따라 태그 가시성 결정
+   */
+  useEffect(() => {
+    if (currentY > lastY) {
+      setTagsVisible(false);
     } else {
-      navigate("");
+      setTagsVisible(true);
     }
-  };
+  }, [currentY]);
 
-  // Intersection Observer 설정
-  const observer = useRef<IntersectionObserver | null>(null);
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  // /**
+  //  * 페이지 진입 시 스크롤 위치 가져오는 함수
+  //  */
+  // const getScrollPosition = () => {
+  //   const savedScrollPosition = sessionStorage.getItem("scrollPosition");
 
-  useEffect(() => {
-    observer.current = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      if (entry.isIntersecting && !loading) {
-        setLoading(true);
-        setPage((prevPage) => prevPage + 1);
-      }
-    });
+  //   if (savedScrollPosition && scrollContainerRef.current) {
+  //     const parsedPosition = parseInt(savedScrollPosition, 10);
 
-    if (loadMoreRef.current) {
-      observer.current.observe(loadMoreRef.current);
-    }
+  //     scrollContainerRef.current.scrollTo({
+  //       top: parsedPosition,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // };
 
-    return () => {
-      if (loadMoreRef.current) {
-        observer.current!.unobserve(loadMoreRef.current);
-      }
-    };
-  }, [loadMoreRef, loading]);
-
-  useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          if (scrollContainerRef.current) {
-            const currentScrollY = scrollContainerRef.current.scrollTop;
-            const currentScrollBottom = currentScrollY + scrollContainerRef.current.clientHeight;
-            const scrollHeight = scrollContainerRef.current.scrollHeight;
-
-            // 태그 가시성 제어
-            if (currentScrollY > lastScrollY.current) {
-              setTagsVisible(false);
-            } else {
-              setTagsVisible(true);
-            }
-
-            sessionStorage.setItem("scrollPosition", currentScrollY.toString());
-            sessionStorage.setItem("currentPage", (page + 1).toString());
-
-            lastScrollY.current = currentScrollY;
-
-            if (currentScrollBottom >= scrollHeight - 10 && !loading) {
-              setLoading(true);
-              setPage((prevPage) => prevPage + 1);
-            }
-
-            ticking = false;
-          }
-        });
-        ticking = true;
-      }
-    };
-
-    scrollContainerRef.current?.addEventListener("scroll", handleScroll);
-
-    return () => {
-      scrollContainerRef.current?.removeEventListener("scroll", handleScroll);
-    };
-  }, [loading]);
-
-  /**
-   * 페이지 진입 시 스크롤 위치 가져오는 함수 + 페이지도 가져와야 할듯
-   */
-  const getScrollPosition = () => {
-    const savedScrollPosition = sessionStorage.getItem("scrollPosition");
-
-    if (savedScrollPosition && scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = parseInt(savedScrollPosition, 10);
-      lastScrollY.current = parseInt(savedScrollPosition, 10);
-    }
-  };
-
-  /**
-   * 무한 스크롤 구현할 예정
-   */
-  useEffect(() => {}, [page]);
-
-  /**
-   * 태그와 검색어로 필터링해서 검색 결과 가져오기
-   */
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tag = params.get("tag");
     const search = params.get("search");
 
-    if (tag) {
-      setSelectedTag(tag);
-    } else {
-      setSelectedTag(null);
-    }
+    setSelectedTag(tag || null);
+    setSearchContent(search || "");
 
-    if (search) {
-      setSearchContent(search);
-    } else {
-      setSearchContent("");
-    }
+    /**
+     * 검색 조건에 맞는 초기 AlbumData 설정
+     */
+    const fetchInitDiaries = async () => {
+      setIsSearching(true);
+      setPage(0);
 
-    // 검색 함수 정의 및 호출
-    const searchDiaries = async () => {
       const response = await getSearchedDiaries({
         page: 0,
-        size: 18,
+        size: 6,
         tag: tag ? tagsMap[tag] : null,
-        content: search,
+        content: search || "",
       });
-      setAlbumData(response);
+
+      setAlbumData(response.content);
+      setIsSearching(false);
+      setIsEnd(!response.hasNext);
     };
 
-    searchDiaries();
-    getScrollPosition();
-  }, [searchContent, selectedTag]);
+    fetchInitDiaries();
+  }, [window.location.search]);
+
+  useEffect(() => {
+    /**
+     * 검색 조건에 맞는 newPage AlbumData 추가
+     * @param newPage 새로 추가할 AlbumData Page
+     */
+    const loadPageData = async (newPage: number) => {
+      const response = await getSearchedDiaries({
+        page: newPage,
+        size: 6,
+        tag: selectedTag ? tagsMap[selectedTag] : null,
+        content: searchContent,
+      });
+
+      const newPageData = response.content;
+      setAlbumData((prev) => [...prev, ...newPageData]);
+
+      if (!response.hasNext) {
+        setIsEnd(true);
+      }
+    };
+
+    //사용자가 끝까지 스크롤 한 경우 && 초기 페이지 로딩이 완료된 경우
+    if (isInView && !isSearching) {
+      const newPage = page + 1;
+      setPage(newPage);
+      loadPageData(newPage);
+    }
+  }, [isInView, isSearching]);
 
   const onClickThumbnail = (diaryId: string) => {
     navigate(`${RoutePaths.diary}/${diaryId}?type=my`);
@@ -219,10 +183,17 @@ const Album = () => {
           </div>
         </div>
         <div className="h-4"></div>
-        {albumData && (
-          <ThumbnailGrid diaries={albumData.content} onClickThumbnail={onClickThumbnail} />
+        {albumData && <ThumbnailGrid diaries={albumData} onClickThumbnail={onClickThumbnail} />}
+        {!isEnd && albumData && (
+          <div
+            className="grid -translate-y-600 grid-cols-3 place-items-center gap-300 pb-800"
+            ref={elementRef}
+          >
+            <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
+            <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
+            <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
+          </div>
         )}
-        <div ref={loadMoreRef} style={{ height: "20px", background: "transparent" }} />
       </div>
     </div>
   );

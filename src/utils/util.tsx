@@ -26,3 +26,20 @@ export const formatDate = (date: Date) => {
 
   return `${year}-${month}-${day}`;
 };
+
+/**
+ * URL 파라미터를 생성하는 함수
+ * @param params 파라미터 객체
+ * @returns URL 파라미터 문자열
+ */
+export const createQueryParams = (params: Record<string, any>) => {
+  const urlParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== null && value !== undefined) {
+      urlParams.append(key, value);
+    }
+  });
+
+  return urlParams.toString();
+};
