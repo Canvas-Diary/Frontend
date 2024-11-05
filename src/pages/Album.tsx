@@ -1,7 +1,7 @@
 import Tag from "../components/common/Tag";
 import SearchBar from "../components/pages/album/SearchBar";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Appbar from "../components/common/Appbar";
 import { getSearchedDiaries } from "../api/api";
@@ -10,6 +10,7 @@ import { SearchedDiary } from "../types/types";
 import RoutePaths from "../constants/routePath";
 import useInView from "../hooks/useInView";
 import useScrollPosition from "../hooks/useScrollPosition";
+import { createQueryParams } from "../utils/util";
 
 const tags = ["기쁨", "슬픔", "분노", "공포", "혐오", "수치", "놀람", "궁금", "무난"];
 
@@ -37,6 +38,7 @@ const Album = () => {
   const [searchContent, setSearchContent] = useState<string>("");
   const [page, setPage] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const [albumData, setAlbumData] = useState<SearchedDiary[]>([]);
   const { isInView, elementRef } = useInView<HTMLDivElement>(0.9);
 
@@ -45,21 +47,15 @@ const Album = () => {
    * @param tag 선택된 태그
    */
   const handleTagClick = (tag: string) => {
-    if (selectedTag === tag) {
-      setSelectedTag(null);
-      if (!searchContent) {
-        navigate("");
-      } else {
-        navigate(`?search=${searchContent}`);
-      }
-    } else {
-      setSelectedTag(tag);
-      if (searchContent) {
-        navigate(`?tag=${tag}&search=${searchContent}`);
-      } else {
-        navigate(`?tag=${tag}`);
-      }
-    }
+    const newTag = selectedTag === tag ? null : tag;
+    setSelectedTag(newTag);
+
+    const params = {
+      tag: newTag,
+      search: searchContent || undefined,
+    };
+
+    navigate(`?${createQueryParams(params)}`);
   };
 
   /**
@@ -68,44 +64,64 @@ const Album = () => {
    */
   const handleSearch = (content: string) => {
     setSearchContent(content);
-    if (content && selectedTag) {
-      navigate(`?search=${content}&tag=${selectedTag}`);
-    } else if (content) {
-      navigate(`?search=${content}`);
-    } else if (selectedTag) {
-      navigate(`?tag=${selectedTag}`);
-    } else {
-      navigate("");
-    }
+
+    const params = {
+      search: content || undefined,
+      tag: selectedTag || undefined,
+    };
+
+    navigate(`?${createQueryParams(params)}`);
   };
 
+  /**
+   * 스크롤 상태에 따라 태그 가시성 결정
+   */
   useEffect(() => {
     if (currentY > lastY) {
       setTagsVisible(false);
     } else {
       setTagsVisible(true);
     }
-
-    sessionStorage.setItem("scrollPosition", currentY.toString());
-    sessionStorage.setItem("currentPage", (page + 1).toString());
   }, [currentY]);
 
-  /**
-   * 페이지 진입 시 스크롤 위치 가져오는 함수
-   */
-  const getScrollPosition = () => {
-    const savedScrollPosition = sessionStorage.getItem("scrollPosition");
+  // /**
+  //  * 페이지 진입 시 스크롤 위치 가져오는 함수
+  //  */
+  // const getScrollPosition = () => {
+  //   const savedScrollPosition = sessionStorage.getItem("scrollPosition");
 
-    if (savedScrollPosition && scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = parseInt(savedScrollPosition, 10);
-    }
-  };
+  //   if (savedScrollPosition && scrollContainerRef.current) {
+  //     const parsedPosition = parseInt(savedScrollPosition, 10);
+
+  //     scrollContainerRef.current.scrollTo({
+  //       top: parsedPosition,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // };
 
   useEffect(() => {
-    getScrollPosition();
-  }, []);
+    setPage(0);
 
-  const [isSearching, setIsSearching] = useState(false);
+    const fetchDiaries = async () => {
+      setIsSearching(true);
+      const response = await getSearchedDiaries({
+        page: 0,
+        size: 6,
+        tag: selectedTag ? tagsMap[selectedTag] : null,
+        content: searchContent,
+      });
+      setAlbumData(response.content);
+      setIsSearching(false);
+      if (!response.hasNext) {
+        setIsEnd(true);
+      } else {
+        setIsEnd(false);
+      }
+    };
+
+    fetchDiaries();
+  }, [window.location.search]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -137,7 +153,6 @@ const Album = () => {
     };
 
     searchDiaries();
-    getScrollPosition();
   }, [searchContent, selectedTag]);
 
   useEffect(() => {
@@ -158,7 +173,6 @@ const Album = () => {
 
       if (!response.hasNext) {
         setIsEnd(true);
-        return;
       }
     };
 
@@ -196,7 +210,10 @@ const Album = () => {
         <div className="h-4"></div>
         {albumData && <ThumbnailGrid diaries={albumData} onClickThumbnail={onClickThumbnail} />}
         {!isEnd && albumData && (
-          <div className="grid grid-cols-3 place-items-center gap-300" ref={elementRef}>
+          <div
+            className="grid -translate-y-600 grid-cols-3 place-items-center gap-300 pb-800"
+            ref={elementRef}
+          >
             <div className="h-[11.125rem] w-[6.375rem] bg-gray-100"></div>
             <div className="h-[11.125rem] w-[6.375rem] bg-gray-100"></div>
             <div className="h-[11.125rem] w-[6.375rem] bg-gray-100"></div>
