@@ -35,14 +35,11 @@ const Explore = () => {
      * 검색 조건에 맞는 초기 AlbumData 설정
      */
     const fetchInitDiaries = async () => {
-      //selected 변경 시 젤 위로 스크롤
-      if (scrollContainerRef.current)
-        scrollContainerRef.current.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
+      // selected 변경 시 젤 위로 스크롤
+      if (scrollContainerRef.current) scrollContainerRef.current.scrollTop = 0;
       setIsSearching(true);
       setPage(0);
+      setIsEnd(false);
 
       const response = await getExploreDiaries({
         page: 0,
@@ -78,7 +75,6 @@ const Explore = () => {
       }
     };
 
-    //사용자가 끝까지 스크롤 한 경우 && 초기 페이지 로딩이 완료된 경우
     if (isInView && !isSearching) {
       const newPage = page + 1;
       setPage(newPage);
