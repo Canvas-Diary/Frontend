@@ -9,6 +9,7 @@ import ThumbnailGrid from "../components/common/ThumbnailGrid";
 import { SearchedDiary } from "../types/types";
 import RoutePaths from "../constants/routePath";
 import useInView from "../hooks/useInView";
+import useScrollPosition from "../hooks/useScrollPosition";
 
 const tags = ["기쁨", "슬픔", "분노", "공포", "혐오", "수치", "놀람", "궁금", "무난"];
 
@@ -30,8 +31,7 @@ const tagsMap: { [key: string]: string } = {
  */
 const Album = () => {
   const navigate = useNavigate();
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const lastScrollY = useRef(0);
+  const { currentY, lastY, scrollContainerRef } = useScrollPosition<HTMLDivElement>();
   const [isTagsVisible, setTagsVisible] = useState(true);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [searchContent, setSearchContent] = useState<string>("");
@@ -80,51 +80,30 @@ const Album = () => {
   };
 
   useEffect(() => {
-    let ticking = false;
+    if (currentY > lastY) {
+      setTagsVisible(false);
+    } else {
+      setTagsVisible(true);
+    }
 
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          if (scrollContainerRef.current) {
-            const currentScrollY = scrollContainerRef.current.scrollTop;
-
-            // 태그 가시성 제어
-            if (currentScrollY > lastScrollY.current) {
-              setTagsVisible(false);
-            } else {
-              setTagsVisible(true);
-            }
-
-            sessionStorage.setItem("scrollPosition", currentScrollY.toString());
-            sessionStorage.setItem("currentPage", (page + 1).toString());
-
-            lastScrollY.current = currentScrollY;
-
-            ticking = false;
-          }
-        });
-        ticking = true;
-      }
-    };
-
-    scrollContainerRef.current?.addEventListener("scroll", handleScroll);
-
-    return () => {
-      scrollContainerRef.current?.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    sessionStorage.setItem("scrollPosition", currentY.toString());
+    sessionStorage.setItem("currentPage", (page + 1).toString());
+  }, [currentY]);
 
   /**
-   * 페이지 진입 시 스크롤 위치 가져오는 함수 + 페이지도 가져와야 할듯
+   * 페이지 진입 시 스크롤 위치 가져오는 함수
    */
   const getScrollPosition = () => {
     const savedScrollPosition = sessionStorage.getItem("scrollPosition");
 
     if (savedScrollPosition && scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = parseInt(savedScrollPosition, 10);
-      lastScrollY.current = parseInt(savedScrollPosition, 10);
     }
   };
+
+  useEffect(() => {
+    getScrollPosition();
+  }, []);
 
   const [isSearching, setIsSearching] = useState(false);
 
