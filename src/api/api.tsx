@@ -15,16 +15,28 @@ const getToken = () => {
   return localStorage.getItem("access_token");
 };
 
+const storeToken = (accessToken: string) => {
+  localStorage.setItem("access_token", accessToken);
+};
+
+const getRefreshToken = () => {
+  return localStorage.getItem("refresh_token");
+};
+
+const storeRefreshToken = (refreshToken: string) => {
+  localStorage.setItem("refresh_token", refreshToken);
+};
+
 /**
  * api 기본 설정
  */
 const axiosInstance = axios.create({
   withCredentials: true,
-  baseURL: BASE_URL,
+  baseURL: "/api",
 });
 
 /**
- * api interceptor
+ * api request interceptor
  */
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -35,9 +47,51 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    return Promise.reject(error);
+    throw error;
   }
 );
+
+/**
+ * api response interceptor
+ */
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response && error.response.status === 401) {
+      const originalRequest = error.config;
+
+      // 무한 루프 방지: 토큰 갱신 요청인 경우 바로 오류 반환
+      if (originalRequest.url.includes("/auth/reissue")) {
+        throw error;
+      }
+
+      try {
+        await updatewAccessToken();
+        originalRequest.headers.Authorization = `Bearer ${getToken()}`;
+        return axiosInstance(originalRequest);
+      } catch (tokenError) {
+        storeToken("");
+        storeRefreshToken("");
+        window.location.href = "/login";
+        throw tokenError;
+      }
+    }
+    throw error;
+  }
+);
+
+/**
+ * 리프레시 토큰으로 엑세스 토큰 갱신
+ */
+export const updatewAccessToken = async () => {
+  try {
+    const refreshToken = getRefreshToken();
+    const response = await axiosInstance.post("/api/v1/auth/reissue", { refreshToken });
+    storeToken(response.data.accessToken);
+  } catch (error) {
+    throw error;
+  }
+};
 
 /**
  * 일기 생성하기
