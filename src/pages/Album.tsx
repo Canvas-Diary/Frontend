@@ -101,71 +101,46 @@ const Album = () => {
   // };
 
   useEffect(() => {
-    setPage(0);
-
-    const fetchDiaries = async () => {
-      setIsSearching(true);
-      const response = await getSearchedDiaries({
-        page: 0,
-        size: 6,
-        tag: selectedTag ? tagsMap[selectedTag] : null,
-        content: searchContent,
-      });
-      setAlbumData(response.content);
-      setIsSearching(false);
-      if (!response.hasNext) {
-        setIsEnd(true);
-      } else {
-        setIsEnd(false);
-      }
-    };
-
-    fetchDiaries();
-  }, [window.location.search]);
-
-  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tag = params.get("tag");
     const search = params.get("search");
 
-    if (tag) {
-      setSelectedTag(tag);
-    } else {
-      setSelectedTag(null);
-    }
+    setSelectedTag(tag || null);
+    setSearchContent(search || "");
 
-    if (search) {
-      setSearchContent(search);
-    } else {
-      setSearchContent("");
-    }
-
-    const searchDiaries = async () => {
+    /**
+     * 검색 조건에 맞는 초기 AlbumData 설정
+     */
+    const fetchInitDiaries = async () => {
       setIsSearching(true);
+      setPage(0);
+
       const response = await getSearchedDiaries({
         page: 0,
         size: 6,
         tag: tag ? tagsMap[tag] : null,
-        content: search,
+        content: search || "",
       });
+
       setAlbumData(response.content);
       setIsSearching(false);
+      setIsEnd(!response.hasNext);
     };
 
-    searchDiaries();
-  }, [searchContent, selectedTag]);
+    fetchInitDiaries();
+  }, [window.location.search]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const tag = params.get("tag");
-    const search = params.get("search");
-
+    /**
+     * 검색 조건에 맞는 newPage AlbumData 추가
+     * @param newPage 새로 추가할 AlbumData Page
+     */
     const loadPageData = async (newPage: number) => {
       const response = await getSearchedDiaries({
         page: newPage,
         size: 6,
-        tag: tag ? tagsMap[tag] : null,
-        content: search,
+        tag: selectedTag ? tagsMap[selectedTag] : null,
+        content: searchContent,
       });
 
       const newPageData = response.content;
@@ -176,7 +151,7 @@ const Album = () => {
       }
     };
 
-    // 검색이 완료된 후에만 무한 스크롤 실행
+    //사용자가 끝까지 스크롤 한 경우 && 초기 페이지 로딩이 완료된 경우
     if (isInView && !isSearching) {
       const newPage = page + 1;
       setPage(newPage);
@@ -214,9 +189,9 @@ const Album = () => {
             className="grid -translate-y-600 grid-cols-3 place-items-center gap-300 pb-800"
             ref={elementRef}
           >
-            <div className="h-[11.125rem] w-[6.375rem] bg-gray-100"></div>
-            <div className="h-[11.125rem] w-[6.375rem] bg-gray-100"></div>
-            <div className="h-[11.125rem] w-[6.375rem] bg-gray-100"></div>
+            <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
+            <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
+            <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
           </div>
         )}
       </div>
