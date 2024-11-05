@@ -6,8 +6,11 @@ import { useEffect, useRef, useState } from "react";
  * @returns { currentY, lastY, elementRef }
  */
 const useScrollPosition = <T extends HTMLElement>() => {
-  const [currentY, setCurrentY] = useState(0);
-  const lastY = useRef(0);
+  const [currentY, setCurrentY] = useState(() => {
+    const savedY = sessionStorage.getItem("scrollPosition");
+    return savedY ? parseInt(savedY, 10) : 0;
+  });
+  const lastY = useRef(currentY);
   const scrollContainerRef = useRef<T>(null);
   const ticking = useRef(false);
 
@@ -20,6 +23,7 @@ const useScrollPosition = <T extends HTMLElement>() => {
 
             lastY.current = currentY;
             setCurrentY(scrollTop);
+            sessionStorage.setItem("scrollPosition", scrollTop.toString());
 
             ticking.current = false;
           }
