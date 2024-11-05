@@ -26,13 +26,13 @@ export default defineConfig({
       },
     },
   },
-  // server: {
-  //   proxy: {
-  //     "/api": {
-  //       target: "http://api.canvas-diary.kro.kr", // 프록시할 서버 주소
-  //       changeOrigin: true, // 필요에 따라 원본의 호스트 헤더를 변경
-  //       rewrite: (path) => path.replace(/^\/api/, ""), // 요청 경로에서 '/api'를 제거
-  //     },
-  //   },
-  // },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://api.canvas-diary.kro.kr", // 프록시할 서버 주소
+        changeOrigin: true, // 필요에 따라 원본의 호스트 헤더를 변경
+        rewrite: (path) => path.replace(/^\/api/, ""), // 요청 경로에서 '/api'를 제거
+      },
+    },
+  },
 });
