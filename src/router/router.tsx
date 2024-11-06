@@ -71,7 +71,7 @@ const routes: RouteObject[] = [
     ],
   },
   {
-    path: RoutePaths.diary,
+    path: `${RoutePaths.diary}/:diaryID`,
     element: (
       <Suspense fallback={<DiaryFallback />}>
         <DiaryLayout />

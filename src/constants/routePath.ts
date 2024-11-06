@@ -3,7 +3,7 @@ const RoutePaths = {
   explore: "/explore",
   album: "/album",
   mypage: "/mypage",
-  diary: "/diary/:diaryID",
+  diary: "/diary",
   diaryWrite: "/diary/write",
   diaryStyle: "/diary/style",
   diaryReview: "/diary/review",
