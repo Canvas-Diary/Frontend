@@ -88,6 +88,9 @@ export default {
     animation: {
       fadeInSlideUp: "fadeInSlideUp 0.5s ease-out forwards",
     },
+    backdropBlur: {
+      default: "25px",
+    },
   },
   plugins: [
     function ({ addUtilities }) {

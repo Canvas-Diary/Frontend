@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { DiaryImage } from "../../../types/types";
+import ImageAddFilter from "./ImageAddFilter";
 
 interface ImageCarouselProps {
   images: DiaryImage[];
+  canAdd: boolean;
 }
 
 /**
@@ -10,9 +12,9 @@ interface ImageCarouselProps {
  * @param images 이미지 {id, url} 배열
  * @returns
  */
-const ImageCarousel = ({ images }: ImageCarouselProps) => {
+const ImageCarousel = ({ images, canAdd }: ImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const containerRef = useRef<HTMLDivElement | null>(null); // 타입 지정
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const handleScroll = () => {
     if (containerRef.current) {
@@ -52,6 +54,20 @@ const ImageCarousel = ({ images }: ImageCarouselProps) => {
             />
           </div>
         ))}
+        {canAdd && (
+          <div className="relative h-auto w-full flex-shrink-0 snap-start">
+            <div className="absolute left-0 top-0 h-full w-full">
+              <ImageAddFilter></ImageAddFilter>
+            </div>
+            {!isLoaded && <div className="absolute left-0 top-0 h-full w-full bg-gray-100"></div>}
+            <img
+              src={images[images.length - 1].imageUrl}
+              alt={images[images.length - 1].imageId}
+              className="inset-0 h-full w-full"
+              onLoad={() => setIsLoaded(true)}
+            />
+          </div>
+        )}
       </div>
       <ol className="absolute mb-[3.5rem] flex justify-center gap-2">
         {images.map((_, index) => (
@@ -62,6 +78,14 @@ const ImageCarousel = ({ images }: ImageCarouselProps) => {
             }`}
           ></li>
         ))}
+        {canAdd && (
+          <li
+            key={images.length}
+            className={`h-[0.375rem] w-[0.375rem] rounded-full ${
+              images.length === currentIndex ? "bg-primary-normal" : "bg-white"
+            }`}
+          ></li>
+        )}
       </ol>
     </div>
   );

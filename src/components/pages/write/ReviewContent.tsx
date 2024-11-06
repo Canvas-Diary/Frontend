@@ -51,7 +51,7 @@ const ReviewContent = ({ date, emotion, likedCount, isLiked, content, images }: 
           <div className="text-detail-1">{likedCount}</div>
         </div>
       </div>
-      <ImageCarousel images={images} />
+      <ImageCarousel images={images} canAdd={false} />
       <div className="text-body-2 font-regular">{content}</div>
     </div>
   );
