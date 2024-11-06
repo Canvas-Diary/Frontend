@@ -160,7 +160,7 @@ const Album = () => {
   }, [isInView, isSearching]);
 
   const onClickThumbnail = (diaryId: string) => {
-    navigate(`${RoutePaths.diary}/${diaryId}?type=my`);
+    navigate(`${RoutePaths.diary}/${diaryId}`);
   };
 
   return (

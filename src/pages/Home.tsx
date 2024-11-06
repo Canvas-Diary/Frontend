@@ -20,7 +20,7 @@ const Home = () => {
   };
 
   const onClickDate = (id: string) => {
-    navigate(`${RoutePaths.diary}/${id}?type=my`);
+    navigate(`${RoutePaths.diary}/${id}`);
   };
 
   const handlePrevMonth = () => {
