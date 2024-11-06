@@ -3,7 +3,6 @@ import {
   Diaries,
   DiaryInfo,
   Emotions,
-  MyDiaryInfo,
   NewDiaryInfo,
   SearchedDiaries,
   Styles,
@@ -102,20 +101,6 @@ export const createDiaryAndGetId = async (newDiaryInfo: NewDiaryInfo): Promise<s
   try {
     const response = await axiosInstance.post("/api/v1/diaries", newDiaryInfo);
     return response.data.diaryId;
-  } catch (error) {
-    throw error;
-  }
-};
-
-/**
- * 내 일기 정보 가져오기
- * @param diaryId
- * @returns
- */
-export const getMyDiaryInfoById = async (diaryId: string): Promise<MyDiaryInfo> => {
-  try {
-    const response = await axiosInstance.get(`/api/v1/diaries/${diaryId}/my`);
-    return response.data;
   } catch (error) {
     throw error;
   }
@@ -250,6 +235,24 @@ export const getExploreDiaries = async ({
     const params = { page, size, order };
     const response = await axiosInstance.get(`/api/v1/diaries/explore`, { params });
     return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+interface newImageProps {
+  diaryId: string;
+  content: string;
+  style: string;
+}
+
+/**
+ * 기존의 일기에 새로운 이미지 추가
+ * @param param0 newImageProps
+ */
+export const addImageToDiary = async ({ diaryId, content, style }: newImageProps) => {
+  try {
+    await axiosInstance.post(`/api/v1/diaries/${diaryId}/images`, { content, style });
   } catch (error) {
     throw error;
   }
