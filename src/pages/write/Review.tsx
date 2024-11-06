@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import ReviewContent from "../../components/pages/write/ReviewContent";
 import { FADEINANIMATION } from "../../styles/animations";
 import { DiaryInfo } from "../../types/types";
-import { getMyDiaryInfoById } from "../../api/api";
 import { formatDateWithWeek } from "../../utils/util";
+import { getDiaryInfoById } from "../../api/api";
 
 const dummyId = "0192f5d7-c29d-5b55-4b74-f1c412201dea";
 
@@ -13,7 +13,7 @@ const Review = () => {
   useEffect(() => {
     const fetchDiary = async () => {
       try {
-        const data = await getMyDiaryInfoById(dummyId);
+        const data = await getDiaryInfoById(dummyId);
         setDiaryInfo(data);
       } catch (error) {
         setDiaryInfo(null);
