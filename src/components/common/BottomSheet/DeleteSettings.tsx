@@ -1,9 +1,13 @@
 import Button from "../Button";
 import BottomSheet from "./BottomSheet";
 
-const DeleteSettings = () => {
+interface DeleteSettingsProps {
+  onClose: () => void;
+}
+
+const DeleteSettings = ({ onClose }: DeleteSettingsProps) => {
   return (
-    <BottomSheet>
+    <BottomSheet onClose={onClose}>
       <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-900">
         <div className="text-heading-2 font-regular">
           일기를 <span className="text-primary-medium">삭제</span>하시겠어요?

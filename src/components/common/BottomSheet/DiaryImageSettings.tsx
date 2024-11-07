@@ -4,13 +4,17 @@ import DeleteIcon from "../../../assets/svg/delete.svg?react";
 import StarIcon from "../../../assets/svg/star.svg?react";
 import DownloadIcon from "../../../assets/svg/download.svg?react";
 
+interface DiaryImageSettingsProps {
+  onClose: () => void;
+}
+
 /**
  * 일기 페이지 이미지 설정 시 나오는 모달
  * @returns
  */
-const DiaryImageSettings = () => {
+const DiaryImageSettings = ({ onClose }: DiaryImageSettingsProps) => {
   return (
-    <BottomSheet>
+    <BottomSheet onClose={onClose}>
       <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-700">
         <div className="flex justify-center">
           <img src={testImg} alt="" width={176} height={308} />
