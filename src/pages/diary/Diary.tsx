@@ -5,6 +5,8 @@ import Appbar from "../../components/common/Appbar";
 import { formatDateWithWeek } from "../../utils/util";
 import { DiaryInfo } from "../../types/types";
 import RoutePaths from "../../constants/routePath";
+import { useState } from "react";
+import DiaryContentSettings from "../../components/common/BottomSheet/DiaryContentSettings";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
@@ -19,6 +21,15 @@ interface DiaryProps {
 const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleMenuClick = () => {
+    setIsModalOpen(true); // Open the modal
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
+  };
 
   return (
     <div className="h-screen overflow-scroll">
@@ -31,7 +42,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
               navigate(-1);
             }
           }}
-          menuHandler={() => {}}
+          menuHandler={handleMenuClick}
         ></Appbar>
       </div>
 
@@ -48,6 +59,15 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
           content={diaryInfo.content}
         />
       </div>
+      {isModalOpen && (
+        <DiaryContentSettings onClose={() => setIsModalOpen(false)}>
+          <div>
+            <h2>Modal Title</h2>
+            <p>This is the content of the modal.</p>
+            <button onClick={closeModal}>Close</button>
+          </div>
+        </DiaryContentSettings>
+      )}
     </div>
   );
 };
