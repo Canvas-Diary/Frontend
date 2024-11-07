@@ -25,7 +25,9 @@ const DiaryLayout = () => {
       if (!diaryID) return;
       try {
         const data = await getDiaryInfoById(diaryID);
-        setIsMyDiary(false);
+        if (data.isMine) setIsMyDiary(true);
+        else setIsMyDiary(false);
+
         setDiaryInfo(data);
       } catch (error) {
         setDiaryInfo(null);
