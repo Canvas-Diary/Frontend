@@ -3,10 +3,10 @@ import Appbar from "../../../components/common/Appbar";
 import MobileLayout from "../../Layout/MobileLayout";
 import Button from "../../../components/common/Button";
 import { useState } from "react";
-import RoutePaths from "../../../constants/routePath";
+// import RoutePaths from "../../../constants/routePath";
 
-const modifyOrder = [RoutePaths.diaryWrite];
-const addImageOrder = [RoutePaths.diaryReview, RoutePaths.diaryDraw];
+// const modifyOrder = [RoutePaths.diaryWrite];
+// const addImageOrder = [RoutePaths.diaryReview, RoutePaths.diaryDraw];
 
 const DiaryModifyFlowLayout = () => {
   const navigate = useNavigate();
