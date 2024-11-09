@@ -151,6 +151,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
         <DeleteDiarySettings
           onClickCancle={() => setActiveModal("DiaryContentSettings")}
           onClickDelete={onClickDelete}
+          date={formatDateWithWeek(diaryInfo.date)}
         ></DeleteDiarySettings>
       </BottomSheet>
       <BottomSheet
@@ -175,6 +176,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
             onClickCancle={() => setActiveModal("DiaryImageSettings")}
             onClickDelete={onClickDeleteImage}
             imgUrl={selectedImage.imageUrl}
+            date={formatDateWithWeek(diaryInfo.date)}
           ></DeleteImageSettings>
         )}
       </BottomSheet>

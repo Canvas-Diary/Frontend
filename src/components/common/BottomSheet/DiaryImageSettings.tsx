@@ -22,7 +22,7 @@ const DiaryImageSettings = ({
   return (
     <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-700">
       <div className="flex justify-center">
-        <img src={imgUrl} alt="" />
+        <img src={imgUrl} alt="" height={308} width={176} />
       </div>
       <div className="flex h-full flex-col gap-900">
         <button className="flex gap-500 text-start" onClick={onClickSetMain}>
