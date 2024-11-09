@@ -242,7 +242,6 @@ export const getExploreDiaries = async ({
 
 interface NewImageProps {
   diaryId: string;
-  content: string;
   style: string;
 }
 
@@ -250,9 +249,9 @@ interface NewImageProps {
  * 기존의 일기에 새로운 이미지 추가
  * @param param0 NewImageProps
  */
-export const postImageToDiary = async ({ diaryId, content, style }: NewImageProps) => {
+export const postImageToDiary = async ({ diaryId, style }: NewImageProps) => {
   try {
-    await axiosInstance.post(`/api/v1/diaries/${diaryId}/images`, { content, style });
+    await axiosInstance.post(`/api/v1/diaries/${diaryId}/images`, { style });
   } catch (error) {
     throw error;
   }
