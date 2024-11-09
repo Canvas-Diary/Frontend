@@ -24,11 +24,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleMenuClick = () => {
-    setIsModalOpen(true); // Open the modal
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false); // Close the modal
+    setIsModalOpen(true);
   };
 
   return (
@@ -60,13 +56,14 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
         />
       </div>
       {isModalOpen && (
-        <DiaryContentSettings onClose={() => setIsModalOpen(false)}>
-          <div>
-            <h2>Modal Title</h2>
-            <p>This is the content of the modal.</p>
-            <button onClick={closeModal}>Close</button>
-          </div>
-        </DiaryContentSettings>
+        <DiaryContentSettings
+          onClose={() => setIsModalOpen(false)}
+          onChangeToggle={() => {}}
+          onClickDelete={() => {}}
+          onClickModify={() => {
+            navigate("modify", { state: { diaryInfo: diaryInfo } });
+          }}
+        ></DiaryContentSettings>
       )}
     </div>
   );
