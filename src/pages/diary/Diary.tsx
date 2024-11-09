@@ -41,19 +41,23 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   };
 
   const onChangeToggle = () => {
-    setIsPublic((prev) => !prev); // 토글 상태 업데이트
+    setIsPublic((prev) => {
+      const newIsPublic = !prev;
 
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
 
-    timeoutRef.current = setTimeout(() => {
-      putModifiedDiary({
-        diaryId: diaryInfo.diaryId,
-        content: diaryInfo.content,
-        isPublic: !isPublic,
-      });
-    }, debounceDelay);
+      timeoutRef.current = setTimeout(() => {
+        putModifiedDiary({
+          diaryId: diaryInfo.diaryId,
+          content: diaryInfo.content,
+          isPublic: newIsPublic,
+        });
+      }, debounceDelay);
+
+      return newIsPublic;
+    });
   };
   const onClickModify = () => {
     navigate("modify", { state: { diaryInfo: diaryInfo } });
