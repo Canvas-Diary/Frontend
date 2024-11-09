@@ -7,7 +7,7 @@ import { DiaryImage, DiaryInfo } from "../../types/types";
 import RoutePaths from "../../constants/routePath";
 import { useEffect, useRef, useState } from "react";
 import DiaryContentSettings from "../../components/common/BottomSheet/DiaryContentSettings";
-import { deleteDiary, deleteImage, putModifiedDiary } from "@/api/api";
+import { deleteDiary, deleteImage, patchMainImage, putModifiedDiary } from "@/api/api";
 import BottomSheet from "@/components/common/BottomSheet/BottomSheet";
 import DeleteDiarySettings from "@/components/common/BottomSheet/DeleteDiarySettings";
 import DiaryImageSettings from "@/components/common/BottomSheet/DiaryImageSettings";
@@ -47,9 +47,16 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
     setActiveModal(null);
   };
 
-  const onClickSetMainImage = () => {
-    toast("메인 이미지로 설정되었어요");
-    setActiveModal(null);
+  const onClickSetMainImage = async () => {
+    if (selectedImage) {
+      try {
+        await patchMainImage({ diaryId: diaryInfo.diaryId, imageId: selectedImage.imageId });
+        toast("메인 이미지로 설정되었어요");
+        setActiveModal(null);
+      } catch (error) {
+        throw error;
+      }
+    }
   };
 
   const handleMenuClick = () => {

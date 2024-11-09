@@ -293,9 +293,30 @@ interface DeleteImageProps {
   imageId: string;
 }
 
+/**
+ * 이미지 삭제
+ * @param param0
+ */
 export const deleteImage = async ({ diaryId, imageId }: DeleteImageProps) => {
   try {
     await axiosInstance.delete(`/api/v1/diaries/${diaryId}/images/${imageId}`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+interface PatchMainImageProps {
+  diaryId: string;
+  imageId: string;
+}
+
+/**
+ * 대표 이미지 수정
+ * @param param0
+ */
+export const patchMainImage = async ({ diaryId, imageId }: PatchMainImageProps) => {
+  try {
+    await axiosInstance.patch(`/api/v1/diaries/${diaryId}/images/${imageId}`);
   } catch (error) {
     throw error;
   }
