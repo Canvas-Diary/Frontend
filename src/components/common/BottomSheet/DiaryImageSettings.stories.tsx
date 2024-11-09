@@ -11,5 +11,7 @@ export default meta;
 type Story = StoryObj<typeof DiaryImageSettings>;
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    onClose: () => {},
+  },
 };

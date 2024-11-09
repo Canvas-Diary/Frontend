@@ -11,5 +11,7 @@ export default meta;
 type Story = StoryObj<typeof DeleteSettings>;
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    onClose: () => {},
+  },
 };

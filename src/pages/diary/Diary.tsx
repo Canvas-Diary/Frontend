@@ -5,12 +5,17 @@ import Appbar from "../../components/common/Appbar";
 import { formatDateWithWeek } from "../../utils/util";
 import { DiaryInfo } from "../../types/types";
 import RoutePaths from "../../constants/routePath";
+import { useEffect, useRef, useState } from "react";
+import DiaryContentSettings from "../../components/common/BottomSheet/DiaryContentSettings";
+import { deleteDiary, putModifiedDiary } from "@/api/api";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
   carouselHeight: number;
   isMyDiary: boolean;
 }
+
+const debounceDelay = 300;
 
 /**
  * 일기 화면
@@ -19,6 +24,58 @@ interface DiaryProps {
 const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [isPublic, setIsPublic] = useState(diaryInfo.isPublic);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleMenuClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const onChangeToggle = () => {
+    setIsPublic((prev) => {
+      const newIsPublic = !prev;
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(async () => {
+        try {
+          await putModifiedDiary({
+            diaryId: diaryInfo.diaryId,
+            content: diaryInfo.content,
+            isPublic: newIsPublic,
+          });
+        } catch (error) {
+          throw error;
+        }
+      }, debounceDelay);
+
+      return newIsPublic;
+    });
+  };
+
+  const onClickModify = () => {
+    navigate("modify", { state: { diaryInfo: diaryInfo } });
+  };
+
+  const onClickDelete = async () => {
+    try {
+      await deleteDiary(diaryInfo.diaryId);
+      navigate("/");
+    } catch (error) {
+      throw error;
+    }
+  };
 
   return (
     <div className="h-screen overflow-scroll">
@@ -31,7 +88,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
               navigate(-1);
             }
           }}
-          menuHandler={() => {}}
+          menuHandler={handleMenuClick}
         ></Appbar>
       </div>
 
@@ -48,6 +105,15 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
           content={diaryInfo.content}
         />
       </div>
+      {isModalOpen && (
+        <DiaryContentSettings
+          onClose={() => setIsModalOpen(false)}
+          isChecked={isPublic}
+          onChangeToggle={onChangeToggle}
+          onClickDelete={onClickDelete}
+          onClickModify={onClickModify}
+        ></DiaryContentSettings>
+      )}
     </div>
   );
 };

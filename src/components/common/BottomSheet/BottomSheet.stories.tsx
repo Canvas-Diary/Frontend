@@ -11,5 +11,7 @@ export default meta;
 type Story = StoryObj<typeof BottomSheet>;
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    onClose: () => {},
+  },
 };
