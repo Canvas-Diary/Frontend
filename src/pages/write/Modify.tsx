@@ -8,14 +8,26 @@ import Appbar from "@/components/common/Appbar";
 import MobileLayout from "../Layout/MobileLayout";
 import Button from "@/components/common/Button";
 import { DiaryInfo } from "@/types/types";
+import { putModifiedDiary } from "@/api/api";
 
 const Modify = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [diaryInfo, setDiaryInfo] = useState<DiaryInfo | null>(null);
 
-  const onClickModify = () => {
-    //일기 수정
+  const onClickModify = async () => {
+    if (diaryInfo) {
+      try {
+        await putModifiedDiary({
+          diaryId: diaryInfo.diaryId,
+          content: diaryInfo.content,
+          isPublic: diaryInfo.isPublic,
+        });
+      } catch (error) {
+        throw error;
+      }
+    }
+    navigate(-1);
   };
 
   useEffect(() => {

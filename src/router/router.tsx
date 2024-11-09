@@ -8,6 +8,8 @@ import DiaryWriteFlowLayout from "../pages/write/Layout/DiaryWriteFlowLayout";
 import { ErrorBoundary } from "react-error-boundary";
 import AlbumFallback from "../components/pages/album/fallback/AlbumFallback";
 import DiaryFallback from "../pages/diary/Fallback/DiaryFallback";
+import DiaryModifyFlowLayout from "@/pages/write/Layout/DiaryModifyFlowLayout";
+import Modify from "@/pages/write/Modify";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
@@ -79,7 +81,7 @@ const routes: RouteObject[] = [
     ),
   },
   {
-    path: RoutePaths.home,
+    path: RoutePaths.diary,
     element: (
       <ErrorBoundary FallbackComponent={ErrorPage}>
         <Suspense fallback={<GlobalFallback />}>
@@ -129,6 +131,42 @@ const routes: RouteObject[] = [
         <Login />
       </Suspense>
     ),
+  },
+  {
+    path: "/diary/:diaryID/modify",
+    element: (
+      <Suspense fallback={<PageFallback />}>
+        <Modify />
+      </Suspense>
+    ),
+  },
+  {
+    path: RoutePaths.diary,
+    element: (
+      <ErrorBoundary FallbackComponent={ErrorPage}>
+        <Suspense fallback={<GlobalFallback />}>
+          <DiaryModifyFlowLayout />
+        </Suspense>
+      </ErrorBoundary>
+    ),
+    children: [
+      {
+        path: "/diary/:diaryID/style",
+        element: (
+          <Suspense fallback={<PageFallback />}>
+            <Style />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/diary/:diaryID/draw",
+        element: (
+          <Suspense fallback={<PageFallback />}>
+            <Draw />
+          </Suspense>
+        ),
+      },
+    ],
   },
 
   {

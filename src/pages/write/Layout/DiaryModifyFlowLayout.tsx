@@ -28,7 +28,7 @@ const DiaryModifyFlowLayout = () => {
         <Button
           size="big"
           active={handleActive()}
-          text="다음으로"
+          text="수정 완료"
           onClickHandler={onClickNext}
           bgColor="dark"
         />
