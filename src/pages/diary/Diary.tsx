@@ -107,6 +107,12 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
     }
   };
 
+  useEffect(() => {
+    if (location.state?.isModified) {
+      toast("일기가 수정되었어요");
+    }
+  }, [location.state]);
+
   return (
     <div className="h-screen overflow-scroll">
       <Toaster
@@ -120,6 +126,8 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
         <Appbar
           backHandler={() => {
             if (location.state?.from === RoutePaths.diaryDraw) {
+              navigate("/");
+            } else if (location.state?.isModified === true) {
               navigate("/");
             } else {
               navigate(-1);
