@@ -3,11 +3,16 @@ import ImageCarousel from "../../components/pages/diary/ImageCarousel";
 import Content from "../../components/pages/diary/Content";
 import Appbar from "../../components/common/Appbar";
 import { formatDateWithWeek } from "../../utils/util";
-import { DiaryInfo } from "../../types/types";
+import { DiaryImage, DiaryInfo } from "../../types/types";
 import RoutePaths from "../../constants/routePath";
 import { useEffect, useRef, useState } from "react";
 import DiaryContentSettings from "../../components/common/BottomSheet/DiaryContentSettings";
-import { deleteDiary, putModifiedDiary } from "@/api/api";
+import { deleteDiary, deleteImage, patchMainImage, putModifiedDiary } from "@/api/api";
+import BottomSheet from "@/components/common/BottomSheet/BottomSheet";
+import DeleteDiarySettings from "@/components/common/BottomSheet/DeleteDiarySettings";
+import DiaryImageSettings from "@/components/common/BottomSheet/DiaryImageSettings";
+import DeleteImageSettings from "@/components/common/BottomSheet/DeleteImageSettings";
+import { toast, Toaster } from "sonner";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
@@ -24,9 +29,10 @@ const debounceDelay = 300;
 const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeModal, setActiveModal] = useState<null | string>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [isPublic, setIsPublic] = useState(diaryInfo.isPublic);
+  const [selectedImage, setSelectedImage] = useState<DiaryImage | null>(null);
 
   useEffect(() => {
     return () => {
@@ -36,8 +42,41 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
     };
   }, []);
 
+  const onClickDownloadImage = () => {
+    toast("이미지가 다운로드 되었어요");
+    setActiveModal(null);
+  };
+
+  const onClickSetMainImage = async () => {
+    if (selectedImage) {
+      try {
+        await patchMainImage({ diaryId: diaryInfo.diaryId, imageId: selectedImage.imageId });
+        toast("메인 이미지로 설정되었어요");
+        setActiveModal(null);
+      } catch (error) {
+        throw error;
+      }
+    }
+  };
+
   const handleMenuClick = () => {
-    setIsModalOpen(true);
+    setActiveModal("DiaryContentSettings");
+  };
+
+  const handleLongPress = (image: DiaryImage) => {
+    setSelectedImage(image);
+    setActiveModal("DiaryImageSettings");
+  };
+
+  const onClickDeleteImage = async () => {
+    if (selectedImage) {
+      try {
+        await deleteImage({ diaryId: diaryInfo.diaryId, imageId: selectedImage.imageId });
+        toast("이미지가 삭제되었어요");
+      } catch (error) {
+        throw error;
+      }
+    }
   };
 
   const onChangeToggle = () => {
@@ -77,12 +116,27 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
     }
   };
 
+  useEffect(() => {
+    if (location.state?.isModified) {
+      toast("일기가 수정되었어요");
+    }
+  }, [location.state]);
+
   return (
     <div className="h-screen overflow-scroll">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          className:
+            "flex w-fit justify-center rounded-full border-none bg-primary-normal px-600 py-300 font-Binggrae text-body-2 text-white",
+        }}
+      />
       <div className="fixed top-0 z-10 w-full">
         <Appbar
           backHandler={() => {
             if (location.state?.from === RoutePaths.diaryDraw) {
+              navigate("/");
+            } else if (location.state?.isModified === true) {
               navigate("/");
             } else {
               navigate(-1);
@@ -91,9 +145,8 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
           menuHandler={handleMenuClick}
         ></Appbar>
       </div>
-
       <div className="fixed top-0">
-        <ImageCarousel images={diaryInfo.images} canAdd={isMyDiary} />
+        <ImageCarousel images={diaryInfo.images} canAdd={isMyDiary} onLongPress={handleLongPress} />
       </div>
       <div style={{ height: carouselHeight - 50 }}></div>
       <div className="relative z-10">
@@ -105,15 +158,54 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
           content={diaryInfo.content}
         />
       </div>
-      {isModalOpen && (
+      {/*하단부터 모달 리팩토링 하고싶음*/}
+      <BottomSheet
+        onClose={() => setActiveModal(null)}
+        isOpen={activeModal === "DiaryContentSettings"}
+      >
         <DiaryContentSettings
-          onClose={() => setIsModalOpen(false)}
           isChecked={isPublic}
           onChangeToggle={onChangeToggle}
-          onClickDelete={onClickDelete}
+          onClickDelete={() => setActiveModal("DeleteDiarySettings")}
           onClickModify={onClickModify}
         ></DiaryContentSettings>
-      )}
+      </BottomSheet>
+      <BottomSheet
+        onClose={() => setActiveModal(null)}
+        isOpen={activeModal === "DeleteDiarySettings"}
+      >
+        <DeleteDiarySettings
+          onClickCancle={() => setActiveModal("DiaryContentSettings")}
+          onClickDelete={onClickDelete}
+          date={formatDateWithWeek(diaryInfo.date)}
+        ></DeleteDiarySettings>
+      </BottomSheet>
+      <BottomSheet
+        onClose={() => setActiveModal(null)}
+        isOpen={activeModal === "DiaryImageSettings"}
+      >
+        {selectedImage && (
+          <DiaryImageSettings
+            onClickDelete={() => setActiveModal("DeleteImageSettings")}
+            onClickDownload={onClickDownloadImage}
+            onClickSetMain={onClickSetMainImage}
+            imgUrl={selectedImage.imageUrl}
+          ></DiaryImageSettings>
+        )}
+      </BottomSheet>
+      <BottomSheet
+        onClose={() => setActiveModal(null)}
+        isOpen={activeModal === "DeleteImageSettings"}
+      >
+        {selectedImage && (
+          <DeleteImageSettings
+            onClickCancle={() => setActiveModal("DiaryImageSettings")}
+            onClickDelete={onClickDeleteImage}
+            imgUrl={selectedImage.imageUrl}
+            date={formatDateWithWeek(diaryInfo.date)}
+          ></DeleteImageSettings>
+        )}
+      </BottomSheet>
     </div>
   );
 };

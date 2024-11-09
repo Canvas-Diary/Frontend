@@ -242,7 +242,6 @@ export const getExploreDiaries = async ({
 
 interface NewImageProps {
   diaryId: string;
-  content: string;
   style: string;
 }
 
@@ -250,9 +249,9 @@ interface NewImageProps {
  * 기존의 일기에 새로운 이미지 추가
  * @param param0 NewImageProps
  */
-export const postImageToDiary = async ({ diaryId, content, style }: NewImageProps) => {
+export const postImageToDiary = async ({ diaryId, style }: NewImageProps) => {
   try {
-    await axiosInstance.post(`/api/v1/diaries/${diaryId}/images`, { content, style });
+    await axiosInstance.post(`/api/v1/diaries/${diaryId}/images`, { style });
   } catch (error) {
     throw error;
   }
@@ -284,6 +283,40 @@ export const putModifiedDiary = async ({ diaryId, content, isPublic }: ModifiedD
 export const deleteDiary = async (diaryId: string) => {
   try {
     await axiosInstance.delete(`/api/v1/diaries/${diaryId}`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+interface DeleteImageProps {
+  diaryId: string;
+  imageId: string;
+}
+
+/**
+ * 이미지 삭제
+ * @param param0
+ */
+export const deleteImage = async ({ diaryId, imageId }: DeleteImageProps) => {
+  try {
+    await axiosInstance.delete(`/api/v1/diaries/${diaryId}/images/${imageId}`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+interface PatchMainImageProps {
+  diaryId: string;
+  imageId: string;
+}
+
+/**
+ * 대표 이미지 수정
+ * @param param0
+ */
+export const patchMainImage = async ({ diaryId, imageId }: PatchMainImageProps) => {
+  try {
+    await axiosInstance.patch(`/api/v1/diaries/${diaryId}/images/${imageId}`);
   } catch (error) {
     throw error;
   }

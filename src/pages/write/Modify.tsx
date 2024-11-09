@@ -23,11 +23,11 @@ const Modify = () => {
           content: diaryInfo.content,
           isPublic: diaryInfo.isPublic,
         });
+        navigate(`/diary/${diaryInfo.diaryId}`, { state: { isModified: true } });
       } catch (error) {
         throw error;
       }
     }
-    navigate(-1);
   };
 
   useEffect(() => {

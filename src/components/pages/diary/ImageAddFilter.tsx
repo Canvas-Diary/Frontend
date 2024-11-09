@@ -1,9 +1,14 @@
+import { useNavigate, useParams } from "react-router-dom";
 import AddButton from "./AddButton";
 
 const ImageAddFilter = () => {
-  const onClickAddButton = () => {};
+  const navigate = useNavigate();
+  const { diaryID } = useParams<{ diaryID: string }>();
+  const onClickAddButton = () => {
+    navigate(`/diary/${diaryID}/style`);
+  };
   return (
-    <div className="backdrop-blur-default flex h-full w-full items-center justify-center bg-transparent bg-opacity-10">
+    <div className="flex h-full w-full items-center justify-center bg-transparent bg-opacity-10 backdrop-blur-default">
       <AddButton onClickHandler={onClickAddButton}></AddButton>
     </div>
   );

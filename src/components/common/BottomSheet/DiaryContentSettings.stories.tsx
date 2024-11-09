@@ -12,6 +12,9 @@ type Story = StoryObj<typeof DiaryContentSettings>;
 
 export const Primary: Story = {
   args: {
-    onClose: () => {},
+    isChecked: true,
+    onClickModify: () => {},
+    onClickDelete: () => {},
+    onChangeToggle: () => {},
   },
 };

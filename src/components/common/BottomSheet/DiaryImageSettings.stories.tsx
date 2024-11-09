@@ -12,6 +12,9 @@ type Story = StoryObj<typeof DiaryImageSettings>;
 
 export const Primary: Story = {
   args: {
-    onClose: () => {},
+    onClickSetMain: () => {},
+    onClickDownload: () => {},
+    onClickDelete: () => {},
+    imgUrl: "",
   },
 };
