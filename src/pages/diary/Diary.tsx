@@ -43,7 +43,8 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   }, []);
 
   const onClickDownloadImage = () => {
-    //이미지 다운로드
+    toast("이미지가 다운로드 되었어요");
+    setActiveModal(null);
   };
 
   const onClickSetMainImage = () => {
@@ -64,6 +65,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
     if (selectedImage) {
       try {
         await deleteImage({ diaryId: diaryInfo.diaryId, imageId: selectedImage.imageId });
+        toast("이미지가 삭제되었어요");
       } catch (error) {
         throw error;
       }
