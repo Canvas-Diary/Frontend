@@ -12,6 +12,7 @@ import BottomSheet from "@/components/common/BottomSheet/BottomSheet";
 import DeleteDiarySettings from "@/components/common/BottomSheet/DeleteDiarySettings";
 import DiaryImageSettings from "@/components/common/BottomSheet/DiaryImageSettings";
 import DeleteImageSettings from "@/components/common/BottomSheet/DeleteImageSettings";
+import { toast, Toaster } from "sonner";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
@@ -46,7 +47,8 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   };
 
   const onClickSetMainImage = () => {
-    //현재 이미지 메인으로 설정
+    toast("메인 이미지로 설정되었어요");
+    setActiveModal(null);
   };
 
   const handleMenuClick = () => {
@@ -107,6 +109,13 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
 
   return (
     <div className="h-screen overflow-scroll">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          className:
+            "flex w-fit justify-center rounded-full border-none bg-primary-normal px-600 py-300 font-Binggrae text-body-2 text-white",
+        }}
+      />
       <div className="fixed top-0 z-10 w-full">
         <Appbar
           backHandler={() => {
