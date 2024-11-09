@@ -288,3 +288,16 @@ export const deleteDiary = async (diaryId: string) => {
     throw error;
   }
 };
+
+interface DeleteImageProps {
+  diaryId: string;
+  imageId: string;
+}
+
+export const deleteImage = async ({ diaryId, imageId }: DeleteImageProps) => {
+  try {
+    await axiosInstance.delete(`/api/v1/diaries/${diaryId}/images/${imageId}`);
+  } catch (error) {
+    throw error;
+  }
+};
