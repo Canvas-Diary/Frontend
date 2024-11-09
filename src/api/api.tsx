@@ -276,3 +276,15 @@ export const putModifiedDiary = async ({ diaryId, content, isPublic }: ModifiedD
     throw error;
   }
 };
+
+/**
+ * 일기 삭제
+ * @param diaryId
+ */
+export const deleteDiary = async (diaryId: string) => {
+  try {
+    await axiosInstance.delete(`/api/v1/diaries/${diaryId}`);
+  } catch (error) {
+    throw error;
+  }
+};

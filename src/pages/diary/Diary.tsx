@@ -7,7 +7,7 @@ import { DiaryInfo } from "../../types/types";
 import RoutePaths from "../../constants/routePath";
 import { useEffect, useRef, useState } from "react";
 import DiaryContentSettings from "../../components/common/BottomSheet/DiaryContentSettings";
-import { putModifiedDiary } from "@/api/api";
+import { deleteDiary, putModifiedDiary } from "@/api/api";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
@@ -48,22 +48,34 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
         clearTimeout(timeoutRef.current);
       }
 
-      timeoutRef.current = setTimeout(() => {
-        putModifiedDiary({
-          diaryId: diaryInfo.diaryId,
-          content: diaryInfo.content,
-          isPublic: newIsPublic,
-        });
+      timeoutRef.current = setTimeout(async () => {
+        try {
+          await putModifiedDiary({
+            diaryId: diaryInfo.diaryId,
+            content: diaryInfo.content,
+            isPublic: newIsPublic,
+          });
+        } catch (error) {
+          throw error;
+        }
       }, debounceDelay);
 
       return newIsPublic;
     });
   };
+
   const onClickModify = () => {
     navigate("modify", { state: { diaryInfo: diaryInfo } });
   };
 
-  const onClickDelete = () => {};
+  const onClickDelete = async () => {
+    try {
+      await deleteDiary(diaryInfo.diaryId);
+      navigate("/");
+    } catch (error) {
+      throw error;
+    }
+  };
 
   return (
     <div className="h-screen overflow-scroll">
