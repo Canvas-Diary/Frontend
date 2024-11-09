@@ -5,6 +5,7 @@ import { FADEINANIMATION } from "../../styles/animations";
 import { useEffect } from "react";
 import Toggle from "../../components/common/Toggle";
 import Divider from "../../components/common/Divider";
+import { Textarea } from "@/components/ui/textarea";
 
 const Write = () => {
   const location = useLocation();
@@ -33,14 +34,14 @@ const Write = () => {
         </div>
       </div>
       <Divider style={FADEINANIMATION[2]} />
-      <textarea
+      <Textarea
         className={`${FADEINANIMATION[3]} flex-grow font-Binggrae text-body-2`}
         value={diaryInfo.content}
         onChange={(e) => {
           setDiaryInfo({ ...diaryInfo, content: e.target.value });
         }}
         placeholder="10자 이상 입력해주세요"
-      ></textarea>
+      ></Textarea>
     </div>
   );
 };
