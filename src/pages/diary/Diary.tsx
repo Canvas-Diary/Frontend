@@ -8,6 +8,7 @@ import RoutePaths from "../../constants/routePath";
 import { useEffect, useRef, useState } from "react";
 import DiaryContentSettings from "../../components/common/BottomSheet/DiaryContentSettings";
 import { deleteDiary, putModifiedDiary } from "@/api/api";
+import BottomSheet from "@/components/common/BottomSheet/BottomSheet";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
@@ -106,13 +107,14 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
         />
       </div>
       {isModalOpen && (
-        <DiaryContentSettings
-          onClose={() => setIsModalOpen(false)}
-          isChecked={isPublic}
-          onChangeToggle={onChangeToggle}
-          onClickDelete={onClickDelete}
-          onClickModify={onClickModify}
-        ></DiaryContentSettings>
+        <BottomSheet onClose={() => setIsModalOpen(false)} isOpen={isModalOpen}>
+          <DiaryContentSettings
+            isChecked={isPublic}
+            onChangeToggle={onChangeToggle}
+            onClickDelete={onClickDelete}
+            onClickModify={onClickModify}
+          ></DiaryContentSettings>
+        </BottomSheet>
       )}
     </div>
   );
