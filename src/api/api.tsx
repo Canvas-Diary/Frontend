@@ -223,7 +223,7 @@ interface DiaryExploreProps {
 
 /**
  * 탐색 화면 일기 목록 가져오기
- * @param param0
+ * @param param0 DiaryExploreProps
  * @returns
  */
 export const getExploreDiaries = async ({
@@ -240,7 +240,7 @@ export const getExploreDiaries = async ({
   }
 };
 
-interface newImageProps {
+interface NewImageProps {
   diaryId: string;
   content: string;
   style: string;
@@ -248,11 +248,30 @@ interface newImageProps {
 
 /**
  * 기존의 일기에 새로운 이미지 추가
- * @param param0 newImageProps
+ * @param param0 NewImageProps
  */
-export const addImageToDiary = async ({ diaryId, content, style }: newImageProps) => {
+export const postImageToDiary = async ({ diaryId, content, style }: NewImageProps) => {
   try {
     await axiosInstance.post(`/api/v1/diaries/${diaryId}/images`, { content, style });
+  } catch (error) {
+    throw error;
+  }
+};
+
+interface ModifiedDiaryProps {
+  diaryId: string;
+  content: string;
+  isPublic: boolean;
+}
+
+/**
+ * 일기 수정
+ * @param param0 ModifyDiaryProps
+ * @returns
+ */
+export const putModifiedDiary = async ({ diaryId, content, isPublic }: ModifiedDiaryProps) => {
+  try {
+    await axiosInstance.put(`/api/v1/diaries/${diaryId}`, { content, isPublic });
   } catch (error) {
     throw error;
   }

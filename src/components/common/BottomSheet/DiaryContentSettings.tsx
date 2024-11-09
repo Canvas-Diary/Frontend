@@ -7,6 +7,7 @@ import Toggle from "../Toggle";
 
 interface DiaryContentSettingsProps {
   onClose: () => void;
+  isChecked: boolean;
   onClickModify: () => void;
   onClickDelete: () => void;
   onChangeToggle: (isChecked: boolean) => void;
@@ -18,6 +19,7 @@ interface DiaryContentSettingsProps {
  */
 const DiaryContentSettings = ({
   onClose,
+  isChecked,
   onClickModify,
   onClickDelete,
   onChangeToggle,
@@ -28,9 +30,9 @@ const DiaryContentSettings = ({
         <div className="flex gap-500">
           <PeopleIcon />
           <span>공개 여부</span>
-          <span className="text-primary-medium">공개</span>
+          <span className="text-primary-medium">{isChecked ? "공개" : "비공개"}</span>
           <button className="ml-auto">
-            <Toggle onClickHandler={onChangeToggle} isChecked={true} />
+            <Toggle onClickHandler={onChangeToggle} isChecked={isChecked} />
           </button>
         </div>
         <Divider />

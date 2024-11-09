@@ -5,14 +5,17 @@ import Appbar from "../../components/common/Appbar";
 import { formatDateWithWeek } from "../../utils/util";
 import { DiaryInfo } from "../../types/types";
 import RoutePaths from "../../constants/routePath";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DiaryContentSettings from "../../components/common/BottomSheet/DiaryContentSettings";
+import { putModifiedDiary } from "@/api/api";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
   carouselHeight: number;
   isMyDiary: boolean;
 }
+
+const debounceDelay = 300;
 
 /**
  * 일기 화면
@@ -22,10 +25,41 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [isPublic, setIsPublic] = useState(diaryInfo.isPublic);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleMenuClick = () => {
     setIsModalOpen(true);
   };
+
+  const onChangeToggle = () => {
+    setIsPublic((prev) => !prev); // 토글 상태 업데이트
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      putModifiedDiary({
+        diaryId: diaryInfo.diaryId,
+        content: diaryInfo.content,
+        isPublic: !isPublic,
+      });
+    }, debounceDelay);
+  };
+  const onClickModify = () => {
+    navigate("modify", { state: { diaryInfo: diaryInfo } });
+  };
+
+  const onClickDelete = () => {};
 
   return (
     <div className="h-screen overflow-scroll">
@@ -58,11 +92,10 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
       {isModalOpen && (
         <DiaryContentSettings
           onClose={() => setIsModalOpen(false)}
-          onChangeToggle={() => {}}
-          onClickDelete={() => {}}
-          onClickModify={() => {
-            navigate("modify", { state: { diaryInfo: diaryInfo } });
-          }}
+          isChecked={isPublic}
+          onChangeToggle={onChangeToggle}
+          onClickDelete={onClickDelete}
+          onClickModify={onClickModify}
         ></DiaryContentSettings>
       )}
     </div>
