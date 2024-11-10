@@ -141,7 +141,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   }, [location.state]);
 
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex h-full flex-col">
       <Toaster
         position="top-center"
         toastOptions={{
@@ -149,7 +149,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
             "flex w-fit justify-center rounded-full border-none bg-primary-normal px-600 py-300 font-Binggrae text-body-2 text-white",
         }}
       />
-      <div className="fixed top-0 z-10 w-full">
+      <div className="fixed top-0 z-50 w-full">
         <Appbar
           backHandler={() => {
             if (location.state?.from === RoutePaths.diaryDraw) {
@@ -168,7 +168,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
       </div>
 
       <div style={{ height: carouselHeight - 50 }} className="flex-shrink-0"></div>
-      <div className="relative z-10 flex-grow">
+      <div className="z-20 flex-grow">
         <Content
           date={formatDateWithWeek(diaryInfo.date)}
           emotion={diaryInfo.emotion}
