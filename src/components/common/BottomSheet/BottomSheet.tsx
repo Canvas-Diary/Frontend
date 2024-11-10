@@ -16,7 +16,7 @@ const BottomSheet = ({ children, onClose, isOpen }: BottomSheetProps) => {
   return (
     <Drawer open={isOpen} onClose={onClose}>
       <DrawerContent>
-        <DrawerHeader className="mb-[2.5rem] flex h-fit w-[22rem] flex-col items-center rounded-300 bg-white px-500 pb-600 pt-300 shadow-default">
+        <DrawerHeader className="mb-[2.5rem] flex h-fit w-[22rem] flex-col items-center rounded-300 bg-white px-800 pb-700 pt-300 shadow-default">
           <div className="mb-600 h-[0.375rem] w-8 rounded-full bg-gray-200"></div>
           {children}
         </DrawerHeader>

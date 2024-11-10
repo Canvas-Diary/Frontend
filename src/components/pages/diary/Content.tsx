@@ -66,7 +66,7 @@ const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) 
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-600 rounded-t-400 bg-white px-800 pb-10 pt-700 font-Binggrae shadow-default">
+    <div className="flex h-full flex-col items-center gap-600 rounded-t-400 bg-white px-800 pb-10 pt-700 font-Binggrae shadow-default">
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-col gap-300">
           <div className="font-BinggraeBold text-title-2">{date}</div>
@@ -83,7 +83,9 @@ const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) 
         </div>
       </div>
       <Divider />
-      <div className="text-body-2 font-regular">{content}</div>
+      <div className="w-full whitespace-pre-wrap text-start text-body-2 font-regular">
+        {content}
+      </div>
     </div>
   );
 };
