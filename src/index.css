@@ -4,6 +4,7 @@
 
 ::-webkit-scrollbar {
   display: none;
+  transform: translateZ(0);
 }
 
 @font-face {
