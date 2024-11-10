@@ -149,7 +149,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
             "flex w-fit justify-center rounded-full border-none bg-primary-normal px-600 py-300 font-Binggrae text-body-2 text-white",
         }}
       />
-      <div className="fixed top-0 z-50 w-full">
+      <div className="fixed top-0 z-50 w-full" style={{ transform: "translateZ(0)" }}>
         <Appbar
           backHandler={() => {
             if (location.state?.from === RoutePaths.diaryDraw) {
@@ -163,7 +163,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
           menuHandler={isMyDiary ? handleMenuClick : undefined}
         />
       </div>
-      <div className="fixed top-0">
+      <div className="fixed top-0" style={{ transform: "translateZ(0)" }}>
         <ImageCarousel images={diaryInfo.images} canAdd={isMyDiary} onLongPress={handleLongPress} />
       </div>
 
