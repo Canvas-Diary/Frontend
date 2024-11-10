@@ -51,6 +51,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   const [selectedImage, setSelectedImage] = useState<DiaryImage | null>(null);
 
   useEffect(() => {
+    console.log(carouselHeight); //임시
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
