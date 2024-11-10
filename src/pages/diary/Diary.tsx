@@ -168,7 +168,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
       </div>
 
       <div className="flex h-full flex-col overflow-scroll">
-        <div style={{ height: carouselHeight - 50 }} className="flex-shrink-0"></div>
+        <div style={{ height: 580 }} className="flex-shrink-0"></div>
         <div className="z-20 flex-grow">
           <Content
             date={formatDateWithWeek(diaryInfo.date)}
