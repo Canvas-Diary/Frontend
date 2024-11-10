@@ -141,7 +141,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   }, [location.state]);
 
   return (
-    <div className="flex h-screen flex-col overflow-scroll">
+    <div className="flex h-screen flex-col">
       <Toaster
         position="top-center"
         toastOptions={{
