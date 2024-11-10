@@ -167,7 +167,10 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
         <ImageCarousel images={diaryInfo.images} canAdd={isMyDiary} onLongPress={handleLongPress} />
       </div>
 
-      <div style={{ height: carouselHeight - 50 }} className="flex-shrink-0"></div>
+      <div
+        style={{ height: carouselHeight - 50, maxHeight: carouselHeight - 50 }}
+        className="flex-shrink-0"
+      ></div>
       <div className="z-20 flex-grow">
         <Content
           date={formatDateWithWeek(diaryInfo.date)}
