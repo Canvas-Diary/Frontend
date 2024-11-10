@@ -141,7 +141,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   }, [location.state]);
 
   return (
-    <div className="h-screen overflow-scroll">
+    <div className="flex h-screen flex-col overflow-scroll">
       <Toaster
         position="top-center"
         toastOptions={{
@@ -166,8 +166,9 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
       <div className="fixed top-0">
         <ImageCarousel images={diaryInfo.images} canAdd={isMyDiary} onLongPress={handleLongPress} />
       </div>
-      <div style={{ height: carouselHeight - 50 }}></div>
-      <div className="relative z-10">
+
+      <div style={{ height: carouselHeight - 50 }} className="flex-shrink-0"></div>
+      <div className="relative z-10 flex-grow">
         <Content
           date={formatDateWithWeek(diaryInfo.date)}
           emotion={diaryInfo.emotion}
@@ -176,6 +177,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
           content={diaryInfo.content}
         />
       </div>
+
       <BottomSheet
         onClose={() => setActiveModal(MODAL_STATE.NONE)}
         isOpen={activeModal === MODAL_STATE.CONTENT_SETTING}
