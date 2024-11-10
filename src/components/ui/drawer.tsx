@@ -25,6 +25,7 @@ const DrawerOverlay = React.forwardRef<
     ref={ref}
     className={cn("fixed inset-0 z-50 bg-black/80", className)}
     {...props}
+    style={{ WebkitTransform: "translateZ(0)" }}
   />
 ));
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
@@ -40,6 +41,7 @@ const DrawerContent = React.forwardRef<
       className={cn(
         "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col items-center rounded-t-[10px]"
       )}
+      style={{ WebkitTransform: "translateZ(0)" }}
       {...props}
     >
       {children}

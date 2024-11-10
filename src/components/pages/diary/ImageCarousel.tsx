@@ -56,7 +56,7 @@ const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <div className="relative flex flex-col items-center justify-end">
+    <div className="flex flex-col items-center justify-end">
       <div className="flex w-full snap-x snap-mandatory overflow-x-scroll" ref={containerRef}>
         {images &&
           images.length > 0 &&
@@ -65,7 +65,7 @@ const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
               key={img.imageId}
               onTouchStart={() => startLongPress(img)}
               onTouchEnd={cancelLongPress}
-              className="h-auto w-full flex-shrink-0 snap-start"
+              className="relative h-auto w-full flex-shrink-0 snap-start"
             >
               {!isLoaded && <div className="absolute left-0 top-0 h-full w-full bg-gray-100"></div>}
               <img
