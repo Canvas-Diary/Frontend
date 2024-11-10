@@ -49,9 +49,9 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [isPublic, setIsPublic] = useState(diaryInfo.isPublic);
   const [selectedImage, setSelectedImage] = useState<DiaryImage | null>(null);
+  const [currentHeight] = useState(carouselHeight - 50);
 
   useEffect(() => {
-    console.log(carouselHeight); //임시
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -150,7 +150,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
             "flex w-fit justify-center rounded-full border-none bg-primary-normal px-600 py-300 font-Binggrae text-body-2 text-white",
         }}
       />
-      <div className="absolute top-0 z-50 w-full">
+      <div className="fixed top-0 z-50 w-full">
         <Appbar
           backHandler={() => {
             if (location.state?.from === RoutePaths.diaryDraw) {
@@ -164,21 +164,19 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
           menuHandler={isMyDiary ? handleMenuClick : undefined}
         />
       </div>
-      <div className="absolute top-0">
+      <div className="fixed top-0">
         <ImageCarousel images={diaryInfo.images} canAdd={isMyDiary} onLongPress={handleLongPress} />
       </div>
 
-      <div className="flex h-full flex-col overflow-scroll">
-        <div style={{ height: 580 }} className="flex-shrink-0"></div>
-        <div className="z-20 flex-grow">
-          <Content
-            date={formatDateWithWeek(diaryInfo.date)}
-            emotion={diaryInfo.emotion}
-            likedCount={diaryInfo.likedCount}
-            isLiked={diaryInfo.isLiked}
-            content={diaryInfo.content}
-          />
-        </div>
+      <div className={`flex-shrink-0`} style={{ height: currentHeight }}></div>
+      <div className="z-20 flex-grow">
+        <Content
+          date={formatDateWithWeek(diaryInfo.date)}
+          emotion={diaryInfo.emotion}
+          likedCount={diaryInfo.likedCount}
+          isLiked={diaryInfo.isLiked}
+          content={diaryInfo.content}
+        />
       </div>
 
       <BottomSheet
