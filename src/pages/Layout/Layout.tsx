@@ -5,7 +5,6 @@ import Album from "../../assets/svg/album.svg?react";
 import Who from "../../assets/svg/who.svg?react";
 import RoutePaths from "../../constants/routePath";
 import Navbar from "../../components/common/Navbar";
-import MobileLayout from "./MobileLayout";
 
 const GNB = [
   { icon: <Home />, label: "홈", path: RoutePaths.home },
@@ -26,10 +25,10 @@ const Layout = () => {
   };
 
   return (
-    <MobileLayout>
+    <div className="flex h-dvh w-full flex-col">
       <Outlet />
       {!shouldDeleteNavBar() && <Navbar NavList={GNB} />}
-    </MobileLayout>
+    </div>
   );
 };
 

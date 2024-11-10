@@ -149,7 +149,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
             "flex w-fit justify-center rounded-full border-none bg-primary-normal px-600 py-300 font-Binggrae text-body-2 text-white",
         }}
       />
-      <div className="fixed top-0 z-50 w-full" style={{ WebkitTransform: "translateZ(0)" }}>
+      <div className="absolute top-0 z-50 w-full">
         <Appbar
           backHandler={() => {
             if (location.state?.from === RoutePaths.diaryDraw) {
@@ -163,22 +163,21 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
           menuHandler={isMyDiary ? handleMenuClick : undefined}
         />
       </div>
-      <div className="fixed top-0" style={{ WebkitTransform: "translateZ(0)" }}>
+      <div className="absolute top-0">
         <ImageCarousel images={diaryInfo.images} canAdd={isMyDiary} onLongPress={handleLongPress} />
       </div>
 
-      <div
-        style={{ height: carouselHeight - 50, maxHeight: carouselHeight - 50 }}
-        className="flex-shrink-0"
-      ></div>
-      <div className="z-20 flex-grow">
-        <Content
-          date={formatDateWithWeek(diaryInfo.date)}
-          emotion={diaryInfo.emotion}
-          likedCount={diaryInfo.likedCount}
-          isLiked={diaryInfo.isLiked}
-          content={diaryInfo.content}
-        />
+      <div className="flex h-full flex-col overflow-scroll">
+        <div style={{ height: carouselHeight - 50 }} className="flex-shrink-0"></div>
+        <div className="z-20 flex-grow">
+          <Content
+            date={formatDateWithWeek(diaryInfo.date)}
+            emotion={diaryInfo.emotion}
+            likedCount={diaryInfo.likedCount}
+            isLiked={diaryInfo.isLiked}
+            content={diaryInfo.content}
+          />
+        </div>
       </div>
 
       <BottomSheet
