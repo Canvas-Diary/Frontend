@@ -14,6 +14,7 @@ import { Diaries } from "../types/types";
 const Home = () => {
   const [calendarData, setCalendarData] = useState<Diaries>({ diaries: [] });
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [activeToday, setActiveToday] = useState(true);
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
     navigate(RoutePaths.diaryWrite, { state: { date: getTodayDate() } });
@@ -47,7 +48,15 @@ const Home = () => {
   useEffect(() => {
     const calendarInit = async (currentDate: Date) => {
       const diaries = await getMonthlyDiariesByDate(formatDate(currentDate));
+
+      const active = diaries.diaries.some(
+        (diary) =>
+          diary.date ===
+          `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`
+      );
+
       setCalendarData(diaries);
+      setActiveToday(!active);
     };
 
     calendarInit(new Date());
@@ -88,7 +97,7 @@ const Home = () => {
       <div className="my-4 flex justify-center">
         <Button
           size="big"
-          active={true}
+          active={activeToday}
           text="오늘 일기 작성하기"
           onClickHandler={onClickCreateDiary}
           bgColor="dark"
