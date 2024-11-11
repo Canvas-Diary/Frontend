@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { DiaryImage } from "../../../types/types";
 import ImageAddFilter from "./ImageAddFilter";
+import defaultImage from "../../../assets/images/defaultImage.png";
 
 interface ImageCarouselProps {
   images: DiaryImage[];
@@ -56,65 +57,72 @@ const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-end">
-      <div className="flex w-full snap-x snap-mandatory overflow-x-scroll" ref={containerRef}>
-        {images &&
-          images.length > 0 &&
-          images.map((img) => (
-            <div
-              key={img.imageId}
-              onTouchStart={() => startLongPress(img)}
-              onTouchEnd={cancelLongPress}
-              className="relative h-auto w-full flex-shrink-0 snap-start"
-            >
-              {!isLoaded && <div className="absolute left-0 top-0 h-full w-full bg-gray-100"></div>}
-              <img
-                src={img.imageUrl}
-                alt={img.imageId}
-                className="h-full w-full"
-                onLoad={() => setIsLoaded(true)}
-              />
-            </div>
-          ))}
-        {canAdd && (
-          <div className="relative h-auto w-full flex-shrink-0 snap-start">
-            <div className="absolute left-0 top-0 h-full w-full">
-              <ImageAddFilter></ImageAddFilter>
-            </div>
-            {!isLoaded && <div className="absolute left-0 top-0 h-full w-full bg-gray-100"></div>}
-            {images.length > 0 ? (
-              <img
-                src={images[images.length - 1].imageUrl}
-                alt={images[images.length - 1].imageId}
-                className="inset-0 h-full w-full"
-                onLoad={() => setIsLoaded(true)}
-              />
-            ) : (
-              <div className="inset-0 h-full w-full bg-black"></div>
+    <div>
+      {images.length > 0 ? (
+        <div className="flex flex-col items-center justify-end">
+          <div className="flex w-full snap-x snap-mandatory overflow-x-scroll" ref={containerRef}>
+            {images.map((img) => (
+              <div
+                key={img.imageId}
+                onTouchStart={() => startLongPress(img)}
+                onTouchEnd={cancelLongPress}
+                className="relative h-auto w-full flex-shrink-0 snap-start"
+              >
+                {!isLoaded && (
+                  <div className="absolute left-0 top-0 h-full w-full bg-gray-100"></div>
+                )}
+                <img
+                  src={img.imageUrl}
+                  alt={img.imageId}
+                  className="h-full w-full"
+                  onLoad={() => setIsLoaded(true)}
+                />
+              </div>
+            ))}
+            {canAdd && (
+              <div className="relative h-auto w-full flex-shrink-0 snap-start">
+                <div className="absolute left-0 top-0 h-full w-full">
+                  <ImageAddFilter></ImageAddFilter>
+                </div>
+                {!isLoaded && (
+                  <div className="absolute left-0 top-0 h-full w-full bg-gray-100"></div>
+                )}
+                <img
+                  src={images[images.length - 1].imageUrl}
+                  alt={images[images.length - 1].imageId}
+                  className="inset-0 h-full w-full"
+                  onLoad={() => setIsLoaded(true)}
+                />
+              </div>
             )}
           </div>
-        )}
-      </div>
-      <ol className="absolute mb-[3.5rem] flex justify-center gap-2">
-        {images &&
-          images.length > 0 &&
-          images.map((_, index) => (
-            <li
-              key={index}
-              className={`h-[0.375rem] w-[0.375rem] rounded-full ${
-                index === currentIndex ? "bg-primary-normal" : "bg-white"
-              }`}
-            ></li>
-          ))}
-        {canAdd && (
-          <li
-            key={images.length}
-            className={`h-[0.375rem] w-[0.375rem] rounded-full ${
-              images.length === currentIndex ? "bg-primary-normal" : "bg-white"
-            }`}
-          ></li>
-        )}
-      </ol>
+          <ol className="absolute mb-[3.5rem] flex justify-center gap-2">
+            {images.map((_, index) => (
+              <li
+                key={index}
+                className={`h-[0.375rem] w-[0.375rem] rounded-full ${
+                  index === currentIndex ? "bg-primary-normal" : "bg-white"
+                }`}
+              ></li>
+            ))}
+            {canAdd && (
+              <li
+                key={images.length}
+                className={`h-[0.375rem] w-[0.375rem] rounded-full ${
+                  images.length === currentIndex ? "bg-primary-normal" : "bg-white"
+                }`}
+              ></li>
+            )}
+          </ol>
+        </div>
+      ) : (
+        <div className="relative h-auto w-full flex-shrink-0">
+          <div className="absolute left-0 top-0 h-full w-full">
+            <ImageAddFilter></ImageAddFilter>
+          </div>
+          <img src={defaultImage} alt="canvas-diary" className="inset-0 h-full w-full" />
+        </div>
+      )}
     </div>
   );
 };
