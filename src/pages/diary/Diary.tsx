@@ -18,6 +18,7 @@ interface DiaryProps {
   diaryInfo: DiaryInfo;
   carouselHeight: number;
   isMyDiary: boolean;
+  retry: () => void;
 }
 
 const debounceDelay = 300;
@@ -42,7 +43,7 @@ const TOAST_TEXT = {
  * 일기 화면
  * @returns
  */
-const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
+const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeModal, setActiveModal] = useState<string | null>(MODAL_STATE.NONE);
@@ -52,6 +53,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   const [currentHeight] = useState(carouselHeight - 50);
 
   useEffect(() => {
+    console.log(retry);
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -95,6 +97,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
         await deleteImage({ diaryId: diaryInfo.diaryId, imageId: selectedImage.imageId });
         toast(TOAST_TEXT.IMAGE_DELETE);
         setActiveModal(MODAL_STATE.NONE);
+        retry();
       } catch (error) {
         throw error;
       }
