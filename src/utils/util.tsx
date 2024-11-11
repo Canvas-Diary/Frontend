@@ -43,3 +43,38 @@ export const createQueryParams = (params: Record<string, any>) => {
 
   return urlParams.toString();
 };
+
+/**
+ * 이미지 url로부터 이미지 다운로드 링크 생성
+ * @param url
+ * @returns
+ */
+export const toDataURL = (url: string) => {
+  try {
+    return fetch(url)
+      .then((response) => {
+        return response.blob();
+      })
+      .then((blob) => {
+        return URL.createObjectURL(blob);
+      });
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * 이미지 다운로드
+ * @param url
+ * @param fileName
+ */
+export const downloadFile = async (url: string, fileName?: string) => {
+  const a = document.createElement("a");
+  const extension = url.split(".").pop();
+  a.href = await toDataURL(url);
+  a.download = fileName ? `${fileName}.${extension}` : `download.${extension}`;
+
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};

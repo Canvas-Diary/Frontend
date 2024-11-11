@@ -20,23 +20,23 @@ const DiaryLayout = () => {
   const { calculatedHeight } = useMediaQuery();
   const [isMyDiary, setIsMyDiary] = useState(false);
 
+  const fetchDiary = async () => {
+    if (!diaryID) return;
+    try {
+      const data = await getDiaryInfoById(diaryID);
+      if (data.isMine) setIsMyDiary(true);
+      else setIsMyDiary(false);
+
+      setDiaryInfo(data);
+    } catch (error) {
+      setDiaryInfo(null);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchDiary = async () => {
-      if (!diaryID) return;
-      try {
-        const data = await getDiaryInfoById(diaryID);
-        if (data.isMine) setIsMyDiary(true);
-        else setIsMyDiary(false);
-
-        setDiaryInfo(data);
-      } catch (error) {
-        setDiaryInfo(null);
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchDiary();
   }, []);
 
@@ -45,7 +45,12 @@ const DiaryLayout = () => {
       {loading && <DiaryFallback />}
       {!loading &&
         (diaryInfo ? (
-          <Diary diaryInfo={diaryInfo} carouselHeight={calculatedHeight} isMyDiary={isMyDiary} />
+          <Diary
+            diaryInfo={diaryInfo}
+            carouselHeight={calculatedHeight}
+            isMyDiary={isMyDiary}
+            retry={fetchDiary}
+          />
         ) : (
           <NoDiary date={diaryID!} />
         ))}

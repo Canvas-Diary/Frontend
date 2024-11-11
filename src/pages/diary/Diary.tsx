@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ImageCarousel from "../../components/pages/diary/ImageCarousel";
 import Content from "../../components/pages/diary/Content";
 import Appbar from "../../components/common/Appbar";
-import { formatDateWithWeek } from "../../utils/util";
+import { downloadFile, formatDateWithWeek } from "../../utils/util";
 import { DiaryImage, DiaryInfo } from "../../types/types";
 import RoutePaths from "../../constants/routePath";
 import { useEffect, useRef, useState } from "react";
@@ -18,6 +18,7 @@ interface DiaryProps {
   diaryInfo: DiaryInfo;
   carouselHeight: number;
   isMyDiary: boolean;
+  retry: () => void;
 }
 
 const debounceDelay = 300;
@@ -42,7 +43,7 @@ const TOAST_TEXT = {
  * 일기 화면
  * @returns
  */
-const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
+const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeModal, setActiveModal] = useState<string | null>(MODAL_STATE.NONE);
@@ -52,6 +53,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   const [currentHeight] = useState(carouselHeight - 50);
 
   useEffect(() => {
+    console.log(retry);
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -60,8 +62,11 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   }, []);
 
   const onClickDownloadImage = () => {
-    toast(TOAST_TEXT.IMAGE_DOWNLOAD);
-    setActiveModal(MODAL_STATE.NONE);
+    if (selectedImage) {
+      downloadFile(selectedImage?.imageUrl, selectedImage?.imageId);
+      toast(TOAST_TEXT.IMAGE_DOWNLOAD);
+      setActiveModal(MODAL_STATE.NONE);
+    }
   };
 
   const onClickSetMainImage = async () => {
@@ -92,6 +97,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
         await deleteImage({ diaryId: diaryInfo.diaryId, imageId: selectedImage.imageId });
         toast(TOAST_TEXT.IMAGE_DELETE);
         setActiveModal(MODAL_STATE.NONE);
+        retry();
       } catch (error) {
         throw error;
       }
@@ -164,7 +170,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
           menuHandler={isMyDiary ? handleMenuClick : undefined}
         />
       </div>
-      <div className="fixed top-0">
+      <div className="fixed top-0 w-full">
         <ImageCarousel images={diaryInfo.images} canAdd={isMyDiary} onLongPress={handleLongPress} />
       </div>
 
