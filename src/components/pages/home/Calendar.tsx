@@ -76,6 +76,8 @@ const Calendar = ({
         month === new Date().getMonth() &&
         day === new Date().getDate();
 
+      const isSunday = new Date(year, month, day).getDay() === 0;
+
       const matchingDiary = calendarData.diaries.find(
         (diary) =>
           diary.date ===
@@ -90,11 +92,12 @@ const Calendar = ({
         emotion: matchingDiary ? matchingDiary.emotion : "none",
         calendarIcon: matchingDiary ? emotionImages[matchingDiary.emotion] : emotionImages.default,
         isToday: isToday,
+        isSunday: isSunday,
       };
 
       days.push(
         <CalendarDate
-          key={`${year}-${month}-${day}`}
+          key={calendarDataInfo.diaryId}
           onClickDate={onClickDate}
           calendarDataInfo={calendarDataInfo}
         />
@@ -123,7 +126,7 @@ const Calendar = ({
           <div className="flex justify-center py-[0.625rem]" key={index}>
             <div
               key={day}
-              className="flex h-8 w-10 items-center justify-center rounded-full bg-primary-light-2 font-Pretendard text-body-1 font-semibold text-primary-normal"
+              className={`flex h-8 w-10 items-center justify-center rounded-full bg-primary-light-2 font-Pretendard text-body-1 font-semibold text-primary-normal ${day === "일" ? "text-status-negative" : "text-primary-normal"}`}
             >
               {day}
             </div>
