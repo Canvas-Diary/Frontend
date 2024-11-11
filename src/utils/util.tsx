@@ -50,13 +50,17 @@ export const createQueryParams = (params: Record<string, any>) => {
  * @returns
  */
 export const toDataURL = (url: string) => {
-  return fetch(url)
-    .then((response) => {
-      return response.blob();
-    })
-    .then((blob) => {
-      return URL.createObjectURL(blob);
-    });
+  try {
+    return fetch(url)
+      .then((response) => {
+        return response.blob();
+      })
+      .then((blob) => {
+        return URL.createObjectURL(blob);
+      });
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**
@@ -66,8 +70,9 @@ export const toDataURL = (url: string) => {
  */
 export const downloadFile = async (url: string, fileName?: string) => {
   const a = document.createElement("a");
+  const extension = url.split(".").pop();
   a.href = await toDataURL(url);
-  a.download = fileName ?? "download";
+  a.download = fileName ? `${fileName}.${extension}` : `download.${extension}`;
 
   console.log(url);
   document.body.appendChild(a);
