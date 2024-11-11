@@ -53,7 +53,6 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
   const [currentHeight] = useState(carouselHeight - 50);
 
   useEffect(() => {
-    console.log(retry);
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
