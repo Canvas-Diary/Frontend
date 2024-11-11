@@ -74,7 +74,6 @@ export const downloadFile = async (url: string, fileName?: string) => {
   a.href = await toDataURL(url);
   a.download = fileName ? `${fileName}.${extension}` : `download.${extension}`;
 
-  console.log(url);
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
