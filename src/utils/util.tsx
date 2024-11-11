@@ -78,3 +78,13 @@ export const downloadFile = async (url: string, fileName?: string) => {
   a.click();
   document.body.removeChild(a);
 };
+
+/**
+ * 날짜 형식 검사 yyyy-mm-dd
+ * @param dateStr
+ * @returns
+ */
+export const isValidDate = (dateStr: string) => {
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  return regex.test(dateStr);
+};

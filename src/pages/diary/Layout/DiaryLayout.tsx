@@ -7,6 +7,7 @@ import NoDiary from "../NoDiary";
 import MobileLayout from "../../Layout/MobileLayout";
 import DiaryFallback from "../Fallback/DiaryFallback";
 import useMediaQuery from "../../../hooks/useMediaQuery";
+import { isValidDate } from "@/utils/util";
 
 /**
  * 일기 화면 레이아웃
@@ -37,7 +38,8 @@ const DiaryLayout = () => {
   };
 
   useEffect(() => {
-    fetchDiary();
+    if (!isValidDate(diaryID!)) fetchDiary();
+    else setLoading(false);
   }, []);
 
   return (
