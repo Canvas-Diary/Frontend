@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ImageCarousel from "../../components/pages/diary/ImageCarousel";
 import Content from "../../components/pages/diary/Content";
 import Appbar from "../../components/common/Appbar";
-import { formatDateWithWeek } from "../../utils/util";
+import { downloadFile, formatDateWithWeek } from "../../utils/util";
 import { DiaryImage, DiaryInfo } from "../../types/types";
 import RoutePaths from "../../constants/routePath";
 import { useEffect, useRef, useState } from "react";
@@ -60,8 +60,11 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary }: DiaryProps) => {
   }, []);
 
   const onClickDownloadImage = () => {
-    toast(TOAST_TEXT.IMAGE_DOWNLOAD);
-    setActiveModal(MODAL_STATE.NONE);
+    if (selectedImage) {
+      downloadFile(selectedImage?.imageUrl, selectedImage?.imageId);
+      toast(TOAST_TEXT.IMAGE_DOWNLOAD);
+      setActiveModal(MODAL_STATE.NONE);
+    }
   };
 
   const onClickSetMainImage = async () => {
