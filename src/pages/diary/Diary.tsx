@@ -170,7 +170,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
           menuHandler={isMyDiary ? handleMenuClick : undefined}
         />
       </div>
-      <div className="fixed top-0">
+      <div className="fixed top-0 w-full">
         <ImageCarousel images={diaryInfo.images} canAdd={isMyDiary} onLongPress={handleLongPress} />
       </div>
 
