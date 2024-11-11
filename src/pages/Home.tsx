@@ -23,10 +23,15 @@ const Home = () => {
     navigate(`${RoutePaths.diary}/${id}`);
   };
 
+  const updateCalander = async (currentDate: Date) => {
+    const diaries = await getMonthlyDiariesByDate(formatDate(currentDate));
+    setCalendarData(diaries);
+  };
+
   const handlePrevMonth = () => {
     setCurrentDate((prev) => {
       const prevMonth = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
-      calendarInit(prevMonth);
+      updateCalander(prevMonth);
       return prevMonth;
     });
   };
@@ -34,17 +39,17 @@ const Home = () => {
   const handleNextMonth = () => {
     setCurrentDate((prev) => {
       const nextMonth = new Date(prev.getFullYear(), prev.getMonth() + 1, 1);
-      calendarInit(nextMonth);
+      updateCalander(nextMonth);
       return nextMonth;
     });
   };
 
-  const calendarInit = async (currentDate: Date) => {
-    const diaries = await getMonthlyDiariesByDate(formatDate(currentDate));
-    setCalendarData(diaries);
-  };
-
   useEffect(() => {
+    const calendarInit = async (currentDate: Date) => {
+      const diaries = await getMonthlyDiariesByDate(formatDate(currentDate));
+      setCalendarData(diaries);
+    };
+
     calendarInit(new Date());
   }, []);
 
@@ -68,7 +73,7 @@ const Home = () => {
       }
     }
 
-    calendarInit(new Date());
+    updateCalander(new Date());
   }, [navigate]);
 
   return (

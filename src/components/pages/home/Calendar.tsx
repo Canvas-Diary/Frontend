@@ -12,6 +12,7 @@ import shy from "../../../assets/icon/shy.png";
 import surprised from "../../../assets/icon/surprised.png";
 import wonder from "../../../assets/icon/wonder.png";
 import { Diaries } from "../../../types/types";
+import CalendarDate from "./CalendarDate";
 
 const emotionImages: { [key: string]: string } = {
   JOY: happy,
@@ -53,19 +54,11 @@ const Calendar = ({
   const [calendarDays, setCalendarDays] = useState<ReactNode[]>([]);
 
   useEffect(() => {
-    const temp = calendarData.diaries.reduce(
-      (acc, diary) => {
-        const day = new Date(diary.date).getDate();
-        acc[day] = { id: diary.diaryId, emotion: diary.emotion };
-        return acc;
-      },
-      {} as { [day: number]: { id: string; emotion: string } }
-    );
+    const calendar = generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+    setCalendarDays(calendar);
+  }, [calendarData, currentDate]);
 
-    generateCalendar(currentDate.getFullYear(), currentDate.getMonth(), temp);
-  }, [calendarData]);
-
-  const generateCalendar = (year: number, month: number, temp: any) => {
+  const generateCalendar = (year: number, month: number) => {
     const firstDayOfMonth = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstDayOfWeek = firstDayOfMonth.getDay();
@@ -83,33 +76,32 @@ const Calendar = ({
         month === new Date().getMonth() &&
         day === new Date().getDate();
 
-      const diary = temp[day];
-      const emotionImage = diary ? emotionImages[diary.emotion] : emotionImages.default;
-      const id = diary ? diary.id : `${year}-${month + 1}-${String(day).padStart(2, "0")}`;
+      const matchingDiary = calendarData.diaries.find(
+        (diary) =>
+          diary.date ===
+          `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`
+      );
+
+      const calendarDataInfo = {
+        date: day,
+        diaryId: matchingDiary
+          ? matchingDiary.diaryId
+          : `${year}-${month + 1}-${String(day).padStart(2, "0")}`,
+        emotion: matchingDiary ? matchingDiary.emotion : "none",
+        calendarIcon: matchingDiary ? emotionImages[matchingDiary.emotion] : emotionImages.default,
+        isToday: isToday,
+      };
 
       days.push(
-        <div
-          key={day}
-          className={`flex cursor-pointer flex-col items-center gap-300`}
-          onClick={() => handleDayClick(id)}
-        >
-          <div className="flex h-11 w-11 items-center justify-center rounded-100">
-            <img src={emotionImage} alt={diary ? diary.emotion : "null"} />
-          </div>
-          <div
-            className={`text-center text-detail-1 font-regular ${isToday && "w-10 rounded-300 bg-primary-normal font-BinggraeBold text-white"}`}
-          >
-            {day}
-          </div>
-        </div>
+        <CalendarDate
+          key={`${year}-${month}-${day}`}
+          onClickDate={onClickDate}
+          calendarDataInfo={calendarDataInfo}
+        />
       );
     }
 
-    setCalendarDays(days);
-  };
-
-  const handleDayClick = (id: string) => {
-    onClickDate(id);
+    return days;
   };
 
   return (
