@@ -18,7 +18,7 @@ const Explore = () => {
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const initialSelected =
-    (localStorage.getItem("exploreSelected") as "LATEST" | "POPULARITY") || "LATEST";
+    (sessionStorage.getItem("exploreSelected") as "LATEST" | "POPULARITY") || "LATEST";
   const [selected, setSelected] = useState<"LATEST" | "POPULARITY">(initialSelected);
 
   /**
@@ -62,7 +62,7 @@ const Explore = () => {
    * @param selected
    */
   const handleChangeSelected = (selected: "LATEST" | "POPULARITY") => {
-    localStorage.setItem("exploreSelected", selected);
+    sessionStorage.setItem("exploreSelected", selected);
     setSelected(selected);
     navigate(`?order=${selected}`);
   };
