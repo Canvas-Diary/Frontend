@@ -122,6 +122,16 @@ const Album = () => {
   }, [window.location.search]);
 
   /**
+   * 스크롤 위치 불러오기
+   */
+  useEffect(() => {
+    const savedScrollTop = sessionStorage.getItem("scrollPosition");
+    if (savedScrollTop && scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = parseInt(savedScrollTop);
+    }
+  }, []);
+
+  /**
    * 다음 페이지 로드
    */
   useEffect(() => {
