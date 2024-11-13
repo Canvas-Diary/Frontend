@@ -42,17 +42,50 @@ const Explore = () => {
     initialPageParam: 0,
   });
 
+  const handleChangeSelected = (selected: "LATEST" | "POPULARITY") => {
+    setSelected(selected);
+  };
+
   useEffect(() => {
-    console.log("isInView", isInView);
+    const savedScrollTop = localStorage.getItem(`exploreScrollTop_${selected}`);
+    if (savedScrollTop && scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = parseInt(savedScrollTop);
+    }
+  }, [selected]);
+
+  // 스크롤 위치 저장
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollContainerRef.current) {
+        const scrollTop = scrollContainerRef.current.scrollTop;
+        const otherSelected = selected === "LATEST" ? "POPULARITY" : "LATEST";
+        const otherScrollTop = localStorage.getItem(`exploreScrollTop_${otherSelected}`);
+        localStorage.setItem(`exploreScrollTop_${selected}`, scrollTop.toString());
+
+        //개선 필요
+        if (scrollTop > 50) {
+          if (otherScrollTop !== null && parseInt(otherScrollTop) < 50) {
+            localStorage.setItem(`exploreScrollTop_${otherSelected}`, "50");
+          }
+        } else {
+          if (otherScrollTop !== null && parseInt(otherScrollTop) <= 50) {
+            localStorage.setItem(`exploreScrollTop_${otherSelected}`, scrollTop.toString());
+          }
+        }
+      }
+    };
+    const scrollContainer = scrollContainerRef.current;
+    scrollContainer?.addEventListener("scroll", handleScroll);
+
+    // cleanup listener
+    return () => {
+      scrollContainer?.removeEventListener("scroll", handleScroll);
+    };
+  }, [selected]);
+
+  useEffect(() => {
     if (isInView && hasNextPage && !isFetchingNextPage) fetchNextPage();
   }, [isInView]);
-
-  const handleChangeSelected = (order: "LATEST" | "POPULARITY") => {
-    setSelected(order);
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = 0;
-    }
-  };
 
   return (
     <div className="flex flex-grow flex-col overflow-scroll" ref={scrollContainerRef}>
