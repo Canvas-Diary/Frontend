@@ -63,7 +63,7 @@ const Content = ({ date, emotion, likedCount, isLiked, content, setAppbar }: Con
   useEffect(() => {
     const handleScroll = () => {
       if (stickyRef.current) {
-        const top = stickyRef.current.getBoundingClientRect().top - 20;
+        const top = stickyRef.current.getBoundingClientRect().top - 50;
         setAppbar(top > 0);
       }
     };
