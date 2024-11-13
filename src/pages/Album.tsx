@@ -1,12 +1,10 @@
 import Tag from "../components/common/Tag";
 import SearchBar from "../components/pages/album/SearchBar";
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Appbar from "../components/common/Appbar";
 import { getSearchedDiaries } from "../api/api";
 import ThumbnailGrid from "../components/common/ThumbnailGrid";
-import { SearchedDiary } from "../types/types";
 import RoutePaths from "../constants/routePath";
 import useInView from "../hooks/useInView";
 import useScrollPosition from "../hooks/useScrollPosition";
@@ -39,6 +37,11 @@ const Album = () => {
   const [searchContent, setSearchContent] = useState<string>("");
   const { isInView, elementRef } = useInView<HTMLDivElement>(0.7);
 
+  /**
+   * 일기 목록 가져오기
+   * @param param0
+   * @returns
+   */
   const fetchDiaries = async ({ pageParam }: { pageParam: number }) => {
     const response = await getSearchedDiaries({
       page: pageParam,
@@ -50,6 +53,9 @@ const Album = () => {
     return response;
   };
 
+  /**
+   * useInfiniteQuery
+   */
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ["albumDiaries", selectedTag, searchContent],
     queryFn: fetchDiaries,
@@ -103,6 +109,9 @@ const Album = () => {
     }
   }, [currentY]);
 
+  /**
+   * url 변경 시 적용
+   */
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tag = params.get("tag");
@@ -112,11 +121,14 @@ const Album = () => {
     setSearchContent(search || "");
   }, [window.location.search]);
 
+  /**
+   * 다음 페이지 로드
+   */
   useEffect(() => {
     if (isInView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [isInView, fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [isInView]);
 
   const onClickThumbnail = (diaryId: string) => {
     navigate(`${RoutePaths.diary}/${diaryId}`);

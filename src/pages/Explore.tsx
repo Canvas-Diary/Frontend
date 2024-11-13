@@ -20,10 +20,19 @@ const Explore = () => {
   const initialSelected = (params.get("order") as "LATEST" | "POPULARITY") || "LATEST";
   const [selected, setSelected] = useState<"LATEST" | "POPULARITY">(initialSelected);
 
+  /**
+   * 일기 조회 화면으로 이동
+   * @param diaryId
+   */
   const onClickThumbnail = (diaryId: string) => {
     navigate(`${RoutePaths.diary}/${diaryId}`);
   };
 
+  /**
+   * 로딩할 페이지 일기 목록 가져오기
+   * @param param0
+   * @returns
+   */
   const fetchDiaries = async ({ pageParam }: { pageParam: number }) => {
     const response = await getExploreDiaries({
       page: pageParam,
@@ -33,6 +42,9 @@ const Explore = () => {
     return response;
   };
 
+  /**
+   * useInfiniteQuery
+   */
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ["exploreDiaries", selected],
     queryFn: fetchDiaries,
@@ -44,11 +56,18 @@ const Explore = () => {
     initialPageParam: 0,
   });
 
+  /**
+   * selected 변경
+   * @param selected
+   */
   const handleChangeSelected = (selected: "LATEST" | "POPULARITY") => {
     setSelected(selected);
     navigate(`?order=${selected}`);
   };
 
+  /**
+   * selected 변경 시 적용
+   */
   useEffect(() => {
     const savedScrollTop = sessionStorage.getItem(`exploreScrollTop_${selected}`);
     if (savedScrollTop && scrollContainerRef.current) {
@@ -56,6 +75,9 @@ const Explore = () => {
     }
   }, [selected]);
 
+  /**
+   * url 변경 시 selected 적용
+   */
   useEffect(() => {
     const param = params.get("order");
     if (param === "LATEST" || param === "POPULARITY") setSelected(param);
@@ -63,7 +85,9 @@ const Explore = () => {
     } else throw Error;
   }, [window.location.search]);
 
-  // 스크롤 위치 저장
+  /**
+   * 스크롤 위치 추적, 저장
+   */
   useEffect(() => {
     const handleScroll = () => {
       if (scrollContainerRef.current) {
@@ -74,7 +98,7 @@ const Explore = () => {
 
         //개선 필요
         if (scrollTop > 50) {
-          if (otherScrollTop !== null && parseInt(otherScrollTop) < 50) {
+          if (otherScrollTop === null || parseInt(otherScrollTop) < 50) {
             sessionStorage.setItem(`exploreScrollTop_${otherSelected}`, "50");
           }
         }
@@ -83,12 +107,14 @@ const Explore = () => {
     const scrollContainer = scrollContainerRef.current;
     scrollContainer?.addEventListener("scroll", handleScroll);
 
-    // cleanup listener
     return () => {
       scrollContainer?.removeEventListener("scroll", handleScroll);
     };
   }, [selected]);
 
+  /**
+   * 다음 페이지 로드
+   */
   useEffect(() => {
     if (isInView && hasNextPage && !isFetchingNextPage) fetchNextPage();
   }, [isInView]);
