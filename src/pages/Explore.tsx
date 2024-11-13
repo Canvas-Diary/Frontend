@@ -17,7 +17,8 @@ const Explore = () => {
   const { isInView, elementRef } = useInView<HTMLDivElement>(0.7);
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
-  const initialSelected = (params.get("order") as "LATEST" | "POPULARITY") || "LATEST";
+  const initialSelected =
+    (localStorage.getItem("exploreSelected") as "LATEST" | "POPULARITY") || "LATEST";
   const [selected, setSelected] = useState<"LATEST" | "POPULARITY">(initialSelected);
 
   /**
@@ -61,6 +62,7 @@ const Explore = () => {
    * @param selected
    */
   const handleChangeSelected = (selected: "LATEST" | "POPULARITY") => {
+    localStorage.setItem("exploreSelected", selected);
     setSelected(selected);
     navigate(`?order=${selected}`);
   };
