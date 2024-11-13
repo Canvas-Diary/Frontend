@@ -11,6 +11,7 @@ interface ContentProps {
   likedCount: number;
   isLiked: boolean;
   content: string;
+  setAppbar: (value: boolean) => void;
 }
 
 const debounceDelay = 300;
@@ -34,13 +35,15 @@ const tagsMap: { [key: string]: string } = {
  * @param likedCount 좋아요 개수
  * @param isLiked 좋아요 누른 여부
  * @param content 일기 내용
+ * @param setAppbar
  * @returns
  */
-const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) => {
+const Content = ({ date, emotion, likedCount, isLiked, content, setAppbar }: ContentProps) => {
   const [currentIsLiked, setCurrentIsLiked] = useState(isLiked);
   const [currentLikedCount, setCurrentLikedCount] = useState(likedCount);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { diaryID } = useParams<{ diaryID: string }>();
+  const stickyRef = useRef<HTMLDivElement>(null);
 
   const handleOnClick = () => {
     setCurrentIsLiked((prev) => !prev);
@@ -58,6 +61,18 @@ const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) 
   };
 
   useEffect(() => {
+    const handleScroll = () => {
+      if (stickyRef.current) {
+        const top = stickyRef.current.getBoundingClientRect().top - 20;
+        setAppbar(top > 0);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -66,23 +81,25 @@ const Content = ({ date, emotion, likedCount, isLiked, content }: ContentProps) 
   }, []);
 
   return (
-    <div className="flex h-full flex-col items-center gap-600 rounded-t-400 bg-white px-800 pb-10 pt-700 font-Binggrae shadow-default">
-      <div className="flex w-full items-center justify-between">
-        <div className="flex flex-col gap-300">
-          <div className="font-BinggraeBold text-title-2">{date}</div>
-          <div>
-            <Tag text={tagsMap[emotion]} selected={true}></Tag>
+    <div className="flex h-full flex-col items-center gap-600 rounded-t-400 bg-white px-800 pb-10 font-Binggrae shadow-default">
+      <div className="sticky top-0 flex w-full flex-col gap-600 bg-white pt-700" ref={stickyRef}>
+        <div className="flex w-full items-center justify-between">
+          <div className="flex flex-col gap-300">
+            <div className="font-BinggraeBold text-title-2">{date}</div>
+            <div>
+              <Tag text={tagsMap[emotion]} selected={true}></Tag>
+            </div>
+          </div>
+          <div
+            className={`${currentIsLiked ? "text-primary-normal" : "text-gray-200"} flex flex-col items-center justify-center`}
+            onClick={handleOnClick}
+          >
+            <HeartIcon />
+            <div className="text-detail-1">{currentLikedCount}</div>
           </div>
         </div>
-        <div
-          className={`${currentIsLiked ? "text-primary-normal" : "text-gray-200"} flex flex-col items-center justify-center`}
-          onClick={handleOnClick}
-        >
-          <HeartIcon />
-          <div className="text-detail-1">{currentLikedCount}</div>
-        </div>
+        <Divider />
       </div>
-      <Divider />
       <div className="w-full whitespace-pre-wrap text-start text-body-2 font-regular">
         {content}
       </div>

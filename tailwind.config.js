@@ -131,6 +131,16 @@ export default {
           transform: "translateY(0)",
         },
       },
+      fadeInSlideDown: {
+        "0%": {
+          opacity: "0",
+          transform: "translateY(-1rem)",
+        },
+        "100%": {
+          opacity: "1",
+          transform: "translateY(0)",
+        },
+      },
       fadeIn: {
         "0%": {
           opacity: "0",
@@ -142,6 +152,7 @@ export default {
     },
     animation: {
       fadeInSlideUp: "fadeInSlideUp 0.5s ease-out forwards",
+      fadeInSlideDown: "fadeInSlideDown 0.5s ease-out forwards",
       fadeIn: "fadeIn 0.5s ease-out forwards",
     },
     backdropBlur: {

@@ -51,6 +51,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
   const [isPublic, setIsPublic] = useState(diaryInfo.isPublic);
   const [selectedImage, setSelectedImage] = useState<DiaryImage | null>(null);
   const [currentHeight] = useState(carouselHeight - 50);
+  const [isAppbarVisible, setIsAppbarVisible] = useState(true);
 
   useEffect(() => {
     return () => {
@@ -155,20 +156,22 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
             "flex w-fit justify-center rounded-full border-none bg-primary-normal px-600 py-300 font-Binggrae text-body-2 text-white",
         }}
       />
-      <div className="fixed top-0 z-50 w-full">
-        <Appbar
-          backHandler={() => {
-            if (location.state?.from === RoutePaths.diaryDraw) {
-              navigate("/");
-            } else if (location.state?.isModified === true) {
-              navigate("/");
-            } else {
-              navigate(-1);
-            }
-          }}
-          menuHandler={isMyDiary ? handleMenuClick : undefined}
-        />
-      </div>
+      {isAppbarVisible && (
+        <div className={`animate-fadeInSlideDown fixed top-0 z-50 w-full`}>
+          <Appbar
+            backHandler={() => {
+              if (location.state?.from === RoutePaths.diaryDraw) {
+                navigate("/");
+              } else if (location.state?.isModified === true) {
+                navigate("/");
+              } else {
+                navigate(-1);
+              }
+            }}
+            menuHandler={isMyDiary ? handleMenuClick : undefined}
+          />
+        </div>
+      )}
       <div className="fixed top-0 w-full">
         <ImageCarousel images={diaryInfo.images} canAdd={isMyDiary} onLongPress={handleLongPress} />
       </div>
@@ -181,6 +184,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
           likedCount={diaryInfo.likedCount}
           isLiked={diaryInfo.isLiked}
           content={diaryInfo.content}
+          setAppbar={setIsAppbarVisible}
         />
       </div>
 
