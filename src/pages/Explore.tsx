@@ -1,95 +1,67 @@
 import ThumbnailGrid from "../components/common/ThumbnailGrid";
 import Appbar from "../components/common/Appbar";
-import { useEffect, useRef, useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import RoutePaths from "../constants/routePath";
 import { getExploreDiaries } from "../api/api";
-import { SearchedDiary } from "../types/types";
 import useInView from "../hooks/useInView";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 const buttonPositions = {
   LATEST: "left-0",
   POPULARITY: "left-1/2",
 };
 
-/**
- * 탐색 화면
- * @returns
- */
 const Explore = () => {
   const [selected, setSelected] = useState<"LATEST" | "POPULARITY">("LATEST");
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { isInView, elementRef } = useInView<HTMLDivElement>(0.7);
-  const [page, setPage] = useState(0);
-  const [isEnd, setIsEnd] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
-  const [diaries, setDiaries] = useState<SearchedDiary[]>([]);
   const navigate = useNavigate();
 
   const onClickThumbnail = (diaryId: string) => {
     navigate(`${RoutePaths.diary}/${diaryId}`);
   };
 
-  useEffect(() => {
-    /**
-     * 검색 조건에 맞는 초기 AlbumData 설정
-     */
-    const fetchInitDiaries = async () => {
-      // selected 변경 시 젤 위로 스크롤
-      if (scrollContainerRef.current) scrollContainerRef.current.scrollTop = 0;
-      setIsSearching(true);
-      setPage(0);
-      setIsEnd(false);
+  const fetchDiaries = async ({ pageParam }: { pageParam: number }) => {
+    const response = await getExploreDiaries({
+      page: pageParam,
+      size: 12,
+      order: selected,
+    });
+    return response;
+  };
 
-      const response = await getExploreDiaries({
-        page: 0,
-        size: 12,
-        order: selected,
-      });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: ["exploreDiaries", selected],
+    queryFn: fetchDiaries,
 
-      setDiaries(response.content);
-      setIsSearching(false);
-      setIsEnd(!response.hasNext);
-    };
-
-    fetchInitDiaries();
-  }, [selected]);
+    getNextPageParam: (lastPage) => {
+      return lastPage.hasNext ? lastPage.number + 1 : undefined;
+    },
+    select: (data) => (data.pages ?? []).flatMap((page) => page.content),
+    initialPageParam: 0,
+  });
 
   useEffect(() => {
-    /**
-     * 검색 조건에 맞는 newPage AlbumData 추가
-     * @param newPage 새로 추가할 AlbumData Page
-     */
-    const loadPageData = async (newPage: number) => {
-      const response = await getExploreDiaries({
-        page: newPage,
-        size: 12,
-        order: selected,
-      });
+    console.log("isInView", isInView);
+    if (isInView && hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }, [isInView]);
 
-      const newPageData = response.content;
-      setDiaries((prev) => [...prev, ...newPageData]);
-
-      if (!response.hasNext) {
-        setIsEnd(true);
-      }
-    };
-
-    if (isInView && !isSearching) {
-      const newPage = page + 1;
-      setPage(newPage);
-      loadPageData(newPage);
+  const handleChangeSelected = (order: "LATEST" | "POPULARITY") => {
+    setSelected(order);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
     }
-  }, [isInView, isSearching]);
+  };
 
   return (
     <div className="flex flex-grow flex-col overflow-scroll" ref={scrollContainerRef}>
-      <Appbar text="일기 공유"></Appbar>
+      <Appbar text="일기 공유" />
       <div className="flex flex-col px-700">
         <div className="sticky top-0 z-10 flex w-full justify-around gap-500 bg-white font-BinggraeBold text-body-2">
           <button
             className="flex w-full items-center justify-center py-400"
-            onClick={() => setSelected("LATEST")}
+            onClick={() => handleChangeSelected("LATEST")}
           >
             <div className={selected === "LATEST" ? "text-primary-normal" : "text-gray-400"}>
               최신순
@@ -97,7 +69,7 @@ const Explore = () => {
           </button>
           <button
             className="flex w-full items-center justify-center py-400"
-            onClick={() => setSelected("POPULARITY")}
+            onClick={() => handleChangeSelected("POPULARITY")}
           >
             <div className={selected === "POPULARITY" ? "text-primary-normal" : "text-gray-400"}>
               인기순
@@ -110,17 +82,20 @@ const Explore = () => {
           </div>
           <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100" />
         </div>
-        {diaries && <ThumbnailGrid diaries={diaries} onClickThumbnail={onClickThumbnail} />}
-        {!isEnd && diaries && (
-          <div
-            className="grid -translate-y-600 grid-cols-3 place-items-center gap-300 pb-800"
-            ref={elementRef}
-          >
-            <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-            <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-            <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-          </div>
-        )}
+        {data && <ThumbnailGrid diaries={data} onClickThumbnail={onClickThumbnail} />}
+
+        <div
+          className="grid -translate-y-600 grid-cols-3 place-items-center gap-300 pb-800"
+          ref={elementRef}
+        >
+          {hasNextPage && (
+            <>
+              <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
+              <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
+              <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
