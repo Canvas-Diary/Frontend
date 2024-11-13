@@ -50,7 +50,7 @@ const Explore = () => {
   };
 
   useEffect(() => {
-    const savedScrollTop = localStorage.getItem(`exploreScrollTop_${selected}`);
+    const savedScrollTop = sessionStorage.getItem(`exploreScrollTop_${selected}`);
     if (savedScrollTop && scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = parseInt(savedScrollTop);
     }
@@ -69,13 +69,13 @@ const Explore = () => {
       if (scrollContainerRef.current) {
         const scrollTop = scrollContainerRef.current.scrollTop;
         const otherSelected = selected === "LATEST" ? "POPULARITY" : "LATEST";
-        const otherScrollTop = localStorage.getItem(`exploreScrollTop_${otherSelected}`);
-        localStorage.setItem(`exploreScrollTop_${selected}`, scrollTop.toString());
+        const otherScrollTop = sessionStorage.getItem(`exploreScrollTop_${otherSelected}`);
+        sessionStorage.setItem(`exploreScrollTop_${selected}`, scrollTop.toString());
 
         //개선 필요
         if (scrollTop > 50) {
           if (otherScrollTop !== null && parseInt(otherScrollTop) < 50) {
-            localStorage.setItem(`exploreScrollTop_${otherSelected}`, "50");
+            sessionStorage.setItem(`exploreScrollTop_${otherSelected}`, "50");
           }
         }
       }
