@@ -13,10 +13,12 @@ const buttonPositions = {
 };
 
 const Explore = () => {
-  const [selected, setSelected] = useState<"LATEST" | "POPULARITY">("LATEST");
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { isInView, elementRef } = useInView<HTMLDivElement>(0.7);
   const navigate = useNavigate();
+  const params = new URLSearchParams(location.search);
+  const initialSelected = (params.get("order") as "LATEST" | "POPULARITY") || "LATEST";
+  const [selected, setSelected] = useState<"LATEST" | "POPULARITY">(initialSelected);
 
   const onClickThumbnail = (diaryId: string) => {
     navigate(`${RoutePaths.diary}/${diaryId}`);
@@ -44,6 +46,7 @@ const Explore = () => {
 
   const handleChangeSelected = (selected: "LATEST" | "POPULARITY") => {
     setSelected(selected);
+    navigate(`?order=${selected}`);
   };
 
   useEffect(() => {
@@ -52,6 +55,13 @@ const Explore = () => {
       scrollContainerRef.current.scrollTop = parseInt(savedScrollTop);
     }
   }, [selected]);
+
+  useEffect(() => {
+    const param = params.get("order");
+    if (param === "LATEST" || param === "POPULARITY") setSelected(param);
+    else if (param === null) {
+    } else throw Error;
+  }, [window.location.search]);
 
   // 스크롤 위치 저장
   useEffect(() => {
@@ -66,10 +76,6 @@ const Explore = () => {
         if (scrollTop > 50) {
           if (otherScrollTop !== null && parseInt(otherScrollTop) < 50) {
             localStorage.setItem(`exploreScrollTop_${otherSelected}`, "50");
-          }
-        } else {
-          if (otherScrollTop !== null && parseInt(otherScrollTop) <= 50) {
-            localStorage.setItem(`exploreScrollTop_${otherSelected}`, scrollTop.toString());
           }
         }
       }
