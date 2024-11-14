@@ -15,7 +15,7 @@ const EmotionStats = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="week" className="flex flex-col gap-800">
-          <div>월 선택</div>
+          <div>주 선택</div>
           <div>
             <EmotionBarChart></EmotionBarChart>
           </div>
@@ -23,8 +23,14 @@ const EmotionStats = () => {
             <EmotionPie></EmotionPie>
           </div>
         </TabsContent>
-        <TabsContent value="month">
-          <div></div>
+        <TabsContent value="month" className="flex flex-col gap-800">
+          <div>월 선택</div>
+          <div>
+            <EmotionBarChart></EmotionBarChart>
+          </div>
+          <div>
+            <EmotionPie></EmotionPie>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
