@@ -1,3 +1,4 @@
+import EmotionBarChart from "@/components/pages/stats/EmotionBarChart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const EmotionStats = () => {
@@ -16,7 +17,7 @@ const EmotionStats = () => {
           <div>
             <div>월 선택</div>
             <div>
-              <div>막대 그래프</div>
+              <EmotionBarChart></EmotionBarChart>
             </div>
             <div>원 그래프</div>
           </div>
