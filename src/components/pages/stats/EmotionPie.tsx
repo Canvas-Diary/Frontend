@@ -42,19 +42,19 @@ const chartConfig = {
   },
   JOY: {
     label: "기쁨",
-    color: "hsl(var(--chart-1))",
+    color: "#FFED4C",
   },
   SADNESS: {
     label: "슬픔",
-    color: "hsl(var(--chart-2))",
+    color: "#33A1FF",
   },
   ANGER: {
     label: "분노",
-    color: "hsl(var(--chart-3))",
+    color: "#FF5757",
   },
   FEAR: {
     label: "공포",
-    color: "hsl(var(--chart-4))",
+    color: "#626262",
   },
   DISGUST: {
     label: "혐오",
@@ -62,15 +62,15 @@ const chartConfig = {
   },
   SHAME: {
     label: "수치",
-    color: "hsl(var(--chart-2))",
+    color: "#FF60FC",
   },
   SURPRISE: {
     label: "놀람",
-    color: "hsl(var(--chart-3))",
+    color: "#FF8336",
   },
   CURIOSITY: {
     label: "궁금",
-    color: "hsl(var(--chart-4))",
+    color: "#2DDB44",
   },
   NONE: {
     label: "무난",

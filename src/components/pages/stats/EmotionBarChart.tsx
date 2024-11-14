@@ -26,16 +26,16 @@ const chartData = [
 ];
 const chartConfig = {
   positive: {
-    label: "positive",
-    color: "hsl(var(--chart-1))",
+    label: "긍정",
+    color: "#1FD18C",
   },
   negative: {
-    label: "negative",
-    color: "hsl(var(--chart-2))",
+    label: "부정",
+    color: "#E85E5D",
   },
   neutral: {
-    label: "neutral",
-    color: "hsl(var(--chart-3))",
+    label: "중립",
+    color: "#64ACF3",
   },
 } satisfies ChartConfig;
 
