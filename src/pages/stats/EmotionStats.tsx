@@ -12,8 +12,18 @@ const EmotionStats = () => {
             1달
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="week">Make changes to your account here.</TabsContent>
-        <TabsContent value="month">Change your password here.</TabsContent>
+        <TabsContent value="week">
+          <div>
+            <div>월 선택</div>
+            <div>
+              <div>막대 그래프</div>
+            </div>
+            <div>원 그래프</div>
+          </div>
+        </TabsContent>
+        <TabsContent value="month">
+          <div></div>
+        </TabsContent>
       </Tabs>
     </div>
   );
