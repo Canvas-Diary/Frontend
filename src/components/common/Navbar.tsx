@@ -25,7 +25,10 @@ const Navbar = ({ NavList }: NavBarProps) => {
           <li
             key={element.label}
             className={`w-[4.375rem] ${
-              currentPath === element.path ? "text-primary-normal" : "text-gray-100"
+              currentPath === element.path ||
+              (element.path !== "/" && currentPath.startsWith(element.path))
+                ? "text-primary-normal"
+                : "text-gray-100"
             }`}
           >
             <Link to={element.path} className="flex flex-col items-center justify-center gap-200">
