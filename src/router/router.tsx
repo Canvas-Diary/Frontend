@@ -10,6 +10,7 @@ import AlbumFallback from "../components/pages/album/fallback/AlbumFallback";
 import DiaryFallback from "../pages/diary/Fallback/DiaryFallback";
 import DiaryModifyFlowLayout from "@/pages/write/Layout/DiaryModifyFlowLayout";
 import Modify from "@/pages/write/Modify";
+import StatsLayout from "@/pages/stats/Layout/StatsLayout";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
@@ -67,6 +68,14 @@ const routes: RouteObject[] = [
         element: (
           <Suspense fallback={<PageFallback />}>
             <Mypage />
+          </Suspense>
+        ),
+      },
+      {
+        path: `${RoutePaths.mypage}/stats`,
+        element: (
+          <Suspense fallback={<PageFallback />}>
+            <StatsLayout />
           </Suspense>
         ),
       },
