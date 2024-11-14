@@ -84,7 +84,7 @@ export function Component() {
       <CardContent className="flex-1">
         <ChartContainer config={chartConfig} className="mx-auto min-h-[400px] w-full">
           <PieChart>
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} trigger="click" />
             <Pie
               data={chartData}
               dataKey="diaryCount"
