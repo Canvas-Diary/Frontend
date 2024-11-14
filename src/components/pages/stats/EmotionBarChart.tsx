@@ -10,14 +10,10 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartData = [
-  { month: "January", positive: 1, neutral: 3, negative: 2 },
-  { month: "February", positive: 1, neutral: 1, negative: 4 },
-  { month: "March", positive: 2, neutral: 2, negative: 3 },
-  { month: "April", positive: 1, neutral: 1, negative: 0 },
-  { month: "May", positive: 2, neutral: 4, negative: 1 },
-  { month: "June", positive: 3, neutral: 1, negative: 2 },
-];
+interface EmotionBarChartProps {
+  chartData: { dataKey: string; positive: number; negative: number; neutral: number }[];
+}
+
 const chartConfig = {
   positive: {
     label: "긍정",
@@ -33,7 +29,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const EmotionBarChart = () => {
+const EmotionBarChart = ({ chartData }: EmotionBarChartProps) => {
   return (
     <Card>
       <CardContent>
@@ -41,13 +37,13 @@ const EmotionBarChart = () => {
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="dataKey"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
               tickFormatter={(value) => value.slice(0, 3)}
             />
-            <YAxis tickLine={false} axisLine={false} width={12} />
+            <YAxis tickLine={false} axisLine={false} width={20} />
             <ChartTooltip content={<ChartTooltipContent />} trigger="click" />
             <ChartLegend content={<ChartLegendContent />} />
             <Bar

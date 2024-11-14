@@ -10,17 +10,9 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartData = [
-  { emotion: "JOY", diaryCount: 275, fill: "var(--color-JOY)" },
-  { emotion: "SADNESS", diaryCount: 200, fill: "var(--color-SADNESS)" },
-  { emotion: "ANGER", diaryCount: 187, fill: "var(--color-ANGER)" },
-  { emotion: "FEAR", diaryCount: 173, fill: "var(--color-FEAR)" },
-  { emotion: "DISGUST", diaryCount: 90, fill: "var(--color-DISGUST)" },
-  { emotion: "SHAME", diaryCount: 200, fill: "var(--color-SHAME)" },
-  { emotion: "SURPRISE", diaryCount: 187, fill: "var(--color-SURPRISE)" },
-  { emotion: "CURIOSITY", diaryCount: 173, fill: "var(--color-CURIOSITY)" },
-  { emotion: "NONE", diaryCount: 90, fill: "var(--color-NONE)" },
-];
+interface EmotionPieChartProps {
+  chartData: { emotion: string; diaryCount: number; fill: string }[];
+}
 
 const chartConfig = {
   diaryCount: {
@@ -64,7 +56,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const EmotionPie = () => {
+const EmotionPieChart = ({ chartData }: EmotionPieChartProps) => {
   return (
     <Card>
       <CardContent className="flex-1">
@@ -88,4 +80,4 @@ const EmotionPie = () => {
   );
 };
 
-export default EmotionPie;
+export default EmotionPieChart;
