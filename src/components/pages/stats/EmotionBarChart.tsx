@@ -10,12 +10,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const EmotionBarChart = () => {
-  return <Component></Component>;
-};
-
-export default EmotionBarChart;
-
 const chartData = [
   { month: "January", positive: 1, neutral: 3, negative: 2 },
   { month: "February", positive: 1, neutral: 1, negative: 4 },
@@ -39,7 +33,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function Component() {
+const EmotionBarChart = () => {
   return (
     <Card>
       <CardContent>
@@ -76,4 +70,6 @@ export function Component() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default EmotionBarChart;

@@ -1,14 +1,6 @@
-import { TrendingUp } from "lucide-react";
 import { Pie, PieChart } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -17,12 +9,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-
-const EmotionPie = () => {
-  return <Component></Component>;
-};
-
-export default EmotionPie;
 
 const chartData = [
   { emotion: "JOY", diaryCount: 275, fill: "var(--color-JOY)" },
@@ -78,7 +64,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function Component() {
+const EmotionPie = () => {
   return (
     <Card>
       <CardContent className="flex-1">
@@ -100,4 +86,6 @@ export function Component() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default EmotionPie;
