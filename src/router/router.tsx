@@ -8,21 +8,22 @@ import DiaryWriteFlowLayout from "../pages/write/Layout/DiaryWriteFlowLayout";
 import { ErrorBoundary } from "react-error-boundary";
 import AlbumFallback from "../components/pages/album/fallback/AlbumFallback";
 import DiaryFallback from "../pages/diary/Fallback/DiaryFallback";
-import DiaryModifyFlowLayout from "@/pages/write/Layout/DiaryModifyFlowLayout";
-import Modify from "@/pages/write/Modify";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
 const AlbumPage = lazy(() => import("../pages/Album"));
 const Mypage = lazy(() => import("../pages/Mypage"));
 const Login = lazy(() => import("../pages/Login"));
+const Stats = lazy(() => import("@/pages/stats/Layout/StatsLayout"));
 
 const DiaryLayout = lazy(() => import("../pages/diary/Layout/DiaryLayout"));
+const DiaryModifyFlowLayout = lazy(() => import("@/pages/write/Layout/DiaryModifyFlowLayout"));
 
 const Draw = lazy(() => import("../pages/write/Draw"));
 const Review = lazy(() => import("../pages/write/Review"));
 const Style = lazy(() => import("../pages/write/Style"));
 const Write = lazy(() => import("../pages/write/Write"));
+const Modify = lazy(() => import("@/pages/write/Modify"));
 
 const ErrorPage = lazy(() => import("../pages/error/Error"));
 const NotFoundErrorPage = lazy(() => import("../pages/error/NotFoundError"));
@@ -67,6 +68,14 @@ const routes: RouteObject[] = [
         element: (
           <Suspense fallback={<PageFallback />}>
             <Mypage />
+          </Suspense>
+        ),
+      },
+      {
+        path: `${RoutePaths.mypage}/stats`,
+        element: (
+          <Suspense fallback={<PageFallback />}>
+            <Stats />
           </Suspense>
         ),
       },

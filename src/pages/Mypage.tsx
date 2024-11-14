@@ -2,6 +2,7 @@ import { useState } from "react";
 import Appbar from "../components/common/Appbar";
 import Divider from "../components/common/Divider";
 import Toggle from "../components/common/Toggle";
+import { useNavigate } from "react-router-dom";
 
 /**
  * 마이페이지 화면
@@ -9,6 +10,7 @@ import Toggle from "../components/common/Toggle";
  */
 const Mypage = () => {
   const [dark, setDark] = useState(false);
+  const navigate = useNavigate();
   return (
     <div className="flex flex-grow flex-col overflow-scroll">
       <Appbar text="마이페이지"></Appbar>
@@ -23,7 +25,9 @@ const Mypage = () => {
           />
         </div>
         <Divider />
-        <button className="w-full text-start">통계</button>
+        <button className="w-full text-start" onClick={() => navigate("stats")}>
+          통계
+        </button>
         <Divider />
         <button className="w-full text-start text-status-negative">회원탈퇴</button>
         <Divider />
