@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const EmotionStats = () => {
   return (
-    <div className="flex w-full flex-col items-center justify-center bg-primary-light-1 px-800 py-500">
+    <div className="flex w-full flex-col items-center justify-center bg-primary-light-1 px-800 pb-1000 pt-500">
       <Tabs defaultValue="week" className="w-full text-center font-Binggrae">
         <TabsList className="w-full">
           <TabsTrigger value="week" className="w-full">
