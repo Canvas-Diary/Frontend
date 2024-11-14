@@ -61,9 +61,16 @@ export function Component() {
               stackId="a"
               fill="var(--color-positive)"
               radius={[0, 0, 4, 4]}
+              barSize={10}
             />
-            <Bar dataKey="negative" stackId="a" fill="var(--color-negative)" />
-            <Bar dataKey="neutral" stackId="a" fill="var(--color-neutral)" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="negative" stackId="a" fill="var(--color-negative)" barSize={10} />
+            <Bar
+              dataKey="neutral"
+              stackId="a"
+              fill="var(--color-neutral)"
+              radius={[4, 4, 0, 0]}
+              barSize={10}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>
