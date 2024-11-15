@@ -1,8 +1,8 @@
 import Appbar from "@/components/common/Appbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import EmotionStats from "../EmotionStats";
-import KeywordStats from "../KeywordStats";
+import EmotionStats from "./EmotionStatsLayout";
+import KeywordStats from "./KeywordStatsLayout";
 
 const buttonPositions = {
   Emotion: "left-0",
