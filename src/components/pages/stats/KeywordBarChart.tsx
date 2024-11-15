@@ -1,4 +1,4 @@
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -35,6 +35,7 @@ const KeywordBarChart = ({ chartData }: EmotionBarChartProps) => {
               axisLine={false}
               tickFormatter={(value) => value.slice(0, 3)}
             />
+            <YAxis hide={true} domain={[0, (dataMax: string) => parseInt(dataMax) + 1]} />
             <ChartTooltip content={<ChartTooltipContent />} trigger="click" />
             <ChartLegend content={<ChartLegendContent />} />
             <Bar
