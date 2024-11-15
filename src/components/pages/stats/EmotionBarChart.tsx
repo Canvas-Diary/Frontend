@@ -43,7 +43,7 @@ const EmotionBarChart = ({ chartData }: EmotionBarChartProps) => {
               axisLine={false}
               tickFormatter={(value) => value.slice(0, 3)}
             />
-            <YAxis tickLine={false} axisLine={false} width={20} />
+            <YAxis tickLine={false} axisLine={false} width={20} domain={[0, "dataMax"]} />
             <ChartTooltip content={<ChartTooltipContent />} trigger="click" />
             <ChartLegend content={<ChartLegendContent />} />
             <Bar
