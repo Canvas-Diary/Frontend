@@ -45,7 +45,7 @@ const StatsLayout = () => {
         <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100" />
       </div>
 
-      {selected === "Emotion" ? <EmotionStats></EmotionStats> : <KeywordStats></KeywordStats>}
+      {selected === "Emotion" ? <EmotionStats /> : <KeywordStats />}
     </div>
   );
 };

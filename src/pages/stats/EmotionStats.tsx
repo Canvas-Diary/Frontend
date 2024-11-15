@@ -48,7 +48,7 @@ const EmotionStats = () => {
   return (
     <div className="flex w-full flex-col items-center justify-center bg-primary-light-1 px-800 pb-1000 pt-500">
       <Tabs defaultValue="week" className="w-full text-center font-Binggrae">
-        <TabsList className="w-full">
+        <TabsList className="mb-2 w-full">
           <TabsTrigger value="week" className="w-full">
             1주
           </TabsTrigger>
@@ -58,21 +58,13 @@ const EmotionStats = () => {
         </TabsList>
         <TabsContent value="week" className="flex flex-col gap-800">
           <div>주 선택</div>
-          <div>
-            <EmotionBarChart chartData={WeeklyEmotionBarData}></EmotionBarChart>
-          </div>
-          <div>
-            <EmotionPieChart chartData={WeeklyEmotionPieData}></EmotionPieChart>
-          </div>
+          <EmotionBarChart chartData={WeeklyEmotionBarData}></EmotionBarChart>
+          <EmotionPieChart chartData={WeeklyEmotionPieData}></EmotionPieChart>
         </TabsContent>
         <TabsContent value="month" className="flex flex-col gap-800">
           <div>월 선택</div>
-          <div>
-            <EmotionBarChart chartData={MonthlyEmotionBarData}></EmotionBarChart>
-          </div>
-          <div>
-            <EmotionPieChart chartData={MonthlyEmotionPieData}></EmotionPieChart>
-          </div>
+          <EmotionBarChart chartData={MonthlyEmotionBarData}></EmotionBarChart>
+          <EmotionPieChart chartData={MonthlyEmotionPieData}></EmotionPieChart>
         </TabsContent>
       </Tabs>
     </div>
