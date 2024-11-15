@@ -1,20 +1,20 @@
 import Appbar from "@/components/common/Appbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import EmotionStats from "../EmotionStats";
-import KeywordStats from "../KeywordStats";
+import EmotionStats from "./EmotionStatsLayout";
+import KeywordStats from "./KeywordStatsLayout";
 
 const buttonPositions = {
-  Emotion: "left-0",
-  Keyword: "left-1/2",
+  emotion: "left-0",
+  keyword: "left-1/2",
 };
 
 const StatsLayout = () => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState("Emotion");
+  const [selected, setSelected] = useState("emotion");
   const handleChangeSelected = (selected: string) => {
     setSelected(selected);
-    navigate(`?order=${selected}`);
+    navigate(`${selected}`);
   };
 
   return (
@@ -23,29 +23,29 @@ const StatsLayout = () => {
       <div className="sticky top-0 z-10 flex w-full justify-around gap-500 bg-white font-BinggraeBold text-body-2">
         <button
           className="flex w-full items-center justify-center py-400"
-          onClick={() => handleChangeSelected("Emotion")}
+          onClick={() => handleChangeSelected("emotion")}
         >
-          <div className={selected === "Emotion" ? "text-primary-normal" : "text-gray-400"}>
+          <div className={selected === "emotion" ? "text-primary-normal" : "text-gray-400"}>
             감정
           </div>
         </button>
         <button
           className="flex w-full items-center justify-center py-400"
-          onClick={() => handleChangeSelected("Keyword")}
+          onClick={() => handleChangeSelected("keyword")}
         >
-          <div className={selected === "Keyword" ? "text-primary-normal" : "text-gray-400"}>
+          <div className={selected === "keyword" ? "text-primary-normal" : "text-gray-400"}>
             키워드
           </div>
         </button>
         <div
-          className={`absolute bottom-0 flex w-1/2 justify-center transition-all duration-300 ${buttonPositions[selected as "Emotion" | "Keyword"]}`}
+          className={`absolute bottom-0 flex w-1/2 justify-center transition-all duration-300 ${buttonPositions[selected as "emotion" | "keyword"]}`}
         >
           <div className="h-[2px] w-[7.5rem] bg-primary-normal" />
         </div>
         <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100" />
       </div>
 
-      {selected === "Emotion" ? <EmotionStats></EmotionStats> : <KeywordStats></KeywordStats>}
+      {selected === "emotion" ? <EmotionStats /> : <KeywordStats />}
     </div>
   );
 };

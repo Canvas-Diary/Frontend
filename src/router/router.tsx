@@ -14,7 +14,10 @@ const ExplorePage = lazy(() => import("../pages/Explore"));
 const AlbumPage = lazy(() => import("../pages/Album"));
 const Mypage = lazy(() => import("../pages/Mypage"));
 const Login = lazy(() => import("../pages/Login"));
-const Stats = lazy(() => import("@/pages/stats/Layout/StatsLayout"));
+
+const StatsLayout = lazy(() => import("@/pages/stats/Layout/StatsLayout"));
+const EmotionStatsLayout = lazy(() => import("@/pages/stats/Layout/EmotionStatsLayout"));
+const KeywordStatsLayout = lazy(() => import("@/pages/stats/Layout/KeywordStatsLayout"));
 
 const DiaryLayout = lazy(() => import("../pages/diary/Layout/DiaryLayout"));
 const DiaryModifyFlowLayout = lazy(() => import("@/pages/write/Layout/DiaryModifyFlowLayout"));
@@ -75,9 +78,27 @@ const routes: RouteObject[] = [
         path: `${RoutePaths.mypage}/stats`,
         element: (
           <Suspense fallback={<PageFallback />}>
-            <Stats />
+            <StatsLayout />
           </Suspense>
         ),
+        children: [
+          {
+            path: `emotion`,
+            element: (
+              <Suspense fallback={<DiaryFallback />}>
+                <EmotionStatsLayout />
+              </Suspense>
+            ),
+          },
+          {
+            path: `keyword`,
+            element: (
+              <Suspense fallback={<DiaryFallback />}>
+                <KeywordStatsLayout />
+              </Suspense>
+            ),
+          },
+        ],
       },
     ],
   },

@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
+import ArrowLeft from "../../assets/svg/arrow_left.svg?react";
+import ArrowRight from "../../assets/svg/arrow_right.svg?react";
 import EmotionBarChart from "@/components/pages/stats/EmotionBarChart";
 import EmotionPieChart from "@/components/pages/stats/EmotionPieChart";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const WeeklyEmotionBarData = [
   { dataKey: "5주전", positive: 1, neutral: 3, negative: 2 },
@@ -44,37 +46,52 @@ const MonthlyEmotionPieData = [
   { emotion: "NONE", diaryCount: 9, fill: "var(--color-NONE)" },
 ];
 
-const EmotionStats = () => {
+interface EmotionStatsProps {
+  value: string;
+  text: string;
+  handleNext: () => void;
+  handlePrev: () => void;
+}
+//api 호출시 필요한 정보까지 Props로 받아서 데이터 처리
+const EmotionStats = ({ value, text, handleNext, handlePrev }: EmotionStatsProps) => {
+  const [barData, setBarData] = useState<
+    {
+      dataKey: string;
+      positive: number;
+      neutral: number;
+      negative: number;
+    }[]
+  >([]);
+  const [pieData, setPieData] = useState<
+    {
+      emotion: string;
+      diaryCount: number;
+      fill: string;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    setBarData(value === "week" ? WeeklyEmotionBarData : MonthlyEmotionBarData);
+    setPieData(value === "week" ? WeeklyEmotionPieData : MonthlyEmotionPieData);
+  });
+
   return (
-    <div className="flex w-full flex-col items-center justify-center bg-primary-light-1 px-800 pb-1000 pt-500">
-      <Tabs defaultValue="week" className="w-full text-center font-Binggrae">
-        <TabsList className="w-full">
-          <TabsTrigger value="week" className="w-full">
-            1주
-          </TabsTrigger>
-          <TabsTrigger value="month" className="w-full">
-            1달
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="week" className="flex flex-col gap-800">
-          <div>주 선택</div>
-          <div>
-            <EmotionBarChart chartData={WeeklyEmotionBarData}></EmotionBarChart>
-          </div>
-          <div>
-            <EmotionPieChart chartData={WeeklyEmotionPieData}></EmotionPieChart>
-          </div>
-        </TabsContent>
-        <TabsContent value="month" className="flex flex-col gap-800">
-          <div>월 선택</div>
-          <div>
-            <EmotionBarChart chartData={MonthlyEmotionBarData}></EmotionBarChart>
-          </div>
-          <div>
-            <EmotionPieChart chartData={MonthlyEmotionPieData}></EmotionPieChart>
-          </div>
-        </TabsContent>
-      </Tabs>
+    <div className="flex flex-col gap-500 font-BinggraeBold text-heading-1 text-primary-normal">
+      <div className="flex items-center justify-center gap-600">
+        <button onClick={handleNext}>
+          <ArrowLeft></ArrowLeft>
+        </button>
+        <div className="px-600 py-200">
+          <h2>{text}</h2>
+        </div>
+        <button onClick={handlePrev}>
+          <ArrowRight></ArrowRight>
+        </button>
+      </div>
+      <div className="flex flex-col gap-800">
+        <EmotionBarChart chartData={barData} />
+        <EmotionPieChart chartData={pieData} />
+      </div>
     </div>
   );
 };
