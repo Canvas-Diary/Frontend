@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArrowLeft from "../../assets/svg/arrow_left.svg?react";
 import ArrowRight from "../../assets/svg/arrow_right.svg?react";
 import EmotionBarChart from "@/components/pages/stats/EmotionBarChart";
@@ -54,12 +54,26 @@ interface EmotionStatsProps {
 }
 //api 호출시 필요한 정보까지 Props로 받아서 데이터 처리
 const EmotionStats = ({ value, text, handleNext, handlePrev }: EmotionStatsProps) => {
-  const [barData, setBarData] = useState(
-    value === "week" ? WeeklyEmotionBarData : MonthlyEmotionBarData
-  );
-  const [pieData, setPieData] = useState(
-    value === "week" ? WeeklyEmotionPieData : MonthlyEmotionPieData
-  );
+  const [barData, setBarData] = useState<
+    {
+      dataKey: string;
+      positive: number;
+      neutral: number;
+      negative: number;
+    }[]
+  >([]);
+  const [pieData, setPieData] = useState<
+    {
+      emotion: string;
+      diaryCount: number;
+      fill: string;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    setBarData(value === "week" ? WeeklyEmotionBarData : MonthlyEmotionBarData);
+    setPieData(value === "week" ? WeeklyEmotionPieData : MonthlyEmotionPieData);
+  });
 
   return (
     <div className="flex flex-col gap-500">
@@ -75,8 +89,8 @@ const EmotionStats = ({ value, text, handleNext, handlePrev }: EmotionStatsProps
         </button>
       </div>
       <div className="flex flex-col gap-800">
-        <EmotionBarChart chartData={barData}></EmotionBarChart>
-        <EmotionPieChart chartData={pieData}></EmotionPieChart>
+        <EmotionBarChart chartData={barData} />
+        <EmotionPieChart chartData={pieData} />
       </div>
     </div>
   );
