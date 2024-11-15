@@ -37,7 +37,6 @@ const KeywordBarChart = ({ chartData }: EmotionBarChartProps) => {
             />
             <YAxis hide={true} domain={[0, (dataMax: string) => parseInt(dataMax) + 1]} />
             <ChartTooltip content={<ChartTooltipContent />} trigger="click" />
-            <ChartLegend content={<ChartLegendContent />} />
             <Bar
               dataKey="value"
               fill="var(--color-value)"
