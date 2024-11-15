@@ -1,46 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
 import * as echarts from "echarts";
 import "echarts-wordcloud";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-const chartData = [
-  { name: "행복", value: 8 },
-  { name: "아침", value: 12 },
-  { name: "커피", value: 8 },
-  { name: "학교", value: 6 },
-  { name: "날씨", value: 14 },
-  { name: "행복", value: 8 },
-  { name: "아침", value: 12 },
-  { name: "커피", value: 8 },
-  { name: "학교", value: 6 },
-  { name: "날씨", value: 14 },
-  { name: "행복", value: 8 },
-  { name: "아침", value: 12 },
-  { name: "커피", value: 8 },
-  { name: "학교", value: 6 },
-  { name: "날씨", value: 14 },
-  { name: "행복", value: 8 },
-  { name: "아침", value: 12 },
-  { name: "커피", value: 8 },
-  { name: "학교", value: 6 },
-  { name: "날씨", value: 14 },
-];
+interface KeywordWordCloudProps {
+  chartData: { name: string; value: number }[];
+}
 
-const KeywordWordCloud = () => {
-  const [wordCloudData, setWordCloudData] = useState<{}[]>(chartData);
-
-  const fetchData = async () => {
-    setWordCloudData(chartData);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+const KeywordWordCloud = ({ chartData }: KeywordWordCloudProps) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    if (wordCloudData === null) return;
+    if (chartData === null) return;
 
     const chart = echarts.init(chartRef.current);
 
@@ -60,7 +31,7 @@ const KeywordWordCloud = () => {
             },
           },
 
-          data: wordCloudData,
+          data: chartData,
         },
       ],
     };
@@ -70,7 +41,7 @@ const KeywordWordCloud = () => {
     return () => {
       chart.dispose();
     };
-  }, [wordCloudData]);
+  }, [chartData]);
 
   return (
     <Card>

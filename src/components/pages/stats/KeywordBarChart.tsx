@@ -11,21 +11,17 @@ import {
 } from "@/components/ui/chart";
 
 const chartConfig = {
-  weight: {
+  value: {
     label: "등장 횟수",
     color: "#6424A5",
   },
 } satisfies ChartConfig;
 
-const chartData = [
-  { dataKey: "행복", weight: 8 },
-  { dataKey: "아침", weight: 12 },
-  { dataKey: "커피", weight: 8 },
-  { dataKey: "학교", weight: 6 },
-  { dataKey: "날씨", weight: 14 },
-];
+interface EmotionBarChartProps {
+  chartData: { name: string; value: number }[];
+}
 
-const KeywordBarChart = () => {
+const KeywordBarChart = ({ chartData }: EmotionBarChartProps) => {
   return (
     <Card>
       <CardContent>
@@ -33,7 +29,7 @@ const KeywordBarChart = () => {
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="dataKey"
+              dataKey="name"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
@@ -42,11 +38,11 @@ const KeywordBarChart = () => {
             <ChartTooltip content={<ChartTooltipContent />} trigger="click" />
             <ChartLegend content={<ChartLegendContent />} />
             <Bar
-              dataKey="weight"
-              fill="var(--color-weight)"
+              dataKey="value"
+              fill="var(--color-value)"
               radius={20}
               barSize={20}
-              label={{ position: "top", fill: "var(--color-weight)", fontSize: 12 }}
+              label={{ position: "top", fill: "var(--color-value)", fontSize: 12 }}
             />
           </BarChart>
         </ChartContainer>
