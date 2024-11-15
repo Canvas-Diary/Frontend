@@ -1,6 +1,9 @@
 import EmotionBarChart from "@/components/pages/stats/EmotionBarChart";
 import EmotionPieChart from "@/components/pages/stats/EmotionPieChart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
+import ArrowLeft from "../../assets/svg/arrow_left.svg?react";
+import ArrowRight from "../../assets/svg/arrow_right.svg?react";
 
 const WeeklyEmotionBarData = [
   { dataKey: "5주전", positive: 1, neutral: 3, negative: 2 },
@@ -44,7 +47,48 @@ const MonthlyEmotionPieData = [
   { emotion: "NONE", diaryCount: 9, fill: "var(--color-NONE)" },
 ];
 
+const months = [" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12"];
+
 const EmotionStats = () => {
+  const [currentWeek, setCurrentWeek] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const handlePrevWeek = () => {
+    setCurrentWeek((prev) => {
+      const prevWeek = new Date(prev.getFullYear(), prev.getMonth(), prev.getDate() - 7);
+      return prevWeek;
+    });
+  };
+
+  const handleNextWeek = () => {
+    setCurrentWeek((prev) => {
+      const nextWeek = new Date(prev.getFullYear(), prev.getMonth(), prev.getDate() + 7);
+      return nextWeek;
+    });
+  };
+
+  const handlePrevMonth = () => {
+    setCurrentMonth((prev) => {
+      const prevMonth = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
+      return prevMonth;
+    });
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth((prev) => {
+      const nextMonth = new Date(prev.getFullYear(), prev.getMonth() + 1, 1);
+      return nextMonth;
+    });
+  };
+
+  const getWeekOfMonth = (date: any) => {
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1); // 해당 달의 첫날
+    const dayOfMonth = date.getDate(); // 해당 날짜의 일(day)
+
+    const weekOfMonth = Math.ceil((dayOfMonth + firstDayOfMonth.getDay()) / 7);
+    return weekOfMonth;
+  };
+
   return (
     <div className="flex w-full flex-col items-center justify-center bg-primary-light-1 px-800 pb-1000 pt-500">
       <Tabs defaultValue="week" className="w-full text-center font-Binggrae">
@@ -56,15 +100,39 @@ const EmotionStats = () => {
             1달
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="week" className="flex flex-col gap-800">
-          <div>주 선택</div>
-          <EmotionBarChart chartData={WeeklyEmotionBarData}></EmotionBarChart>
-          <EmotionPieChart chartData={WeeklyEmotionPieData}></EmotionPieChart>
+        <TabsContent value="week" className="flex flex-col gap-500">
+          <div className="flex items-center justify-center gap-600 text-primary-normal">
+            <button onClick={handlePrevWeek}>
+              <ArrowLeft></ArrowLeft>
+            </button>
+            <div className="px-600 py-200">
+              <h2 className="font-BinggraeBold">{`${months[currentWeek.getMonth()]}월 ${getWeekOfMonth(currentWeek)}주차`}</h2>
+            </div>
+            <button onClick={handleNextWeek}>
+              <ArrowRight></ArrowRight>
+            </button>
+          </div>
+          <div className="flex flex-col gap-800">
+            <EmotionBarChart chartData={WeeklyEmotionBarData}></EmotionBarChart>
+            <EmotionPieChart chartData={WeeklyEmotionPieData}></EmotionPieChart>
+          </div>
         </TabsContent>
-        <TabsContent value="month" className="flex flex-col gap-800">
-          <div>월 선택</div>
-          <EmotionBarChart chartData={MonthlyEmotionBarData}></EmotionBarChart>
-          <EmotionPieChart chartData={MonthlyEmotionPieData}></EmotionPieChart>
+        <TabsContent value="month" className="flex flex-col gap-500">
+          <div className="flex items-center justify-center gap-600 text-primary-normal">
+            <button onClick={handlePrevMonth}>
+              <ArrowLeft></ArrowLeft>
+            </button>
+            <div className="px-600 py-200">
+              <h2 className="font-BinggraeBold">{`${currentMonth.getFullYear()}년 ${months[currentMonth.getMonth()]}월`}</h2>
+            </div>
+            <button onClick={handleNextMonth}>
+              <ArrowRight></ArrowRight>
+            </button>
+          </div>
+          <div className="flex flex-col gap-800">
+            <EmotionPieChart chartData={MonthlyEmotionPieData}></EmotionPieChart>
+            <EmotionBarChart chartData={MonthlyEmotionBarData}></EmotionBarChart>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
