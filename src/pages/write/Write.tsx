@@ -128,7 +128,9 @@ const Write = () => {
           }}
         ></div>
         {diaryInfo.content.trim() === "" && (
-          <div className="pointer-events-none absolute left-3 top-2 text-muted-foreground">
+          <div
+            className={`${FADEINANIMATION[3]} pointer-events-none absolute left-3 top-2 text-muted-foreground`}
+          >
             10자 이상
           </div>
         )}
