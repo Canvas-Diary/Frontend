@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useBlocker, useLocation, useNavigate } from "react-router-dom";
 import Appbar from "../../../components/common/Appbar";
 import Button from "../../../components/common/Button";
 import RoutePaths from "../../../constants/routePath";
@@ -8,6 +8,15 @@ import { useErrorBoundary } from "react-error-boundary";
 import MobileLayout from "../../Layout/MobileLayout";
 import { getTodayDate } from "../../../utils/util";
 import { NewDiaryInfo } from "../../../types/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 const pageOrder = [
   RoutePaths.diaryWrite,
@@ -38,7 +47,9 @@ const DiaryWriteFlowLayout = () => {
     const currentIndex = pageOrder.indexOf(location.pathname);
 
     if (currentIndex !== -1 && currentIndex < pageOrder.length - 1) {
-      if (currentIndex === 1) {
+      if (currentIndex === 0) {
+        navigate(pageOrder[currentIndex + 1]);
+      } else if (currentIndex === 1) {
         createDiaryAndGetId(diaryInfo)
           .then((id) => {
             setDiaryId(id);
@@ -46,26 +57,15 @@ const DiaryWriteFlowLayout = () => {
           .catch((error) => {
             showBoundary(error);
           });
-        navigate(pageOrder[currentIndex + 1]);
-      } else {
-        navigate(pageOrder[currentIndex + 1]);
-      }
+        navigate(pageOrder[currentIndex + 1], { replace: true });
+      } else navigate(pageOrder[currentIndex + 1]);
     } else {
       navigate(`${RoutePaths.diary}/${diaryId}`, { state: { from: RoutePaths.diaryDraw } });
     }
   };
 
   const handleBack = () => {
-    const currentIndex = pageOrder.indexOf(location.pathname);
-
-    switch (currentIndex) {
-      case 2:
-        //do nothing
-        break;
-      default:
-        navigate(-1);
-        break;
-    }
+    navigate(-1);
   };
 
   const handleActive = () => {
@@ -86,6 +86,32 @@ const DiaryWriteFlowLayout = () => {
     return true;
   };
 
+  const blocker = useBlocker(({ nextLocation, historyAction }) => {
+    const isInternalNavigation = pageOrder.some((path) => nextLocation.pathname === path);
+    const currentIndex = pageOrder.indexOf(location.pathname);
+
+    if (currentIndex === 1 && nextLocation.pathname === RoutePaths.diaryStyle) {
+      navigate(RoutePaths.diaryWrite, { replace: true });
+      return true;
+    }
+
+    if (historyAction === "PUSH") {
+      return false;
+    } else if (historyAction === "REPLACE") {
+      if (isInternalNavigation) {
+        return false;
+      }
+    } else if (historyAction === "POP") {
+      console.log(currentIndex);
+
+      if (currentIndex === 0 || currentIndex === 2) {
+        return true;
+      } else return false;
+    }
+
+    return false;
+  });
+
   return (
     <MobileLayout>
       <Appbar text="일기 작성" backHandler={handleBack}></Appbar>
@@ -101,6 +127,52 @@ const DiaryWriteFlowLayout = () => {
           bgColor="dark"
         />
       </div>
+
+      <Dialog open={blocker.state === "blocked"}>
+        <DialogContent
+          className="min-w-fit max-w-[95%] rounded-200"
+          onClick={() => {
+            blocker.state === "blocked" && blocker!.reset();
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>정말 나가시겠습니까?</DialogTitle>
+            <DialogDescription>
+              {pageOrder.indexOf(location.pathname) === 2
+                ? "홈으로 나가집니다."
+                : "변경사항이 저장되지 않을 수 있습니다."}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex w-full flex-row">
+            <DialogClose asChild>
+              <Button
+                size="small"
+                active={true}
+                text="남아있기"
+                bgColor="light"
+                onClickHandler={() => {
+                  blocker.state === "blocked" && blocker.reset();
+                }}
+              ></Button>
+            </DialogClose>
+
+            <Button
+              size="small"
+              active={true}
+              text="나가기"
+              bgColor="dark"
+              onClickHandler={() => {
+                if (blocker.state === "blocked") {
+                  if (pageOrder.indexOf(location.pathname) === 2) {
+                    blocker.reset();
+                    navigate("/", { replace: true });
+                  } else blocker.proceed();
+                }
+              }}
+            ></Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </MobileLayout>
   );
 };
