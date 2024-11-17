@@ -137,7 +137,11 @@ const DiaryWriteFlowLayout = () => {
         >
           <DialogHeader>
             <DialogTitle>정말 나가시겠습니까?</DialogTitle>
-            <DialogDescription>변경사항이 저장되지 않을 수 있습니다.</DialogDescription>
+            <DialogDescription>
+              {pageOrder.indexOf(location.pathname) === 2
+                ? "홈으로 나가집니다."
+                : "변경사항이 저장되지 않을 수 있습니다."}
+            </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex w-full flex-row">
             <DialogClose asChild>
