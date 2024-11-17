@@ -47,7 +47,9 @@ const DiaryWriteFlowLayout = () => {
     const currentIndex = pageOrder.indexOf(location.pathname);
 
     if (currentIndex !== -1 && currentIndex < pageOrder.length - 1) {
-      if (currentIndex === 1) {
+      if (currentIndex === 0) {
+        navigate(pageOrder[currentIndex + 1]);
+      } else if (currentIndex === 1) {
         createDiaryAndGetId(diaryInfo)
           .then((id) => {
             setDiaryId(id);
@@ -55,26 +57,15 @@ const DiaryWriteFlowLayout = () => {
           .catch((error) => {
             showBoundary(error);
           });
-        navigate(pageOrder[currentIndex + 1]);
-      } else {
-        navigate(pageOrder[currentIndex + 1]);
-      }
+        navigate(pageOrder[currentIndex + 1], { replace: true });
+      } else navigate(pageOrder[currentIndex + 1]);
     } else {
       navigate(`${RoutePaths.diary}/${diaryId}`, { state: { from: RoutePaths.diaryDraw } });
     }
   };
 
   const handleBack = () => {
-    const currentIndex = pageOrder.indexOf(location.pathname);
-
-    switch (currentIndex) {
-      case 2:
-        //do nothing
-        break;
-      default:
-        navigate(-1);
-        break;
-    }
+    navigate(-1);
   };
 
   const handleActive = () => {
@@ -95,23 +86,30 @@ const DiaryWriteFlowLayout = () => {
     return true;
   };
 
-  const blocker = useBlocker(({ currentLocation, nextLocation, historyAction }) => {
-    const isInternalNavigation =
-      currentLocation.pathname.startsWith("/diary/") && nextLocation.pathname.startsWith("/diary/");
-    if (isInternalNavigation) {
-      return false;
+  const blocker = useBlocker(({ nextLocation, historyAction }) => {
+    const isInternalNavigation = pageOrder.some((path) => nextLocation.pathname === path);
+    const currentIndex = pageOrder.indexOf(location.pathname);
+
+    if (currentIndex === 1 && nextLocation.pathname === RoutePaths.diaryStyle) {
+      navigate(RoutePaths.diaryWrite, { replace: true });
+      return true;
     }
 
     if (historyAction === "PUSH") {
       return false;
     } else if (historyAction === "REPLACE") {
-      // 현재 페이지를 대체하려고 할 때 허용
-      return false;
+      if (isInternalNavigation) {
+        return false;
+      }
     } else if (historyAction === "POP") {
-      // 브라우저의 뒤로 가기 또는 앞으로 가기 버튼을 눌렀을 때 확인 메시지 표시
-      return true;
+      console.log(currentIndex);
+
+      if (currentIndex === 0 || currentIndex === 2) {
+        return true;
+      } else return false;
     }
-    return false; // 기본적으로 차단하지 않음
+
+    return false;
   });
 
   return (
@@ -160,7 +158,12 @@ const DiaryWriteFlowLayout = () => {
               text="나가기"
               bgColor="dark"
               onClickHandler={() => {
-                blocker.state === "blocked" && blocker.proceed();
+                if (blocker.state === "blocked") {
+                  if (pageOrder.indexOf(location.pathname) === 2) {
+                    blocker.reset();
+                    navigate("/", { replace: true });
+                  } else blocker.proceed();
+                }
               }}
             ></Button>
           </DialogFooter>
