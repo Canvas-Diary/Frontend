@@ -16,6 +16,9 @@ const Write = () => {
 
   useEffect(() => {
     setDiaryInfo({ ...diaryInfo, date: date });
+    if (editorRef.current) {
+      editorRef.current.textContent = diaryInfo.content;
+    }
   }, []);
 
   useEffect(() => {
