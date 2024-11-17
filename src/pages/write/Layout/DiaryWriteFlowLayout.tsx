@@ -44,7 +44,6 @@ const DiaryWriteFlowLayout = () => {
   });
 
   const onClickNext = async () => {
-    console.log(diaryInfo);
     const currentIndex = pageOrder.indexOf(location.pathname);
 
     if (currentIndex !== -1 && currentIndex < pageOrder.length - 1) {
