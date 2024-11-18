@@ -101,13 +101,13 @@ const Write = () => {
   const isBold = document.queryCommandState("bold");
 
   return (
-    <div className="flex h-full flex-col gap-600 font-Binggrae text-gray-900">
+    <div className="flex h-full flex-col gap-600 font-Binggrae text-gray-900 dark:text-gray-50">
       <div className={`${FADEINANIMATION[0]} font-BinggraeBold text-title-2`}>
         {formatDateWithWeek(date)}
       </div>
       <div className={`${FADEINANIMATION[1]} flex items-center gap-300 text-body-2`}>
         <div className="font-Binggrae text-gray-500">공개 여부</div>
-        <div className="flex items-center justify-center rounded-50 bg-primary-light-2 px-300 py-200">
+        <div className="flex items-center justify-center rounded-50 bg-primary-light-2 px-300 py-200 dark:bg-primary-medium">
           {diaryInfo.isPublic ? "공개" : "비공개"}
         </div>
         <div className="ml-auto">
@@ -134,7 +134,7 @@ const Write = () => {
           <div
             className={`${FADEINANIMATION[3]} pointer-events-none absolute left-3 top-2 text-muted-foreground`}
           >
-            10자 이상
+            10자 이상 작성해주세요. 드래그해서 강조할 단어를 선택할 수 있어요.
           </div>
         )}
         {buttonPosition && (

@@ -16,7 +16,7 @@ interface AppBarProps {
  */
 const Appbar = ({ text, backHandler, menuHandler }: AppBarProps) => {
   return (
-    <div className="relative z-50 flex w-full items-center justify-between bg-transparent px-500 py-300 text-black dark:text-white">
+    <div className="relative z-50 flex w-full items-center justify-between bg-transparent px-500 py-300">
       <button
         className={`h-7 w-8 ${backHandler ? "visible" : "invisible"} text-white`}
         onClick={backHandler}

@@ -45,7 +45,7 @@ const KeywordStatsLayout = () => {
   };
 
   return (
-    <div className="flex w-full flex-col items-center justify-center bg-primary-light-1 px-800 py-500">
+    <div className="flex w-full flex-col items-center justify-center bg-primary-light-1 px-800 py-500 dark:bg-background">
       <Tabs defaultValue="week" className="w-full text-center font-Binggrae text-body-2">
         <TabsList className="mb-500 w-full">
           <TabsTrigger value="week" className="w-full">

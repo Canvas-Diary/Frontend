@@ -1,27 +1,26 @@
-import { useState } from "react";
 import Appbar from "../components/common/Appbar";
 import Divider from "../components/common/Divider";
 import Toggle from "../components/common/Toggle";
 import { useNavigate } from "react-router-dom";
+import { useDarkModeStore } from "@/global/globalState";
 
 /**
  * 마이페이지 화면
  * @returns
  */
 const Mypage = () => {
-  const [dark, setDark] = useState(false);
   const navigate = useNavigate();
+  const { dark, toggleDarkMode } = useDarkModeStore();
+
   return (
     <div className="flex flex-grow flex-col overflow-scroll">
-      <Appbar text="마이페이지"></Appbar>
+      <Appbar text="마이페이지" />
       <div className="flex flex-col gap-600 p-800 font-Binggrae text-body-1">
         <div className="flex">
           <button className="w-full text-start">다크모드</button>
           <Toggle
-            onClickHandler={() => {
-              setDark((prev) => !prev);
-            }}
-            isChecked={dark}
+            onClickHandler={toggleDarkMode} // Toggle 클릭 시 다크모드 상태를 전환
+            isChecked={dark} // 현재 다크모드 상태
           />
         </div>
         <Divider />

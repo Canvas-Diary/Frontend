@@ -36,7 +36,7 @@ const tagsMap: { [key: string]: string } = {
  */
 const ReviewContent = ({ date, emotion, likedCount, isLiked, content, images }: ContentProps) => {
   return (
-    <div className="flex flex-col items-center gap-600 rounded-400 bg-white px-800 pb-10 pt-700 font-Binggrae shadow-default">
+    <div className="flex flex-col items-center gap-600 rounded-400 bg-white px-800 pb-10 pt-700 font-Binggrae shadow-default dark:bg-gray-700">
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-col gap-300">
           <div className="font-BinggraeBold text-title-2">{date}</div>
@@ -52,7 +52,9 @@ const ReviewContent = ({ date, emotion, likedCount, isLiked, content, images }: 
         </div>
       </div>
       <ImageCarousel images={images} canAdd={false} />
-      <div className="text-body-2 font-regular">{content}</div>
+      <div className="w-full whitespace-pre-wrap text-start text-body-2 font-regular">
+        {content}
+      </div>
     </div>
   );
 };

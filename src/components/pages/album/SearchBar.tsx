@@ -38,7 +38,7 @@ const SearchBar = ({ onEnter, content }: SearchBarProps) => {
   };
 
   return (
-    <div className="flex items-center justify-center gap-400 rounded-50 border border-primary-light-3 bg-primary-light-1 p-400">
+    <div className="flex items-center justify-center gap-400 rounded-50 border border-primary-light-3 bg-primary-light-1 p-400 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-500 dark:focus-within:border dark:focus-within:border-primary-light-3">
       <SearchIcon />
       <input
         type="text"
@@ -46,7 +46,7 @@ const SearchBar = ({ onEnter, content }: SearchBarProps) => {
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        className="w-full bg-transparent font-Binggrae text-body-2 font-regular text-gray-900 placeholder:text-detail-1 placeholder:text-primary-light-3 focus:outline-none"
+        className="w-full bg-transparent font-Binggrae text-body-2 font-regular text-gray-900 placeholder:text-detail-1 placeholder:text-primary-light-3 focus:outline-none dark:text-gray-400 dark:placeholder:text-gray-400"
       />
     </div>
   );

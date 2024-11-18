@@ -8,7 +8,7 @@ interface DeleteDiarySettingsProps {
 
 const DeleteDiarySettings = ({ onClickCancle, onClickDelete, date }: DeleteDiarySettingsProps) => {
   return (
-    <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-900">
+    <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-900 dark:text-gray-50">
       <div className="text-start text-heading-2 font-regular">
         일기를 <span className="text-primary-medium">삭제</span>하시겠어요?
       </div>

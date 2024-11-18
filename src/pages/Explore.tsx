@@ -125,12 +125,16 @@ const Explore = () => {
     <div className="flex flex-grow flex-col overflow-scroll" ref={scrollContainerRef}>
       <Appbar text="일기 공유" />
       <div className="flex flex-col px-700">
-        <div className="sticky top-0 z-10 flex w-full justify-around gap-500 bg-white font-BinggraeBold text-body-2">
+        <div className="sticky top-0 z-10 flex w-full justify-around gap-500 bg-background font-BinggraeBold text-body-2">
           <button
             className="flex w-full items-center justify-center py-400"
             onClick={() => handleChangeSelected("LATEST")}
           >
-            <div className={selected === "LATEST" ? "text-primary-normal" : "text-gray-400"}>
+            <div
+              className={
+                selected === "LATEST" ? "text-primary-normal" : "text-gray-400 dark:text-gray-500"
+              }
+            >
               최신순
             </div>
           </button>
@@ -138,7 +142,13 @@ const Explore = () => {
             className="flex w-full items-center justify-center py-400"
             onClick={() => handleChangeSelected("POPULARITY")}
           >
-            <div className={selected === "POPULARITY" ? "text-primary-normal" : "text-gray-400"}>
+            <div
+              className={
+                selected === "POPULARITY"
+                  ? "text-primary-normal"
+                  : "text-gray-400 dark:text-gray-500"
+              }
+            >
               인기순
             </div>
           </button>
@@ -147,7 +157,7 @@ const Explore = () => {
           >
             <div className="h-[2px] w-[7.5rem] bg-primary-normal" />
           </div>
-          <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100" />
+          <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100 dark:bg-gray-500" />
         </div>
         {data && <ThumbnailGrid diaries={data} onClickThumbnail={onClickThumbnail} />}
 

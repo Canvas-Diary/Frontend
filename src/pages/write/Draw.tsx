@@ -17,7 +17,7 @@ const Draw = () => {
   }, [diaryId]);
 
   return (
-    <div className="items-centergap-[2rem] flex h-full flex-col justify-center font-Binggrae text-gray-900">
+    <div className="items-centergap-[2rem] flex h-full flex-col justify-center font-Binggrae text-gray-900 dark:text-gray-50">
       <div className="flex flex-col items-center justify-center gap-1000 font-BinggraeBold text-title-2">
         <img
           src={dummy}
@@ -28,12 +28,14 @@ const Draw = () => {
           <div
             className={`${diaryId !== "0" && "-translate-y-11 opacity-0"} transition-all duration-1000`}
           >
-            <span className="text-primary-medium">그림</span>을 그리고 있어요
+            <span className="text-primary-medium dark:text-primary-light-3">그림</span>을 그리고
+            있어요
           </div>
           <div
             className={`${diaryId !== "0" ? "-translate-y-11 opacity-100" : "opacity-0"} transition-all duration-1000`}
           >
-            <span className="text-primary-medium">그림</span>이 다 그려졌어요
+            <span className="text-primary-medium dark:text-primary-light-3">그림</span>이 다
+            그려졌어요
           </div>
         </div>
       </div>

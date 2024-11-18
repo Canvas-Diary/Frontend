@@ -81,8 +81,11 @@ const Content = ({ date, emotion, likedCount, isLiked, content, setAppbar }: Con
   }, []);
 
   return (
-    <div className="flex h-full flex-col items-center gap-600 rounded-t-400 bg-white px-800 pb-10 font-Binggrae shadow-default">
-      <div className="sticky top-0 flex w-full flex-col gap-600 bg-white pt-700" ref={stickyRef}>
+    <div className="flex h-full flex-col items-center gap-600 rounded-t-400 bg-background px-800 pb-10 font-Binggrae shadow-default">
+      <div
+        className="sticky top-0 flex w-full flex-col gap-600 bg-background pt-700"
+        ref={stickyRef}
+      >
         <div className="flex w-full items-center justify-between">
           <div className="flex flex-col gap-300">
             <div className="font-BinggraeBold text-title-2">{date}</div>
@@ -91,7 +94,7 @@ const Content = ({ date, emotion, likedCount, isLiked, content, setAppbar }: Con
             </div>
           </div>
           <div
-            className={`${currentIsLiked ? "text-primary-normal" : "text-gray-200"} flex flex-col items-center justify-center`}
+            className={`${currentIsLiked ? "text-primary-normal dark:text-primary-medium" : "text-gray-200"} flex flex-col items-center justify-center`}
             onClick={handleOnClick}
           >
             <HeartIcon />

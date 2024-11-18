@@ -20,12 +20,16 @@ const StatsLayout = () => {
   return (
     <div className="flex-grow overflow-scroll">
       <Appbar text="통계"></Appbar>
-      <div className="sticky top-0 z-10 flex w-full justify-around gap-500 bg-white font-BinggraeBold text-body-2">
+      <div className="sticky top-0 z-10 flex w-full justify-around gap-500 bg-background font-BinggraeBold text-body-2">
         <button
           className="flex w-full items-center justify-center py-400"
           onClick={() => handleChangeSelected("emotion")}
         >
-          <div className={selected === "emotion" ? "text-primary-normal" : "text-gray-400"}>
+          <div
+            className={
+              selected === "emotion" ? "text-primary-normal" : "text-gray-400 dark:text-gray-500"
+            }
+          >
             감정
           </div>
         </button>
@@ -33,7 +37,11 @@ const StatsLayout = () => {
           className="flex w-full items-center justify-center py-400"
           onClick={() => handleChangeSelected("keyword")}
         >
-          <div className={selected === "keyword" ? "text-primary-normal" : "text-gray-400"}>
+          <div
+            className={
+              selected === "keyword" ? "text-primary-normal" : "text-gray-400 dark:text-gray-500"
+            }
+          >
             키워드
           </div>
         </button>
@@ -42,7 +50,7 @@ const StatsLayout = () => {
         >
           <div className="h-[2px] w-[7.5rem] bg-primary-normal" />
         </div>
-        <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100" />
+        <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100 dark:bg-gray-500" />
       </div>
 
       {selected === "emotion" ? <EmotionStats /> : <KeywordStats />}
