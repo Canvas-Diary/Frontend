@@ -22,7 +22,7 @@ const DiaryContentSettings = ({
   onChangeToggle,
 }: DiaryContentSettingsProps) => {
   return (
-    <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-700">
+    <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-700 dark:text-gray-200">
       <div className="flex items-center gap-500">
         <PeopleIcon />
         <span>공개 여부</span>

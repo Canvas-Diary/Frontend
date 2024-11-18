@@ -26,9 +26,9 @@ const Review = () => {
   }, []);
 
   return (
-    <div className="flex h-full flex-col gap-[2rem] font-Binggrae text-gray-900">
+    <div className="flex h-full flex-col gap-[2rem] font-Binggrae text-gray-900 dark:text-gray-50">
       <div className={`${FADEINANIMATION[0]} font-BinggraeBold text-title-2`}>
-        <span className="text-primary-medium">한달 전</span>에<br />
+        <span className="text-primary-medium dark:text-primary-light-3">한달 전</span>에<br />
         비슷한 일기를 작성했어요
       </div>
       <div className={`${FADEINANIMATION[1]} flex-grow pb-[2rem]`}>

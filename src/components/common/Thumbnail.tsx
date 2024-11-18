@@ -18,7 +18,9 @@ const Thumbnail = ({ src, alt, onClickHandler }: ThumbnailProps) => {
 
   return (
     <div className="relative h-[11.125rem] w-[6.375rem] cursor-pointer" onClick={onClickHandler}>
-      {!isLoaded && <div className="absolute left-0 top-0 h-full w-full bg-gray-100"></div>}
+      {!isLoaded && (
+        <div className="absolute left-0 top-0 h-full w-full rounded bg-gray-100 dark:bg-gray-600"></div>
+      )}
 
       <img
         src={src}

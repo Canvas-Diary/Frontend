@@ -282,7 +282,7 @@ const ChartLegendContent = React.forwardRef<
                 }}
               />
             )}
-            <span className="flex gap-200 text-detail-1 text-gray-600">
+            <span className="flex gap-200 text-detail-1 text-gray-600 dark:text-gray-300">
               {itemConfig?.label} <span className="text-primary-normal">{item.payload?.value}</span>
             </span>
           </div>

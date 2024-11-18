@@ -85,7 +85,7 @@ const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
                   <ImageAddFilter></ImageAddFilter>
                 </div>
                 {!isLoaded && (
-                  <div className="absolute left-0 top-0 h-full w-full bg-gray-100"></div>
+                  <div className="absolute left-0 top-0 h-full w-full bg-gray-100 dark:bg-gray-500"></div>
                 )}
                 <img
                   src={images[images.length - 1].imageUrl}
@@ -101,7 +101,7 @@ const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
               <li
                 key={index}
                 className={`h-[0.375rem] w-[0.375rem] rounded-full ${
-                  index === currentIndex ? "bg-primary-normal" : "bg-white"
+                  index === currentIndex ? "bg-primary-normal" : "bg-background"
                 }`}
               ></li>
             ))}
@@ -109,7 +109,7 @@ const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
               <li
                 key={images.length}
                 className={`h-[0.375rem] w-[0.375rem] rounded-full ${
-                  images.length === currentIndex ? "bg-primary-normal" : "bg-white"
+                  images.length === currentIndex ? "bg-primary-normal" : "bg-background"
                 }`}
               ></li>
             )}

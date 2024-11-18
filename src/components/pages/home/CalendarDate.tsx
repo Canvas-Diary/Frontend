@@ -25,7 +25,7 @@ const CalendarDate = ({ onClickDate, calendarDataInfo }: CalendarDateProps) => {
       </div>
 
       <div
-        className={`text-center font-Binggrae text-detail-1 ${calendarDataInfo.isSunday && "text-status-negative"} ${calendarDataInfo.isToday && "w-10 rounded-300 bg-primary-normal font-BinggraeBold text-white"}`}
+        className={`text-center font-Binggrae text-detail-1 ${calendarDataInfo.isSunday && "text-status-negative"} ${calendarDataInfo.isToday && "w-10 rounded-300 bg-primary-normal font-BinggraeBold text-background"}`}
       >
         {calendarDataInfo.date}
       </div>

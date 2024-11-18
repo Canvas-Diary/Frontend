@@ -20,9 +20,9 @@ const Style = () => {
   }, []);
 
   return (
-    <div className="flex h-full flex-col gap-[2rem] font-Binggrae text-gray-900">
+    <div className="flex h-full flex-col gap-[2rem] font-Binggrae text-gray-900 dark:text-gray-50">
       <div className={`${FADEINANIMATION[0]} font-BinggraeBold text-title-2`}>
-        <span className="text-primary-medium">화풍</span>을 선택해 주세요
+        <span className="text-primary-medium dark:text-primary-light-3">화풍</span>을 선택해 주세요
       </div>
       {styles && (
         <StyleOptionGrid

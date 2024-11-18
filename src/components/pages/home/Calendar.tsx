@@ -121,12 +121,12 @@ const Calendar = ({
         </button>
       </div>
 
-      <div className="grid grid-cols-7 px-5">
+      <div className="grid grid-cols-7 px-5 dark:text-gray-800">
         {daysOfWeek.map((day, index) => (
           <div className="flex justify-center py-[0.625rem]" key={index}>
             <div
               key={day}
-              className={`flex h-8 w-10 items-center justify-center rounded-full bg-primary-light-2 font-Pretendard text-body-1 font-semibold text-primary-normal ${day === "일" ? "text-status-negative" : "text-primary-normal"}`}
+              className={`flex h-8 w-10 items-center justify-center rounded-full bg-primary-light-2 font-Pretendard text-body-1 font-semibold text-primary-normal dark:bg-gray-600 ${day === "일" ? "text-status-negative" : "text-primary-normal dark:text-gray-200"}`}
             >
               {day}
             </div>

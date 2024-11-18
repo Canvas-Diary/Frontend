@@ -7,10 +7,10 @@ interface ButtonProps {
 }
 
 const bgColorStyle = {
-  light: "bg-primary-light-2 text-primary-normal",
-  dark: "bg-primary-normal text-white",
-  gray: "bg-gray-100 text-gray-500",
-  non: "bg-primary-light-1 text-primary-light-3",
+  light: "bg-primary-light-2 text-primary-normal dark:bg-primary-normal dark:text-white",
+  dark: "bg-primary-normal text-white dark:bg-primary-medium",
+  gray: "bg-gray-100 text-gray-500 dark:bg-gray-500 dark:text-gray-800",
+  non: "bg-primary-light-1 text-primary-light-3 dark:bg-gray-700 dark:text-gray-300",
 };
 
 /**
