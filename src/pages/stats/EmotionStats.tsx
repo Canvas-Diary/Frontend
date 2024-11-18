@@ -78,13 +78,13 @@ const EmotionStats = ({ value, text, handleNext, handlePrev }: EmotionStatsProps
   return (
     <div className="flex flex-col gap-500 font-BinggraeBold text-heading-1 text-primary-normal">
       <div className="flex items-center justify-center gap-600">
-        <button onClick={handleNext}>
+        <button onClick={handlePrev}>
           <ArrowLeft></ArrowLeft>
         </button>
         <div className="px-600 py-200">
           <h2>{text}</h2>
         </div>
-        <button onClick={handlePrev}>
+        <button onClick={handleNext}>
           <ArrowRight></ArrowRight>
         </button>
       </div>
