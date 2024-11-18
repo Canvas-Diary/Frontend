@@ -60,7 +60,10 @@ const DiaryWriteFlowLayout = () => {
         navigate(pageOrder[currentIndex + 1], { replace: true });
       } else navigate(pageOrder[currentIndex + 1]);
     } else {
-      navigate(`${RoutePaths.diary}/${diaryId}`, { state: { from: RoutePaths.diaryDraw } });
+      navigate(`${RoutePaths.diary}/${diaryId}`, {
+        state: { from: RoutePaths.diaryDraw },
+        replace: true,
+      });
     }
   };
 
