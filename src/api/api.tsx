@@ -3,6 +3,7 @@ import {
   Diaries,
   DiaryInfo,
   Emotions,
+  EmotionStatsData,
   NewDiaryInfo,
   SearchedDiaries,
   Styles,
@@ -355,6 +356,24 @@ export const postKeyword = async ({ diaryId, keywords }: PostKeywordProps) => {
     const response = await axiosInstance.post(`/api/v1/diaries/${diaryId}/reminiscence`, {
       keywords,
     });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+interface GetEmotionStatsProps {
+  type: "WEEK" | "MONTH";
+  date: string;
+}
+
+export const getEmotionStats = async ({
+  type,
+  date,
+}: GetEmotionStatsProps): Promise<EmotionStatsData> => {
+  const params = { type, date };
+  try {
+    const response = await axiosInstance.get(`/api/v1/stats/emotions`, { params });
     return response.data;
   } catch (error) {
     throw error;

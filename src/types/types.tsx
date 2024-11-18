@@ -74,3 +74,20 @@ export type Emotion = {
   name: string;
   koreanName: string;
 };
+
+//감정 통계 정보
+export type EmotionStatsData = {
+  barData: EmotionBarData;
+  pieData: EmotionPieData;
+};
+
+//감정 막대 그래프 정보
+export type EmotionBarData = {
+  dataKey: number;
+  positive: number;
+  neutral: number;
+  negative: number;
+}[];
+
+//감정 도넛 그래프 정보
+export type EmotionPieData = { emotion: string; diaryCount: number }[];

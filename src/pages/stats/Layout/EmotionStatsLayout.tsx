@@ -15,12 +15,10 @@ function getWeekRange(date: Date): string {
   const lastDayOfWeek = new Date(firstDayOfWeek);
   lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6);
 
-  // 날짜를 "yyyy.mm.dd" 형식으로 변환하는 함수
   const formatDate = (d: Date): string => {
-    const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, "0");
     const day = String(d.getDate()).padStart(2, "0");
-    return `${year}.${month}.${day}`;
+    return `${month}.${day}`;
   };
 
   // 주간 범위 반환
@@ -61,26 +59,28 @@ const EmotionStatsLayout = () => {
 
   return (
     <div className="flex w-full flex-col items-center justify-center bg-primary-light-1 px-800 py-500 dark:bg-background">
-      <Tabs defaultValue="week" className="w-full text-center font-Binggrae text-body-2">
+      <Tabs defaultValue="WEEK" className="w-full text-center font-Binggrae text-body-2">
         <TabsList className="mb-500 w-full">
-          <TabsTrigger value="week" className="w-full">
+          <TabsTrigger value="WEEK" className="w-full">
             1주
           </TabsTrigger>
-          <TabsTrigger value="month" className="w-full">
+          <TabsTrigger value="MONTH" className="w-full">
             1달
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="week">
+        <TabsContent value="WEEK">
           <EmotionStats
-            value="week"
+            value="WEEK"
+            current={currentWeek}
             text={`${getWeekRange(currentWeek)}`}
             handleNext={handleNextWeek}
             handlePrev={handlePrevWeek}
           />
         </TabsContent>
-        <TabsContent value="month">
+        <TabsContent value="MONTH">
           <EmotionStats
-            value="month"
+            value="MONTH"
+            current={currentMonth}
             text={`${currentMonth.getFullYear()}년 ${months[currentMonth.getMonth()]}월`}
             handleNext={handleNextMonth}
             handlePrev={handlePrevMonth}

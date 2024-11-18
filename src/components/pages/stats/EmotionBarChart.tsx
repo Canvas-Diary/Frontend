@@ -50,15 +50,21 @@ const EmotionBarChart = ({ chartData }: EmotionBarChartProps) => {
               dataKey="positive"
               stackId="a"
               fill="var(--color-positive)"
-              radius={[0, 0, 4, 4]}
+              radius={10}
               barSize={10}
             />
-            <Bar dataKey="negative" stackId="a" fill="var(--color-negative)" barSize={10} />
+            <Bar
+              dataKey="negative"
+              stackId="a"
+              fill="var(--color-negative)"
+              radius={10}
+              barSize={10}
+            />
             <Bar
               dataKey="neutral"
               stackId="a"
               fill="var(--color-neutral)"
-              radius={[4, 4, 0, 0]}
+              radius={10}
               barSize={10}
             />
           </BarChart>

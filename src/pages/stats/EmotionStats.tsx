@@ -3,57 +3,67 @@ import ArrowLeft from "../../assets/svg/arrow_left.svg?react";
 import ArrowRight from "../../assets/svg/arrow_right.svg?react";
 import EmotionBarChart from "@/components/pages/stats/EmotionBarChart";
 import EmotionPieChart from "@/components/pages/stats/EmotionPieChart";
+import { getEmotionStats } from "@/api/api";
+import { formatDate } from "@/utils/util";
+import { EmotionBarData, EmotionPieData } from "@/types/types";
 
-const WeeklyEmotionBarData = [
-  { dataKey: "5주전", positive: 1, neutral: 3, negative: 2 },
-  { dataKey: "4주전", positive: 1, neutral: 1, negative: 4 },
-  { dataKey: "3주전", positive: 2, neutral: 2, negative: 3 },
-  { dataKey: "2주전", positive: 1, neutral: 1, negative: 0 },
-  { dataKey: "저번주", positive: 2, neutral: 4, negative: 1 },
-  { dataKey: "이번주", positive: 3, neutral: 1, negative: 2 },
-];
+interface FormatToPropsProps {
+  barData: EmotionBarData;
+  pieData: EmotionPieData;
+  type: "WEEK" | "MONTH";
+}
 
-const MonthlyEmotionBarData = [
-  { dataKey: "5달전", positive: 8, neutral: 10, negative: 11 },
-  { dataKey: "4달전", positive: 12, neutral: 7, negative: 14 },
-  { dataKey: "3달전", positive: 8, neutral: 20, negative: 1 },
-  { dataKey: "2달전", positive: 8, neutral: 10, negative: 12 },
-  { dataKey: "저번달", positive: 18, neutral: 2, negative: 8 },
-  { dataKey: "이번달", positive: 8, neutral: 10, negative: 14 },
-];
+//개선 필요
+/**
+ * api 응답값을 chart 의 Props 형식에 맞게 포멧팅
+ * @param param0
+ * @returns
+ */
+const formatToProps = ({ barData, pieData, type }: FormatToPropsProps) => {
+  const dataMap = Object.fromEntries(barData.map((item) => [Number(item.dataKey), item]));
+  const updatedBarData = [];
+  for (let i = 5; i >= 0; i--) {
+    if (dataMap[i]) {
+      let key = type === "WEEK" ? `${dataMap[i].dataKey}주전` : `${dataMap[i].dataKey}달전`;
 
-const WeeklyEmotionPieData = [
-  { emotion: "JOY", diaryCount: 2, fill: "var(--color-JOY)" },
-  { emotion: "SADNESS", diaryCount: 2, fill: "var(--color-SADNESS)" },
-  { emotion: "ANGER", diaryCount: 1, fill: "var(--color-ANGER)" },
-  { emotion: "FEAR", diaryCount: 1, fill: "var(--color-FEAR)" },
-  { emotion: "DISGUST", diaryCount: 1, fill: "var(--color-DISGUST)" },
-  { emotion: "SHAME", diaryCount: 2, fill: "var(--color-SHAME)" },
-  { emotion: "SURPRISE", diaryCount: 1, fill: "var(--color-SURPRISE)" },
-  { emotion: "CURIOSITY", diaryCount: 1, fill: "var(--color-CURIOSITY)" },
-  { emotion: "NONE", diaryCount: 1, fill: "var(--color-NONE)" },
-];
+      if (i === 0) key = type === "WEEK" ? "이번주" : "이번달";
+      else if (i === 1) key = type === "WEEK" ? "저번주" : "저번달";
 
-const MonthlyEmotionPieData = [
-  { emotion: "JOY", diaryCount: 27, fill: "var(--color-JOY)" },
-  { emotion: "SADNESS", diaryCount: 20, fill: "var(--color-SADNESS)" },
-  { emotion: "ANGER", diaryCount: 18, fill: "var(--color-ANGER)" },
-  { emotion: "FEAR", diaryCount: 17, fill: "var(--color-FEAR)" },
-  { emotion: "DISGUST", diaryCount: 9, fill: "var(--color-DISGUST)" },
-  { emotion: "SHAME", diaryCount: 20, fill: "var(--color-SHAME)" },
-  { emotion: "SURPRISE", diaryCount: 18, fill: "var(--color-SURPRISE)" },
-  { emotion: "CURIOSITY", diaryCount: 17, fill: "var(--color-CURIOSITY)" },
-  { emotion: "NONE", diaryCount: 9, fill: "var(--color-NONE)" },
-];
+      updatedBarData.push({
+        ...dataMap[i],
+        dataKey: `${key}`,
+      });
+    } else {
+      let key = type === "WEEK" ? `${i}주전` : `${i}달전`;
+      if (i === 0) key = type === "WEEK" ? "이번주" : "이번달";
+      else if (i === 1) key = type === "WEEK" ? "저번주" : "저번달";
+      updatedBarData.push({
+        dataKey: `${key}`,
+        positive: 0,
+        neutral: 0,
+        negative: 0,
+      });
+    }
+  }
+
+  const updatedPieData = pieData.map((item) => ({
+    ...item,
+    fill: `var(--color-${item.emotion})`,
+  }));
+
+  return { barData: updatedBarData, pieData: updatedPieData };
+};
 
 interface EmotionStatsProps {
-  value: string;
+  value: "WEEK" | "MONTH";
   text: string;
+  current: Date;
   handleNext: () => void;
   handlePrev: () => void;
 }
+
 //api 호출시 필요한 정보까지 Props로 받아서 데이터 처리
-const EmotionStats = ({ value, text, handleNext, handlePrev }: EmotionStatsProps) => {
+const EmotionStats = ({ value, text, current, handleNext, handlePrev }: EmotionStatsProps) => {
   const [barData, setBarData] = useState<
     {
       dataKey: string;
@@ -71,9 +81,20 @@ const EmotionStats = ({ value, text, handleNext, handlePrev }: EmotionStatsProps
   >([]);
 
   useEffect(() => {
-    setBarData(value === "week" ? WeeklyEmotionBarData : MonthlyEmotionBarData);
-    setPieData(value === "week" ? WeeklyEmotionPieData : MonthlyEmotionPieData);
-  });
+    const setEmotionData = async () => {
+      const response = await getEmotionStats({ type: value, date: formatDate(current) });
+      const formatedResponse = formatToProps({
+        barData: response.barData,
+        pieData: response.pieData,
+        type: value,
+      });
+
+      setBarData(formatedResponse.barData);
+      setPieData(formatedResponse.pieData);
+    };
+
+    setEmotionData();
+  }, [current]);
 
   return (
     <div className="flex flex-col gap-500 font-BinggraeBold text-heading-1 text-primary-normal">
