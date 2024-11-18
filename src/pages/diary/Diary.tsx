@@ -157,17 +157,9 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
         }}
       />
       {isAppbarVisible && (
-        <div className={`animate-fadeInSlideDown fixed top-0 z-50 w-full`}>
+        <div className={`fixed top-0 z-50 w-full animate-fadeInSlideDown`}>
           <Appbar
-            backHandler={() => {
-              if (location.state?.from === RoutePaths.diaryDraw) {
-                navigate("/");
-              } else if (location.state?.isModified === true) {
-                navigate("/");
-              } else {
-                navigate(-1);
-              }
-            }}
+            backHandler={() => navigate(-1)}
             menuHandler={isMyDiary ? handleMenuClick : undefined}
           />
         </div>
