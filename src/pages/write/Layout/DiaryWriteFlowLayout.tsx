@@ -102,8 +102,6 @@ const DiaryWriteFlowLayout = () => {
         return false;
       }
     } else if (historyAction === "POP") {
-      console.log(currentIndex);
-
       if (currentIndex === 0 || currentIndex === 2) {
         return true;
       } else return false;
