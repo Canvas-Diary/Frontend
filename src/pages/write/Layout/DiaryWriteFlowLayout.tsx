@@ -29,6 +29,8 @@ export interface ContextProps {
   diaryInfo: NewDiaryInfo;
   setDiaryInfo: Function;
   diaryId: string;
+  keywords: string[];
+  setKeywords: Function;
 }
 
 const DiaryWriteFlowLayout = () => {
@@ -42,6 +44,7 @@ const DiaryWriteFlowLayout = () => {
     isPublic: true,
     style: "",
   });
+  const [keywords, setKeywords] = useState([]);
 
   const onClickNext = async () => {
     const currentIndex = pageOrder.indexOf(location.pathname);
@@ -117,7 +120,7 @@ const DiaryWriteFlowLayout = () => {
     <MobileLayout>
       <Appbar text="일기 작성" backHandler={handleBack}></Appbar>
       <div className="flex-grow overflow-scroll px-800 py-300">
-        <Outlet context={{ diaryInfo, setDiaryInfo, diaryId }} />
+        <Outlet context={{ diaryInfo, setDiaryInfo, diaryId, keywords, setKeywords }} />
       </div>
       <div className="my-4 flex justify-center">
         <Button
