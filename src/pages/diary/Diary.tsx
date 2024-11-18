@@ -4,7 +4,6 @@ import Content from "../../components/pages/diary/Content";
 import Appbar from "../../components/common/Appbar";
 import { downloadFile, formatDateWithWeek } from "../../utils/util";
 import { DiaryImage, DiaryInfo } from "../../types/types";
-import RoutePaths from "../../constants/routePath";
 import { useEffect, useRef, useState } from "react";
 import DiaryContentSettings from "../../components/common/BottomSheet/DiaryContentSettings";
 import { deleteDiary, deleteImage, patchMainImage, putModifiedDiary } from "@/api/api";
