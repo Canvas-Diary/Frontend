@@ -3,20 +3,22 @@ import ReviewContent from "../../components/pages/write/ReviewContent";
 import { FADEINANIMATION } from "../../styles/animations";
 import { DiaryInfo } from "../../types/types";
 import { formatDateWithWeek } from "../../utils/util";
-import { getDiaryInfoById } from "../../api/api";
-
-const dummyId = "0192f5d7-c29d-5b55-4b74-f1c412201dea";
+import { getReview } from "../../api/api";
+import { useOutletContext } from "react-router-dom";
+import { ContextProps } from "./Layout/DiaryWriteFlowLayout";
 
 const Review = () => {
-  const [diaryInfo, setDiaryInfo] = useState<DiaryInfo | null>(null);
+  const { diaryInfo, setKeywords } = useOutletContext<ContextProps>();
+  const [reviewDiaryInfo, setReviewDiaryInfo] = useState<DiaryInfo | null>(null);
 
   useEffect(() => {
     const fetchDiary = async () => {
       try {
-        const data = await getDiaryInfoById(dummyId);
-        setDiaryInfo(data);
+        const data = await getReview({ content: diaryInfo!.content, date: diaryInfo!.date });
+        setReviewDiaryInfo(data);
+        setKeywords(data.keywords);
       } catch (error) {
-        setDiaryInfo(null);
+        setReviewDiaryInfo(null);
       }
     };
 
@@ -30,14 +32,14 @@ const Review = () => {
         비슷한 일기를 작성했어요
       </div>
       <div className={`${FADEINANIMATION[1]} flex-grow pb-[2rem]`}>
-        {diaryInfo && (
+        {reviewDiaryInfo && (
           <ReviewContent
-            date={formatDateWithWeek(diaryInfo.date)}
-            emotion={diaryInfo.emotion}
-            content={diaryInfo.content}
-            likedCount={diaryInfo.likedCount}
-            isLiked={diaryInfo.isLiked}
-            images={diaryInfo.images}
+            date={formatDateWithWeek(reviewDiaryInfo.date)}
+            emotion={reviewDiaryInfo.emotion}
+            content={reviewDiaryInfo.content}
+            likedCount={reviewDiaryInfo.likedCount}
+            isLiked={reviewDiaryInfo.isLiked}
+            images={reviewDiaryInfo.images}
           ></ReviewContent>
         )}
       </div>

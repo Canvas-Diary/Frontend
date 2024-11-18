@@ -4,7 +4,6 @@ import Content from "../../components/pages/diary/Content";
 import Appbar from "../../components/common/Appbar";
 import { downloadFile, formatDateWithWeek } from "../../utils/util";
 import { DiaryImage, DiaryInfo } from "../../types/types";
-import RoutePaths from "../../constants/routePath";
 import { useEffect, useRef, useState } from "react";
 import DiaryContentSettings from "../../components/common/BottomSheet/DiaryContentSettings";
 import { deleteDiary, deleteImage, patchMainImage, putModifiedDiary } from "@/api/api";
@@ -157,17 +156,9 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
         }}
       />
       {isAppbarVisible && (
-        <div className={`animate-fadeInSlideDown fixed top-0 z-50 w-full`}>
+        <div className={`fixed top-0 z-50 w-full animate-fadeInSlideDown`}>
           <Appbar
-            backHandler={() => {
-              if (location.state?.from === RoutePaths.diaryDraw) {
-                navigate("/");
-              } else if (location.state?.isModified === true) {
-                navigate("/");
-              } else {
-                navigate(-1);
-              }
-            }}
+            backHandler={() => navigate(-1)}
             menuHandler={isMyDiary ? handleMenuClick : undefined}
           />
         </div>

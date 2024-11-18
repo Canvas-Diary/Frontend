@@ -16,14 +16,20 @@ interface AppBarProps {
  */
 const Appbar = ({ text, backHandler, menuHandler }: AppBarProps) => {
   return (
-    <div className="relative z-50 flex w-full items-center justify-between bg-transparent px-800 py-300 text-black dark:text-white">
-      <button className={`h-7 w-8 ${backHandler ? "visible" : "invisible"}`} onClick={backHandler}>
+    <div className="relative z-50 flex w-full items-center justify-between bg-transparent px-500 py-300 text-black dark:text-white">
+      <button
+        className={`h-7 w-8 ${backHandler ? "visible" : "invisible"} text-white`}
+        onClick={backHandler}
+      >
         <BackIcon />
       </button>
 
       {text && <span className="font-Binggrae text-body-1 font-regular">{text}</span>}
 
-      <button className={`h-7 w-8 ${menuHandler ? "visible" : "invisible"}`} onClick={menuHandler}>
+      <button
+        className={`h-7 w-8 ${menuHandler ? "visible" : "invisible"} text-white`}
+        onClick={menuHandler}
+      >
         <MenuIcon />
       </button>
     </div>

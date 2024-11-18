@@ -2,9 +2,19 @@ import { useOutletContext } from "react-router-dom";
 import dummy from "../../assets/dummy/_Image.png";
 import { FADEINANIMATION } from "../../styles/animations";
 import { ContextProps } from "./Layout/DiaryWriteFlowLayout";
+import { useEffect } from "react";
+import { postKeyword } from "@/api/api";
 
 const Draw = () => {
-  const { diaryId } = useOutletContext<ContextProps>();
+  const { diaryId, keywords } = useOutletContext<ContextProps>();
+
+  useEffect(() => {
+    const setKeywordToDiary = async () => {
+      await postKeyword({ diaryId: diaryId, keywords: keywords });
+    };
+
+    if (diaryId !== "0") setKeywordToDiary();
+  }, [diaryId]);
 
   return (
     <div className="items-centergap-[2rem] flex h-full flex-col justify-center font-Binggrae text-gray-900">

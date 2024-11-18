@@ -321,3 +321,42 @@ export const patchMainImage = async ({ diaryId, imageId }: PatchMainImageProps) 
     throw error;
   }
 };
+
+interface GetReviewProps {
+  content: string;
+  date: string;
+}
+
+/**
+ * 회고 조회
+ * @param param0
+ */
+export const getReview = async ({ content, date }: GetReviewProps) => {
+  try {
+    const response = await axiosInstance.post("/api/v1/diaries/reminiscence", { content, date });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+interface PostKeywordProps {
+  diaryId: string;
+  keywords: string[];
+}
+
+/**
+ * diaryID에 키워드 저장...
+ * @param param0
+ * @returns
+ */
+export const postKeyword = async ({ diaryId, keywords }: PostKeywordProps) => {
+  try {
+    const response = await axiosInstance.post(`/api/v1/diaries/${diaryId}/reminiscence`, {
+      keywords,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
