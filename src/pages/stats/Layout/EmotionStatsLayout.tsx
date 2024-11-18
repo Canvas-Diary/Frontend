@@ -4,13 +4,28 @@ import { useState } from "react";
 
 const months = [" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12"];
 
-const getWeekOfMonth = (date: any) => {
-  const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1); // 해당 달의 첫날
-  const dayOfMonth = date.getDate(); // 해당 날짜의 일(day)
+function getWeekRange(date: Date): string {
+  // 주의 첫날(일요일) 구하기
+  const firstDayOfWeek = new Date(date);
+  const dayOfWeek = firstDayOfWeek.getDay();
+  const diffToSunday = dayOfWeek === 0 ? 0 : 7 - dayOfWeek;
+  firstDayOfWeek.setDate(firstDayOfWeek.getDate() - diffToSunday);
 
-  const weekOfMonth = Math.ceil((dayOfMonth + firstDayOfMonth.getDay()) / 7);
-  return weekOfMonth;
-};
+  // 주의 마지막날(토요일) 구하기
+  const lastDayOfWeek = new Date(firstDayOfWeek);
+  lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6);
+
+  // 날짜를 "yyyy.mm.dd" 형식으로 변환하는 함수
+  const formatDate = (d: Date): string => {
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+  };
+
+  // 주간 범위 반환
+  return `${formatDate(firstDayOfWeek)} ~ ${formatDate(lastDayOfWeek)}`;
+}
 
 const EmotionStatsLayout = () => {
   const [currentWeek, setCurrentWeek] = useState(new Date());
@@ -58,7 +73,7 @@ const EmotionStatsLayout = () => {
         <TabsContent value="week">
           <EmotionStats
             value="week"
-            text={`${months[currentWeek.getMonth()]}월 ${getWeekOfMonth(currentWeek)}주차`}
+            text={`${getWeekRange(currentWeek)}`}
             handleNext={handleNextWeek}
             handlePrev={handlePrevWeek}
           />
