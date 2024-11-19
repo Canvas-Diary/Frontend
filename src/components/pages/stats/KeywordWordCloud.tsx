@@ -11,7 +11,7 @@ const KeywordWordCloud = ({ chartData }: KeywordWordCloudProps) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    if (chartData === null) return;
+    if (chartData === null || chartData.length === 0) return;
 
     const chart = echarts.init(chartRef.current);
 

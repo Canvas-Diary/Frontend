@@ -22,28 +22,30 @@ interface EmotionBarChartProps {
 const KeywordBarChart = ({ chartData }: EmotionBarChartProps) => {
   return (
     <Card>
-      <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-80 w-full">
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="name"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <YAxis hide={true} domain={[0, (dataMax: string) => parseInt(dataMax) + 1]} />
-            <ChartTooltip content={<ChartTooltipContent />} trigger="click" />
-            <Bar
-              dataKey="value"
-              fill="var(--color-value)"
-              radius={20}
-              barSize={20}
-              label={{ position: "top", fill: "var(--color-value)", fontSize: 12 }}
-            />
-          </BarChart>
-        </ChartContainer>
+      <CardContent className="min-h-80">
+        {chartData.length !== 0 && (
+          <ChartContainer config={chartConfig} className="min-h-80 w-full">
+            <BarChart accessibilityLayer data={chartData}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="name"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
+              />
+              <YAxis hide={true} domain={[0, (dataMax: string) => parseInt(dataMax) + 1]} />
+              <ChartTooltip content={<ChartTooltipContent />} trigger="click" />
+              <Bar
+                dataKey="value"
+                fill="var(--color-value)"
+                radius={20}
+                barSize={20}
+                label={{ position: "top", fill: "var(--color-value)", fontSize: 12 }}
+              />
+            </BarChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );
