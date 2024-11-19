@@ -4,13 +4,26 @@ import { useState } from "react";
 
 const months = [" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12"];
 
-const getWeekOfMonth = (date: any) => {
-  const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1); // 해당 달의 첫날
-  const dayOfMonth = date.getDate(); // 해당 날짜의 일(day)
+function getWeekRange(date: Date): string {
+  // 주의 첫날(일요일) 구하기
+  const firstDayOfWeek = new Date(date);
+  const dayOfWeek = firstDayOfWeek.getDay();
+  const diffToSunday = dayOfWeek === 0 ? 0 : 7 - dayOfWeek;
+  firstDayOfWeek.setDate(firstDayOfWeek.getDate() - diffToSunday);
 
-  const weekOfMonth = Math.ceil((dayOfMonth + firstDayOfMonth.getDay()) / 7);
-  return weekOfMonth;
-};
+  // 주의 마지막날(토요일) 구하기
+  const lastDayOfWeek = new Date(firstDayOfWeek);
+  lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6);
+
+  const formatDate = (d: Date): string => {
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${month}.${day}`;
+  };
+
+  // 주간 범위 반환
+  return `${formatDate(firstDayOfWeek)} ~ ${formatDate(lastDayOfWeek)}`;
+}
 
 const KeywordStatsLayout = () => {
   const [currentWeek, setCurrentWeek] = useState(new Date());
@@ -46,26 +59,28 @@ const KeywordStatsLayout = () => {
 
   return (
     <div className="flex w-full flex-col items-center justify-center bg-primary-light-1 px-800 py-500 dark:bg-background">
-      <Tabs defaultValue="week" className="w-full text-center font-Binggrae text-body-2">
+      <Tabs defaultValue="WEEK" className="w-full text-center font-Binggrae text-body-2">
         <TabsList className="mb-500 w-full">
-          <TabsTrigger value="week" className="w-full">
+          <TabsTrigger value="WEEK" className="w-full">
             1주
           </TabsTrigger>
-          <TabsTrigger value="month" className="w-full">
+          <TabsTrigger value="MONTH" className="w-full">
             1달
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="week">
+        <TabsContent value="WEEK">
           <KeywordStats
-            value="week"
-            text={`${months[currentWeek.getMonth()]}월 ${getWeekOfMonth(currentWeek)}주차`}
+            value="WEEK"
+            current={currentWeek}
+            text={`${getWeekRange(currentWeek)}`}
             handleNext={handleNextWeek}
             handlePrev={handlePrevWeek}
           />
         </TabsContent>
-        <TabsContent value="month">
+        <TabsContent value="MONTH">
           <KeywordStats
-            value="month"
+            value="MONTH"
+            current={currentMonth}
             text={`${currentMonth.getFullYear()}년 ${months[currentMonth.getMonth()]}월`}
             handleNext={handleNextMonth}
             handlePrev={handlePrevMonth}
