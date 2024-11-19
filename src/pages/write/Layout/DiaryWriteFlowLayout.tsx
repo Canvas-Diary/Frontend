@@ -28,7 +28,7 @@ const pageOrder = [
 export interface ContextProps {
   diaryInfo: NewDiaryInfo;
   setDiaryInfo: React.Dispatch<React.SetStateAction<NewDiaryInfo>>;
-  diaryId: string;
+  isLoaded: boolean;
   keywords: string[];
   setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
 }

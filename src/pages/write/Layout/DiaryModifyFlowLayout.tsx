@@ -36,7 +36,7 @@ const DiaryModifyFlowLayout = () => {
     <MobileLayout>
       <Appbar text="이미지 추가" backHandler={() => navigate(-1)}></Appbar>
       <div className="flex-grow overflow-scroll px-800 py-300">
-        <Outlet context={{ diaryInfo, setDiaryInfo }} />
+        <Outlet context={{ diaryInfo, setDiaryInfo, isLoaded }} />
       </div>
       <div className="my-4 flex justify-center">
         <Button
