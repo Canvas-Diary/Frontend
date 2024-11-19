@@ -3,7 +3,6 @@ import ArrowLeft from "../../../assets/svg/arrow_left.svg?react";
 import ArrowRight from "../../../assets/svg/arrow_right.svg?react";
 import afraid from "../../../assets/icon/afraid.png";
 import angry from "../../../assets/icon/angry.png";
-import defaultIcon from "../../../assets/icon/defaultIcon.png";
 import dislike from "../../../assets/icon/dislike.png";
 import happy from "../../../assets/icon/happy.png";
 import non from "../../../assets/icon/non.png";
@@ -14,7 +13,7 @@ import wonder from "../../../assets/icon/wonder.png";
 import { Diaries } from "../../../types/types";
 import CalendarDate from "./CalendarDate";
 
-const emotionImages: { [key: string]: string } = {
+const emotionImages: { [key: string]: string | null } = {
   JOY: happy,
   SADNESS: sad,
   ANGER: angry,
@@ -24,7 +23,7 @@ const emotionImages: { [key: string]: string } = {
   SHAMEhy: shy,
   SURPRISE: surprised,
   CURIOSITY: wonder,
-  default: defaultIcon,
+  default: null,
 };
 
 const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
@@ -64,6 +63,9 @@ const Calendar = ({
     const firstDayOfWeek = firstDayOfMonth.getDay();
     const days = [];
 
+    const today = new Date(); // 오늘 날짜
+    today.setHours(0, 0, 0, 0); // 시간을 초기화해 날짜만 비교
+
     // 이전 달의 빈 칸 생성
     for (let i = 0; i < firstDayOfWeek; i++) {
       days.push(<div key={`empty-${i}`} />);
@@ -71,12 +73,13 @@ const Calendar = ({
 
     // 달의 날짜 생성
     for (let day = 1; day <= daysInMonth; day++) {
-      const isToday =
-        year === new Date().getFullYear() &&
-        month === new Date().getMonth() &&
-        day === new Date().getDate();
+      const currentDate = new Date(year, month, day);
+      currentDate.setHours(0, 0, 0, 0); // 시간 초기화
 
-      const isSunday = new Date(year, month, day).getDay() === 0;
+      const isToday =
+        year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
+
+      const isSunday = currentDate.getDay() === 0;
 
       const matchingDiary = calendarData.diaries.find(
         (diary) =>
@@ -95,10 +98,11 @@ const Calendar = ({
         isSunday: isSunday,
       };
 
+      const isFutureDate = currentDate > today; // 미래 날짜인지 확인
       days.push(
         <CalendarDate
           key={calendarDataInfo.diaryId}
-          onClickDate={onClickDate}
+          onClickDate={!isFutureDate ? onClickDate : undefined}
           calendarDataInfo={calendarDataInfo}
         />
       );
