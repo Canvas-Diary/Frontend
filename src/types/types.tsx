@@ -30,6 +30,7 @@ export type DiaryInfo = {
   isPublic: boolean;
   date: string;
   images: DiaryImage[];
+  weightedContents: string[];
 };
 
 //일기 조회 이미지
