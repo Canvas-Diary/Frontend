@@ -15,7 +15,7 @@ const Review = () => {
     const fetchDiary = async () => {
       try {
         const data = await getReview({ content: diaryInfo!.content, date: diaryInfo!.date });
-        setReviewDiaryInfo(data);
+        setReviewDiaryInfo(data.diaryInfo);
         setKeywords(data.keywords);
       } catch (error) {
         setReviewDiaryInfo(null);
