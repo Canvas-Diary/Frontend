@@ -5,6 +5,7 @@ import { FADEINANIMATION } from "../../styles/animations";
 import { useEffect, useRef, useState } from "react";
 import Toggle from "../../components/common/Toggle";
 import Divider from "../../components/common/Divider";
+import KeywordTag from "@/components/common/KeywordTag";
 
 const Write = () => {
   const location = useLocation();
@@ -13,6 +14,7 @@ const Write = () => {
   const editorRef = useRef<HTMLDivElement>(null);
   const [buttonPosition, setButtonPosition] = useState<{ x: number; y: number } | null>(null);
   const [selectedText, setSelectedText] = useState<Range | null>(null);
+  const [keywords, setKeywords] = useState<string[]>([]);
 
   useEffect(() => {
     setDiaryInfo({ ...diaryInfo, date: date });
@@ -62,43 +64,21 @@ const Write = () => {
   const makeBold = () => {
     if (selectedText) {
       const selection = window.getSelection();
-      const range = selectedText;
 
-      if (selection && range) {
-        document.execCommand("bold");
-
+      if (selection) {
+        const text = selection.toString();
+        setKeywords((prev) => {
+          return text ? [...prev, text] : prev;
+        });
         setButtonPosition(null);
         setSelectedText(null);
-
-        if (editorRef.current) {
-          extractBoldText();
-        }
       }
     }
   };
 
-  /**
-   * 일기 ref에서 b 태그로 강조된 단어 리스트 생성하는 함수
-   * @returns
-   */
-  const extractBoldText = () => {
-    if (!editorRef.current) return;
-
-    const boldTexts: string[] = [];
-    editorRef.current.childNodes.forEach((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        const element = node as HTMLElement;
-        if (element.tagName === "B") {
-          boldTexts.push(element.textContent || "");
-        }
-      }
-    });
-
-    console.log("Bold Texts:", boldTexts);
-    return boldTexts;
+  const handleKeywordClick = (keywordToRemove: string) => {
+    setKeywords((prev) => prev.filter((keyword) => keyword !== keywordToRemove));
   };
-
-  const isBold = document.queryCommandState("bold");
 
   return (
     <div className="flex h-full flex-col gap-600 font-Binggrae text-gray-900 dark:text-gray-50">
@@ -106,7 +86,7 @@ const Write = () => {
         {formatDateWithWeek(date)}
       </div>
       <div className={`${FADEINANIMATION[1]} flex items-center gap-300 text-body-2`}>
-        <div className="font-Binggrae text-gray-500">공개 여부</div>
+        <div className="py-200 font-Binggrae text-gray-500">공개 여부</div>
         <div className="flex items-center justify-center rounded-50 bg-primary-light-2 px-300 py-200 dark:bg-primary-medium">
           {diaryInfo.isPublic ? "공개" : "비공개"}
         </div>
@@ -117,13 +97,21 @@ const Write = () => {
           ></Toggle>
         </div>
       </div>
-      <Divider style={FADEINANIMATION[2]} />
+      <div className={`${FADEINANIMATION[2]} flex items-center gap-300 text-body-2`}>
+        <div className="whitespace-nowrap py-200 font-Binggrae text-gray-500">키워드</div>
+        <div className="flex gap-400 overflow-scroll">
+          {keywords.map((keyword) => (
+            <KeywordTag text={keyword} onClick={() => handleKeywordClick(keyword)}></KeywordTag>
+          ))}
+        </div>
+      </div>
+      <Divider style={FADEINANIMATION[3]} />
       <div className="relative flex min-h-[80px] w-full flex-grow">
         <div
           ref={editorRef}
           className={`${
-            FADEINANIMATION[3]
-          } w-full rounded-md border border-input bg-background px-3 py-2 font-Binggrae text-body-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}
+            FADEINANIMATION[4]
+          } w-full overflow-scroll rounded-md border border-input bg-background px-3 py-2 font-Binggrae text-body-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}
           contentEditable={true}
           suppressContentEditableWarning={true}
           onInput={(e) => {
@@ -132,9 +120,9 @@ const Write = () => {
         ></div>
         {diaryInfo.content.trim() === "" && (
           <div
-            className={`${FADEINANIMATION[3]} pointer-events-none absolute left-3 top-2 text-muted-foreground`}
+            className={`${FADEINANIMATION[4]} pointer-events-none absolute left-3 top-2 text-muted-foreground`}
           >
-            10자 이상 작성해주세요. 드래그해서 강조할 단어를 선택할 수 있어요.
+            10자 이상 작성해주세요. 드래그해서 강조할 단어를 최대 5개 선택할 수 있어요.
           </div>
         )}
         {buttonPosition && (
@@ -145,13 +133,9 @@ const Write = () => {
               top: `${buttonPosition.y}px`,
               left: `${buttonPosition.x}px`,
             }}
-            className={`absolute z-50 rounded-md border px-3 py-2 text-sm ${
-              isBold
-                ? "border-blue-500 bg-blue-500 text-white"
-                : "border-gray-300 bg-white text-black"
-            }`}
+            className={`absolute z-50 rounded-md border bg-primary-medium px-3 py-2 text-sm text-background`}
           >
-            Bold
+            강조하기
           </button>
         )}
       </div>
