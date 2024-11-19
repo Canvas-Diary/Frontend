@@ -2,8 +2,8 @@ import { Outlet, useBlocker, useLocation, useNavigate } from "react-router-dom";
 import Appbar from "../../../components/common/Appbar";
 import Button from "../../../components/common/Button";
 import RoutePaths from "../../../constants/routePath";
-import { useState } from "react";
-import { createDiaryAndGetId } from "../../../api/api";
+import { useEffect, useState } from "react";
+import { createDiaryAndGetId, postKeyword } from "../../../api/api";
 import { useErrorBoundary } from "react-error-boundary";
 import MobileLayout from "../../Layout/MobileLayout";
 import { getTodayDate } from "../../../utils/util";
@@ -38,6 +38,7 @@ const DiaryWriteFlowLayout = () => {
   const location = useLocation();
   const { showBoundary } = useErrorBoundary();
   const [diaryId, setDiaryId] = useState("0");
+  const [keywords, setKeywords] = useState([]);
   const [diaryInfo, setDiaryInfo] = useState<NewDiaryInfo>({
     date: getTodayDate(),
     content: "",
@@ -49,7 +50,7 @@ const DiaryWriteFlowLayout = () => {
   const onClickNext = async () => {
     const currentIndex = pageOrder.indexOf(location.pathname);
 
-    if (currentIndex !== -1 && currentIndex < pageOrder.length - 1) {
+    if (currentIndex < pageOrder.length - 1) {
       if (currentIndex === 0) {
         navigate(pageOrder[currentIndex + 1]);
       } else if (currentIndex === 1) {
@@ -116,11 +117,19 @@ const DiaryWriteFlowLayout = () => {
     return false;
   });
 
+  useEffect(() => {
+    const setKeywordToDiary = async () => {
+      await postKeyword({ diaryId: diaryId, keywords: keywords });
+    };
+
+    if (diaryId !== "0") setKeywordToDiary();
+  }, [diaryId]);
+
   return (
     <MobileLayout>
       <Appbar text="일기 작성" backHandler={handleBack}></Appbar>
       <div className="flex-grow overflow-scroll px-800 py-300">
-        <Outlet context={{ diaryInfo, setDiaryInfo, diaryId }} />
+        <Outlet context={{ diaryInfo, setDiaryInfo, diaryId, setKeywords }} />
       </div>
       <div className="my-4 flex justify-center">
         <Button

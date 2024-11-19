@@ -1,8 +1,6 @@
 import Appbar from "@/components/common/Appbar";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import EmotionStats from "./EmotionStatsLayout";
-import KeywordStats from "./KeywordStatsLayout";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const buttonPositions = {
   emotion: "left-0",
@@ -53,7 +51,7 @@ const StatsLayout = () => {
         <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100 dark:bg-gray-500" />
       </div>
 
-      {selected === "emotion" ? <EmotionStats /> : <KeywordStats />}
+      <Outlet />
     </div>
   );
 };

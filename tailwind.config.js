@@ -149,11 +149,16 @@ export default {
           opacity: "1",
         },
       },
+      customPulse: {
+        "0%, 100%": { opacity: 1 },
+        "50%": { opacity: 0.5 },
+      },
     },
     animation: {
       fadeInSlideUp: "fadeInSlideUp 0.5s ease-out forwards",
       fadeInSlideDown: "fadeInSlideDown 0.5s ease-out forwards",
       fadeIn: "fadeIn 0.5s ease-out forwards",
+      pulse: "customPulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
     },
     backdropBlur: {
       default: "25px",

@@ -65,6 +65,7 @@ const Album = () => {
     },
     select: (data) => (data.pages ?? []).flatMap((page) => page.content),
     initialPageParam: 0,
+    staleTime: 1000 * 60 * 5,
   });
 
   /**

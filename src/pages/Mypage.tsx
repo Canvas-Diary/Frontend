@@ -24,7 +24,7 @@ const Mypage = () => {
           />
         </div>
         <Divider />
-        <button className="w-full text-start" onClick={() => navigate("stats")}>
+        <button className="w-full text-start" onClick={() => navigate("stats/emotion")}>
           통계
         </button>
         <Divider />

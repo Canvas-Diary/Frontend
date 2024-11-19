@@ -8,6 +8,7 @@ import DiaryWriteFlowLayout from "../pages/write/Layout/DiaryWriteFlowLayout";
 import { ErrorBoundary } from "react-error-boundary";
 import AlbumFallback from "../components/pages/album/fallback/AlbumFallback";
 import DiaryFallback from "../pages/diary/Fallback/DiaryFallback";
+import StatsFallback from "@/pages/stats/Fallback/StatsFallback";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
@@ -85,7 +86,7 @@ const routes: RouteObject[] = [
           {
             path: `emotion`,
             element: (
-              <Suspense fallback={<DiaryFallback />}>
+              <Suspense fallback={<StatsFallback />}>
                 <EmotionStatsLayout />
               </Suspense>
             ),
@@ -93,7 +94,7 @@ const routes: RouteObject[] = [
           {
             path: `keyword`,
             element: (
-              <Suspense fallback={<DiaryFallback />}>
+              <Suspense fallback={<StatsFallback />}>
                 <KeywordStatsLayout />
               </Suspense>
             ),
