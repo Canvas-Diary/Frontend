@@ -14,8 +14,10 @@ const Write = () => {
   const editorRef = useRef<HTMLDivElement>(null);
   const [buttonPosition, setButtonPosition] = useState<{ x: number; y: number } | null>(null);
   const [selectedText, setSelectedText] = useState<Range | null>(null);
-  const [keywords, setKeywords] = useState<string[]>([]);
 
+  /**
+   * 마운트 시 date 반경
+   */
   useEffect(() => {
     setDiaryInfo({ ...diaryInfo, date: date });
     if (editorRef.current) {
@@ -59,16 +61,16 @@ const Write = () => {
   }, []);
 
   /**
-   * 선택된 텍스트를 bold 처리하는 함수
+   * 선택된 텍스트를 키워드로 추가하는 함수
    */
-  const makeBold = () => {
+  const addKeyword = () => {
     if (selectedText) {
       const selection = window.getSelection();
 
       if (selection) {
         const text = selection.toString();
-        setKeywords((prev) => {
-          return text ? [...prev, text] : prev;
+        setDiaryInfo((prev) => {
+          return { ...prev, weightedContents: [...prev.weightedContents, text] };
         });
         setButtonPosition(null);
         setSelectedText(null);
@@ -76,8 +78,17 @@ const Write = () => {
     }
   };
 
+  /**
+   * 키워드 태그 선택 시 삭제하는 함수
+   * @param keywordToRemove
+   */
   const handleKeywordClick = (keywordToRemove: string) => {
-    setKeywords((prev) => prev.filter((keyword) => keyword !== keywordToRemove));
+    setDiaryInfo((prev) => {
+      return {
+        ...prev,
+        weightedContents: prev.weightedContents.filter((keyword) => keyword !== keywordToRemove),
+      };
+    });
   };
 
   return (
@@ -100,8 +111,12 @@ const Write = () => {
       <div className={`${FADEINANIMATION[2]} flex items-center gap-300 text-body-2`}>
         <div className="whitespace-nowrap py-200 font-Binggrae text-gray-500">키워드</div>
         <div className="flex gap-400 overflow-scroll">
-          {keywords.map((keyword) => (
-            <KeywordTag text={keyword} onClick={() => handleKeywordClick(keyword)}></KeywordTag>
+          {diaryInfo.weightedContents.map((keyword) => (
+            <KeywordTag
+              key={keyword}
+              text={keyword}
+              onClick={() => handleKeywordClick(keyword)}
+            ></KeywordTag>
           ))}
         </div>
       </div>
@@ -127,7 +142,7 @@ const Write = () => {
         )}
         {buttonPosition && (
           <button
-            onClick={makeBold}
+            onClick={addKeyword}
             style={{
               position: "absolute",
               top: `${buttonPosition.y}px`,

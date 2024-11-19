@@ -27,10 +27,8 @@ const pageOrder = [
 
 export interface ContextProps {
   diaryInfo: NewDiaryInfo;
-  setDiaryInfo: Function;
+  setDiaryInfo: React.Dispatch<React.SetStateAction<NewDiaryInfo>>;
   diaryId: string;
-  keywords: string[];
-  setKeywords: Function;
 }
 
 const DiaryWriteFlowLayout = () => {
@@ -43,8 +41,8 @@ const DiaryWriteFlowLayout = () => {
     content: "",
     isPublic: true,
     style: "",
+    weightedContents: [],
   });
-  const [keywords, setKeywords] = useState([]);
 
   const onClickNext = async () => {
     const currentIndex = pageOrder.indexOf(location.pathname);
@@ -120,7 +118,7 @@ const DiaryWriteFlowLayout = () => {
     <MobileLayout>
       <Appbar text="일기 작성" backHandler={handleBack}></Appbar>
       <div className="flex-grow overflow-scroll px-800 py-300">
-        <Outlet context={{ diaryInfo, setDiaryInfo, diaryId, keywords, setKeywords }} />
+        <Outlet context={{ diaryInfo, setDiaryInfo, diaryId }} />
       </div>
       <div className="my-4 flex justify-center">
         <Button
