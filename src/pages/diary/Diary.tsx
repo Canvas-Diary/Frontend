@@ -12,6 +12,7 @@ import DeleteDiarySettings from "@/components/common/BottomSheet/DeleteDiarySett
 import DiaryImageSettings from "@/components/common/BottomSheet/DiaryImageSettings";
 import DeleteImageSettings from "@/components/common/BottomSheet/DeleteImageSettings";
 import { toast, Toaster } from "sonner";
+import RoutePaths from "@/constants/routePath";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
@@ -52,6 +53,26 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
   const [currentHeight] = useState(carouselHeight - 50);
   const [isAppbarVisible, setIsAppbarVisible] = useState(true);
 
+  const browserPreventEvent = (event: () => void) => {
+    history.pushState(null, "", location.pathname);
+    event();
+  };
+
+  useEffect(() => {
+    const handlePopstate = () => {
+      browserPreventEvent(() => {
+        if (location.state && location.state.from === RoutePaths.diaryDraw) {
+          navigate("/");
+        } else navigate(-2);
+      });
+    };
+    history.pushState(null, "", location.pathname);
+    window.addEventListener("popstate", handlePopstate);
+    return () => {
+      window.removeEventListener("popstate", handlePopstate);
+    };
+  }, []);
+
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
@@ -78,6 +99,11 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
         throw error;
       }
     }
+  };
+
+  const handleBackClick = () => {
+    if (location.state && location.state.from === RoutePaths.diaryDraw) navigate("/");
+    else navigate(-1);
   };
 
   const handleMenuClick = () => {
@@ -159,7 +185,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
       {isAppbarVisible && (
         <div className={`fixed top-0 z-50 w-full animate-fadeInSlideDown`}>
           <Appbar
-            backHandler={() => navigate(-1)}
+            backHandler={handleBackClick}
             menuHandler={isMyDiary ? handleMenuClick : undefined}
           />
         </div>
