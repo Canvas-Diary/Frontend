@@ -21,8 +21,9 @@ const DiaryModifyFlowLayout = () => {
         .catch((error) => {
           throw error;
         });
-      navigate(`/diary/${diaryID}/draw`);
-    } else if (location.pathname === `/diary/${diaryID}/draw`) navigate(`/diary/${diaryID}`);
+      navigate(`/diary/${diaryID}/draw`, { replace: true });
+    } else if (location.pathname === `/diary/${diaryID}/draw`)
+      navigate(`/diary/${diaryID}`, { replace: true });
   };
 
   const handleActive = () => {
