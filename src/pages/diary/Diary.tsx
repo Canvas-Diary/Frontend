@@ -117,6 +117,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
             diaryId: diaryInfo.diaryId,
             content: diaryInfo.content,
             isPublic: newIsPublic,
+            weightedContents: diaryInfo.weightedContents,
           });
         } catch (error) {
           throw error;
