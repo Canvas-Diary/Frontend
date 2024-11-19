@@ -22,7 +22,7 @@ const tagsMap: { [key: string]: string } = {
   ANGER: "분노",
   FEAR: "공포",
   DISGUST: "혐오",
-  NONE: "NONE",
+  NONE: "무난",
   SHAMEhy: "수치",
   SURPRISE: "놀람",
   CURIOSITY: "궁금",
