@@ -1,4 +1,4 @@
-import Tag from "../../common/Tag";
+import EmotionTag from "../../common/EmotionTag";
 import HeartIcon from "../../../assets/svg/heart.svg?react";
 import { useEffect, useRef, useState } from "react";
 import { addLike, removeLike } from "../../../api/api";
@@ -90,7 +90,7 @@ const Content = ({ date, emotion, likedCount, isLiked, content, setAppbar }: Con
           <div className="flex flex-col gap-300">
             <div className="font-BinggraeBold text-title-2">{date}</div>
             <div>
-              <Tag text={tagsMap[emotion]} selected={true}></Tag>
+              <EmotionTag text={tagsMap[emotion]} selected={true}></EmotionTag>
             </div>
           </div>
           <div

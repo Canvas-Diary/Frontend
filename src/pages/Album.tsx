@@ -1,4 +1,4 @@
-import Tag from "../components/common/Tag";
+import EmotionTag from "../components/common/EmotionTag";
 import SearchBar from "../components/pages/album/SearchBar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -154,7 +154,7 @@ const Album = () => {
             className={`absolute flex w-full gap-400 overflow-scroll bg-background py-500 transition-all duration-300 ${isTagsVisible ? "top-[3.3rem] opacity-100" : "pointer-events-none top-10 opacity-0"}`}
           >
             {tags.map((tag, index) => (
-              <Tag
+              <EmotionTag
                 key={index}
                 text={tag}
                 selected={selectedTag === tag}
