@@ -93,3 +93,14 @@ export type EmotionBarData = {
 
 //감정 도넛 그래프 정보
 export type EmotionPieData = { emotion: string; diaryCount: number }[];
+
+//키워드 워드클라우드, 그래프 통계 정보
+export type KeywordStatsData = {
+  keywordData: KeywordData[];
+};
+
+//키워드 정보
+export type KeywordData = {
+  name: string;
+  value: number;
+};

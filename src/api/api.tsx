@@ -4,6 +4,7 @@ import {
   DiaryInfo,
   Emotions,
   EmotionStatsData,
+  KeywordStatsData,
   NewDiaryInfo,
   SearchedDiaries,
   Styles,
@@ -373,6 +374,11 @@ interface GetEmotionStatsProps {
   date: string;
 }
 
+/**
+ * 감정 통계 조회
+ * @param param0
+ * @returns
+ */
 export const getEmotionStats = async ({
   type,
   date,
@@ -380,6 +386,24 @@ export const getEmotionStats = async ({
   const params = { type, date };
   try {
     const response = await axiosInstance.get(`/api/v1/stats/emotions`, { params });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+interface GetKeywordStatsProps {
+  type: "WEEK" | "MONTH";
+  date: string;
+}
+
+export const getKeywordStats = async ({
+  type,
+  date,
+}: GetKeywordStatsProps): Promise<KeywordStatsData> => {
+  const params = { type, date };
+  try {
+    const response = await axiosInstance.get(`/api/v1/stats/keywords`, { params });
     return response.data;
   } catch (error) {
     throw error;
