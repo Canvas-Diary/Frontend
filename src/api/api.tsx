@@ -262,6 +262,7 @@ interface ModifiedDiaryProps {
   diaryId: string;
   content: string;
   isPublic: boolean;
+  weightedContents: string[];
 }
 
 /**
@@ -269,9 +270,14 @@ interface ModifiedDiaryProps {
  * @param param0 ModifyDiaryProps
  * @returns
  */
-export const putModifiedDiary = async ({ diaryId, content, isPublic }: ModifiedDiaryProps) => {
+export const putModifiedDiary = async ({
+  diaryId,
+  content,
+  isPublic,
+  weightedContents,
+}: ModifiedDiaryProps) => {
   try {
-    await axiosInstance.put(`/api/v1/diaries/${diaryId}`, { content, isPublic });
+    await axiosInstance.put(`/api/v1/diaries/${diaryId}`, { content, isPublic, weightedContents });
   } catch (error) {
     throw error;
   }

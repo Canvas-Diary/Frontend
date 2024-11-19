@@ -1,4 +1,4 @@
-interface TagProps {
+interface EmotionTagProps {
   text: string;
   selected: boolean;
   onClick?: () => void;
@@ -11,7 +11,7 @@ interface TagProps {
  * @param onClick 태그 클릭 콜백 함수
  * @returns
  */
-const Tag = ({ text, selected, onClick }: TagProps) => {
+const EmotionTag = ({ text, selected, onClick }: EmotionTagProps) => {
   return (
     <button
       className={`h-fit w-fit whitespace-nowrap rounded-full px-400 py-200 font-Binggrae text-detail-1 font-regular ${selected ? "bg-primary-medium text-background" : "bg-primary-light-2 text-primary-normal dark:bg-gray-600 dark:text-gray-200"}`}
@@ -20,4 +20,4 @@ const Tag = ({ text, selected, onClick }: TagProps) => {
   );
 };
 
-export default Tag;
+export default EmotionTag;

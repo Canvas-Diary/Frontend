@@ -16,6 +16,7 @@ export type NewDiaryInfo = {
   content: string;
   style: string;
   isPublic: boolean;
+  weightedContents: string[];
 };
 
 //일기 조회 정보
@@ -29,6 +30,7 @@ export type DiaryInfo = {
   isPublic: boolean;
   date: string;
   images: DiaryImage[];
+  weightedContents: string[];
 };
 
 //일기 조회 이미지

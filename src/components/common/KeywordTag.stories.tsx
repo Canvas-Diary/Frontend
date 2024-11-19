@@ -1,19 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import KeywordTag from "./KeywordTag";
 import { fn } from "@storybook/test";
-import Tag from "./Tag";
 
-const meta: Meta<typeof Tag> = {
-  component: Tag,
+const meta: Meta<typeof KeywordTag> = {
+  component: KeywordTag,
   tags: ["autodocs"],
 };
 
 export default meta;
-type Story = StoryObj<typeof Tag>;
+type Story = StoryObj<typeof KeywordTag>;
 
 export const Primary: Story = {
   args: {
     text: "Text",
-    selected: false,
     onClick: fn(),
   },
 };

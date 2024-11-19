@@ -1,4 +1,4 @@
-import Tag from "../../common/Tag";
+import EmotionTag from "../../common/EmotionTag";
 import ImageCarousel from "../diary/ImageCarousel";
 import HeartIcon from "../../../assets/svg/heart.svg?react";
 import { DiaryImage } from "../../../types/types";
@@ -41,7 +41,7 @@ const ReviewContent = ({ date, emotion, likedCount, isLiked, content, images }: 
         <div className="flex flex-col gap-300">
           <div className="font-BinggraeBold text-title-2">{date}</div>
           <div>
-            <Tag text={tagsMap[emotion]} selected={true}></Tag>
+            <EmotionTag text={tagsMap[emotion]} selected={true}></EmotionTag>
           </div>
         </div>
         <div
