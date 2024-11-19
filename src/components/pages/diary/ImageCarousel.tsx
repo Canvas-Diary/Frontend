@@ -18,10 +18,18 @@ const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const isDraggingRef = useRef(false);
 
   const startLongPress = (img: DiaryImage) => {
     if (onLongPress) {
-      longPressTimerRef.current = setTimeout(() => onLongPress(img), 500);
+      isDraggingRef.current = false;
+
+      longPressTimerRef.current = setTimeout(() => {
+        if (!isDraggingRef.current) {
+          onLongPress(img);
+        }
+      }, 500);
     }
   };
 
@@ -32,29 +40,37 @@ const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
     }
   };
 
+  const handleMouseMove = () => {
+    isDraggingRef.current = true;
+    cancelLongPress();
+  };
+
   const handleScroll = () => {
     if (containerRef.current) {
       const scrollPosition = containerRef.current.scrollLeft;
       const imageWidth = containerRef.current.offsetWidth;
       const index = Math.round(scrollPosition / imageWidth);
       setCurrentIndex(index);
+
+      cancelLongPress();
     }
   };
 
   useEffect(() => {
     const container = containerRef.current;
+
     if (container) {
+      container.addEventListener("mousemove", handleMouseMove);
       container.addEventListener("scroll", handleScroll);
     }
 
     return () => {
       if (container) {
+        container.removeEventListener("mousemove", handleMouseMove);
         container.removeEventListener("scroll", handleScroll);
       }
     };
   }, []);
-
-  const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <div>
