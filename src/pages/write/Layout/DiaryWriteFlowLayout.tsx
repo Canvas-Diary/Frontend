@@ -29,6 +29,8 @@ export interface ContextProps {
   diaryInfo: NewDiaryInfo;
   setDiaryInfo: React.Dispatch<React.SetStateAction<NewDiaryInfo>>;
   diaryId: string;
+  keywords: string[];
+  setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const DiaryWriteFlowLayout = () => {

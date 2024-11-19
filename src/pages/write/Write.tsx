@@ -16,7 +16,7 @@ const Write = () => {
   const [selectedText, setSelectedText] = useState<Range | null>(null);
 
   /**
-   * 마운트 시 date 반경
+   * 마운트 시 date, content 반영
    */
   useEffect(() => {
     setDiaryInfo({ ...diaryInfo, date: date });
