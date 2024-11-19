@@ -7,6 +7,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useDarkModeStore } from "@/global/globalState";
 
 const chartConfig = {
   value: {
@@ -20,30 +21,34 @@ interface EmotionBarChartProps {
 }
 
 const KeywordBarChart = ({ chartData }: EmotionBarChartProps) => {
+  const dark = useDarkModeStore();
+
   return (
     <Card>
-      <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-80 w-full">
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="name"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <YAxis hide={true} domain={[0, (dataMax: string) => parseInt(dataMax) + 1]} />
-            <ChartTooltip content={<ChartTooltipContent />} trigger="click" />
-            <Bar
-              dataKey="value"
-              fill="var(--color-value)"
-              radius={20}
-              barSize={20}
-              label={{ position: "top", fill: "var(--color-value)", fontSize: 12 }}
-            />
-          </BarChart>
-        </ChartContainer>
+      <CardContent className="min-h-80">
+        {chartData.length !== 0 && (
+          <ChartContainer config={chartConfig} className="min-h-80 w-full">
+            <BarChart accessibilityLayer data={chartData}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="name"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
+              />
+              <YAxis hide={true} domain={[0, (dataMax: string) => parseInt(dataMax) + 1]} />
+              <ChartTooltip content={<ChartTooltipContent />} trigger="click" />
+              <Bar
+                dataKey="value"
+                fill={dark ? "#A059F3" : "#6424A5"}
+                radius={20}
+                barSize={20}
+                label={{ position: "top", fill: `${dark ? "#A059F3" : "#6424A5"}`, fontSize: 12 }}
+              />
+            </BarChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );

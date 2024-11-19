@@ -36,7 +36,7 @@ const chartConfig = {
   },
   DISGUST: {
     label: "혐오",
-    color: "hsl(var(--chart-5))",
+    color: "#286C00",
   },
   SHAME: {
     label: "수치",
@@ -52,7 +52,7 @@ const chartConfig = {
   },
   NONE: {
     label: "무난",
-    color: "hsl(var(--chart-5))",
+    color: "#5BECE7",
   },
 } satisfies ChartConfig;
 
