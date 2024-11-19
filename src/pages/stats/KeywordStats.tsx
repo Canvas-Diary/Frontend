@@ -21,7 +21,6 @@ const KeywordStats = ({ value, text, current, handleNext, handlePrev }: KeywordS
   useEffect(() => {
     const setEmotionData = async () => {
       const response = await getKeywordStats({ type: value, date: formatDate(current) });
-      console.log(response);
 
       setKeyword(response.keywordData);
     };
