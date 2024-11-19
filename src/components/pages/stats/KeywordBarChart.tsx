@@ -7,6 +7,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useDarkModeStore } from "@/global/globalState";
 
 const chartConfig = {
   value: {
@@ -20,6 +21,8 @@ interface EmotionBarChartProps {
 }
 
 const KeywordBarChart = ({ chartData }: EmotionBarChartProps) => {
+  const dark = useDarkModeStore();
+
   return (
     <Card>
       <CardContent className="min-h-80">
@@ -38,10 +41,10 @@ const KeywordBarChart = ({ chartData }: EmotionBarChartProps) => {
               <ChartTooltip content={<ChartTooltipContent />} trigger="click" />
               <Bar
                 dataKey="value"
-                fill="var(--color-value)"
+                fill={dark ? "#A059F3" : "#6424A5"}
                 radius={20}
                 barSize={20}
-                label={{ position: "top", fill: "var(--color-value)", fontSize: 12 }}
+                label={{ position: "top", fill: `${dark ? "#A059F3" : "#6424A5"}`, fontSize: 12 }}
               />
             </BarChart>
           </ChartContainer>
