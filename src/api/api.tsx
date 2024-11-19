@@ -9,7 +9,7 @@ import {
   Styles,
 } from "../types/types";
 
-const BASE_URL = "http://api.canvas-diary.kro.kr";
+const BASE_URL = "https://api.canvas-diary.kro.kr";
 
 const getToken = () => {
   return localStorage.getItem("access_token");
