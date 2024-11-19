@@ -16,6 +16,7 @@ export type NewDiaryInfo = {
   content: string;
   style: string;
   isPublic: boolean;
+  weightedContents: string[];
 };
 
 //일기 조회 정보
