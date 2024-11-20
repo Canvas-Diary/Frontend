@@ -7,7 +7,7 @@ import { createDiaryAndGetId, postKeyword } from "../../../api/api";
 import { useErrorBoundary } from "react-error-boundary";
 import MobileLayout from "../../Layout/MobileLayout";
 import { getTodayDate } from "../../../utils/util";
-import { NewDiaryInfo } from "../../../types/types";
+import { NewDiaryInfo, Styles } from "../../../types/types";
 import {
   Dialog,
   DialogContent,
@@ -31,6 +31,9 @@ export interface ContextProps {
   isLoaded: boolean;
   keywords: string[];
   setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
+  setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+  setStyles: React.Dispatch<React.SetStateAction<Styles>>;
+  styles: Styles | null;
 }
 
 const DiaryWriteFlowLayout = () => {
@@ -38,7 +41,9 @@ const DiaryWriteFlowLayout = () => {
   const location = useLocation();
   const { showBoundary } = useErrorBoundary();
   const [diaryId, setDiaryId] = useState("0");
+  const [isLoaded, setIsLoaded] = useState(false);
   const [keywords, setKeywords] = useState([]);
+  const [styles, setStyles] = useState<Styles | null>(null);
   const [diaryInfo, setDiaryInfo] = useState<NewDiaryInfo>({
     date: getTodayDate(),
     content: "",
@@ -57,6 +62,7 @@ const DiaryWriteFlowLayout = () => {
         createDiaryAndGetId(diaryInfo)
           .then((id) => {
             setDiaryId(id);
+            setIsLoaded(true);
           })
           .catch((error) => {
             showBoundary(error);
@@ -86,7 +92,7 @@ const DiaryWriteFlowLayout = () => {
         if (diaryInfo.style === "") return false;
         else return true;
       case 3:
-        if (diaryId === "0") return false;
+        if (!isLoaded) return false;
         else return true;
     }
 
@@ -129,7 +135,17 @@ const DiaryWriteFlowLayout = () => {
     <MobileLayout>
       <Appbar text="일기 작성" backHandler={handleBack}></Appbar>
       <div className="flex-grow overflow-scroll px-800 py-300">
-        <Outlet context={{ diaryInfo, setDiaryInfo, diaryId, setKeywords }} />
+        <Outlet
+          context={{
+            diaryInfo,
+            setDiaryInfo,
+            isLoaded,
+            setKeywords,
+            setIsLoaded,
+            styles,
+            setStyles,
+          }}
+        />
       </div>
       <div className="my-4 flex justify-center">
         <Button

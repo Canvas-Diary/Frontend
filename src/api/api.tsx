@@ -397,6 +397,11 @@ interface GetKeywordStatsProps {
   date: string;
 }
 
+/**
+ * 키워드 통계 조회
+ * @param param0
+ * @returns
+ */
 export const getKeywordStats = async ({
   type,
   date,
@@ -404,6 +409,27 @@ export const getKeywordStats = async ({
   const params = { type, date };
   try {
     const response = await axiosInstance.get(`/api/v1/stats/keywords`, { params });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+interface GetLikedDiariesProps {
+  page: number;
+  size: number;
+}
+
+/**
+ * 좋아요 누른 일기 목록 가져오기
+ */
+export const getLikedDiaries = async ({ page, size }: GetLikedDiariesProps) => {
+  try {
+    const params: DiarySearchProps = { page, size };
+    const response = await axiosInstance.get("/api/v1/diaries/like", {
+      params,
+    });
+
     return response.data;
   } catch (error) {
     throw error;

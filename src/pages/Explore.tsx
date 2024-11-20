@@ -126,7 +126,7 @@ const Explore = () => {
     <div className="flex flex-grow flex-col overflow-scroll" ref={scrollContainerRef}>
       <Appbar text="일기 공유" />
       <div className="flex flex-col px-700">
-        <div className="sticky top-0 z-10 flex w-full justify-around gap-500 bg-background font-BinggraeBold text-body-2">
+        <div className="sticky -top-[1px] z-10 flex w-full justify-around gap-500 bg-background font-BinggraeBold text-body-2">
           <button
             className="flex w-full items-center justify-center py-400"
             onClick={() => handleChangeSelected("LATEST")}

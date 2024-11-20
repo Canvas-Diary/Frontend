@@ -28,6 +28,10 @@ const Mypage = () => {
           통계
         </button>
         <Divider />
+        <button className="w-full text-start" onClick={() => navigate("liked")}>
+          좋아요
+        </button>
+        <Divider />
         <button className="w-full text-start text-status-negative">회원탈퇴</button>
         <Divider />
         <button className="w-full text-start text-status-negative">로그아웃</button>

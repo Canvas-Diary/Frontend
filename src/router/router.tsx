@@ -19,6 +19,7 @@ const Login = lazy(() => import("../pages/Login"));
 const StatsLayout = lazy(() => import("@/pages/stats/Layout/StatsLayout"));
 const EmotionStatsLayout = lazy(() => import("@/pages/stats/Layout/EmotionStatsLayout"));
 const KeywordStatsLayout = lazy(() => import("@/pages/stats/Layout/KeywordStatsLayout"));
+const LikedPage = lazy(() => import("@/pages/Liked"));
 
 const DiaryLayout = lazy(() => import("../pages/diary/Layout/DiaryLayout"));
 const DiaryModifyFlowLayout = lazy(() => import("@/pages/write/Layout/DiaryModifyFlowLayout"));
@@ -100,6 +101,14 @@ const routes: RouteObject[] = [
             ),
           },
         ],
+      },
+      {
+        path: `${RoutePaths.mypage}/liked`,
+        element: (
+          <Suspense fallback={<PageFallback />}>
+            <LikedPage />
+          </Suspense>
+        ),
       },
     ],
   },

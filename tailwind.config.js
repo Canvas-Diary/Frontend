@@ -149,16 +149,31 @@ export default {
           opacity: "1",
         },
       },
+      fadeOut: {
+        "0%": {
+          opacity: "1",
+        },
+        "100%": {
+          opacity: "0",
+        },
+      },
       customPulse: {
         "0%, 100%": { opacity: 1 },
         "50%": { opacity: 0.5 },
+      },
+      fade: {
+        "0%, 100%": { opacity: 1 },
+        "50%": { opacity: 0 },
       },
     },
     animation: {
       fadeInSlideUp: "fadeInSlideUp 0.5s ease-out forwards",
       fadeInSlideDown: "fadeInSlideDown 0.5s ease-out forwards",
       fadeIn: "fadeIn 0.5s ease-out forwards",
+      fadeOut: "fadeOut 0.5s ease-out forwards",
       pulse: "customPulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+      fade1: "fade 6s infinite",
+      fade2: "fade 6s infinite 3s",
     },
     backdropBlur: {
       default: "25px",

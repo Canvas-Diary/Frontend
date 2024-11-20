@@ -2,18 +2,16 @@ import { useOutletContext } from "react-router-dom";
 import StyleOptionGrid from "../../components/pages/write/StyleOptionGrid";
 import { ContextProps } from "./Layout/DiaryWriteFlowLayout";
 import { FADEINANIMATION } from "../../styles/animations";
-import { useEffect, useState } from "react";
-import { Styles } from "../../types/types";
-import { getStyles } from "../../api/api";
+import { useEffect } from "react";
+import { getStyles } from "@/api/api";
 
 const Style = () => {
-  const { diaryInfo, setDiaryInfo } = useOutletContext<ContextProps>();
-  const [styles, setStyle] = useState<Styles | null>(null);
+  const { diaryInfo, setDiaryInfo, styles, setStyles } = useOutletContext<ContextProps>();
 
   useEffect(() => {
     const styleInit = async () => {
       const styleData = await getStyles();
-      setStyle(styleData);
+      setStyles(styleData);
     };
 
     styleInit();

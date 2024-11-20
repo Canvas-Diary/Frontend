@@ -4,6 +4,7 @@ import MobileLayout from "../../Layout/MobileLayout";
 import Button from "../../../components/common/Button";
 import { useState } from "react";
 import { postImageToDiary } from "@/api/api";
+import { Styles } from "@/types/types";
 
 //리팩토링 무조건 해야함
 const DiaryModifyFlowLayout = () => {
@@ -11,6 +12,7 @@ const DiaryModifyFlowLayout = () => {
   const { diaryID } = useParams<{ diaryID: string }>();
   const [diaryInfo, setDiaryInfo] = useState<{ style: string }>({ style: "" });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [styles, setStyles] = useState<Styles | null>(null);
 
   const onClickNext = async () => {
     if (location.pathname === `/diary/${diaryID}/style` && diaryID) {
@@ -36,13 +38,13 @@ const DiaryModifyFlowLayout = () => {
     <MobileLayout>
       <Appbar text="이미지 추가" backHandler={() => navigate(-1)}></Appbar>
       <div className="flex-grow overflow-scroll px-800 py-300">
-        <Outlet context={{ diaryInfo, setDiaryInfo, isLoaded }} />
+        <Outlet context={{ diaryInfo, setDiaryInfo, isLoaded, styles, setStyles }} />
       </div>
       <div className="my-4 flex justify-center">
         <Button
           size="big"
           active={handleActive()}
-          text="추가 생성하기"
+          text={location.pathname === `/diary/${diaryID}/draw` ? "다음으로" : "추가 생성하기"}
           onClickHandler={onClickNext}
           bgColor="dark"
         />
