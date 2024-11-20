@@ -1,11 +1,9 @@
 import { getLikedDiaries } from "@/api/api";
 import Appbar from "@/components/common/Appbar";
-import PullToRefresh from "@/components/common/PullToRefresh";
 import ThumbnailGrid from "@/components/common/ThumbnailGrid";
 import RoutePaths from "@/constants/routePath";
 import useInView from "@/hooks/useInView";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Tag } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -55,31 +53,23 @@ const Liked = () => {
   return (
     <>
       <Appbar text="좋아요 표시한 일기"></Appbar>
-      <PullToRefresh
-        onRefresh={() => {
-          console.log("refresh");
-        }}
-        maxDistance={100}
-        loadingComponent={<Tag />}
-      >
-        <div className="flex flex-grow flex-col overflow-scroll">
-          <div className="flex flex-col px-700">
-            {data && <ThumbnailGrid diaries={data} onClickThumbnail={onClickThumbnail} />}
-            <div
-              className="grid -translate-y-600 grid-cols-3 place-items-center gap-300 pb-800"
-              ref={elementRef}
-            >
-              {hasNextPage && (
-                <>
-                  <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-                  <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-                  <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-                </>
-              )}
-            </div>
+      <div className="flex flex-grow flex-col overflow-scroll">
+        <div className="flex flex-col px-700">
+          {data && <ThumbnailGrid diaries={data} onClickThumbnail={onClickThumbnail} />}
+          <div
+            className="grid -translate-y-600 grid-cols-3 place-items-center gap-300 pb-800"
+            ref={elementRef}
+          >
+            {hasNextPage && (
+              <>
+                <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
+                <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
+                <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
+              </>
+            )}
           </div>
         </div>
-      </PullToRefresh>
+      </div>
     </>
   );
 };
