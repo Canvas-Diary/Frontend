@@ -1,6 +1,5 @@
 import { getLikedDiaries } from "@/api/api";
 import Appbar from "@/components/common/Appbar";
-import Divider from "@/components/common/Divider";
 import PullToRefresh from "@/components/common/PullToRefresh";
 import ThumbnailGrid from "@/components/common/ThumbnailGrid";
 import RoutePaths from "@/constants/routePath";

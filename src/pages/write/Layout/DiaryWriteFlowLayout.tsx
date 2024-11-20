@@ -3,7 +3,7 @@ import Appbar from "../../../components/common/Appbar";
 import Button from "../../../components/common/Button";
 import RoutePaths from "../../../constants/routePath";
 import { useEffect, useState } from "react";
-import { createDiaryAndGetId, getStyles, postKeyword } from "../../../api/api";
+import { createDiaryAndGetId, postKeyword } from "../../../api/api";
 import { useErrorBoundary } from "react-error-boundary";
 import MobileLayout from "../../Layout/MobileLayout";
 import { getTodayDate } from "../../../utils/util";
