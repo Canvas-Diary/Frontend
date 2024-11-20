@@ -141,7 +141,6 @@ const DiaryWriteFlowLayout = () => {
             setDiaryInfo,
             isLoaded,
             setKeywords,
-            setIsLoaded,
             styles,
             setStyles,
           }}

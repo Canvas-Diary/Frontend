@@ -4,7 +4,7 @@ import { FADEINANIMATION } from "../../styles/animations";
 import { ContextProps } from "./Layout/DiaryWriteFlowLayout";
 
 const Draw = () => {
-  const { isLoaded, setIsLoaded, styles, diaryInfo } = useOutletContext<ContextProps>();
+  const { isLoaded, styles, diaryInfo } = useOutletContext<ContextProps>();
   const matchingStyle = styles?.styles.find((style) => style.name === diaryInfo.style);
   const imageUrl = matchingStyle ? matchingStyle.imageUrl : "";
 
@@ -38,7 +38,6 @@ const Draw = () => {
             <span className="text-primary-medium dark:text-primary-light-3">그림</span>이 다
             그려졌어요
           </div>
-          <button onClick={() => setIsLoaded((prev) => !prev)}>test</button>
         </div>
       </div>
     </div>

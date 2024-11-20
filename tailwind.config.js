@@ -172,8 +172,8 @@ export default {
       fadeIn: "fadeIn 0.5s ease-out forwards",
       fadeOut: "fadeOut 0.5s ease-out forwards",
       pulse: "customPulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-      fade1: "fade 6s infinite",
-      fade2: "fade 6s infinite 3s",
+      fade1: "fade 4s infinite",
+      fade2: "fade 4s infinite 2s",
     },
     backdropBlur: {
       default: "25px",
