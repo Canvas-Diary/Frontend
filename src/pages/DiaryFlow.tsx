@@ -13,8 +13,9 @@ import {
   DialogContent,
   DialogDescription,
   DialogTitle,
-} from "@radix-ui/react-dialog";
-import { DialogFooter, DialogHeader } from "@/components/ui/dialog";
+  DialogFooter,
+  DialogHeader,
+} from "@/components/ui/dialog";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
 import Write from "@/components/pages/diaryflow/Write";
 import Style from "@/components/pages/diaryflow/Style";
@@ -36,13 +37,13 @@ const DiaryFlow = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { showBoundary } = useErrorBoundary();
 
-  const steps = ["write", "style", "review", "done"]; // 순서 정의
-  const currentStep = searchParams.get("step") || "write"; // 현재 스텝 가져오기
+  const steps = ["write", "style", "review", "done"];
+  const currentStep = searchParams.get("step") || "write";
   const currentIndex = steps.indexOf(currentStep);
 
   const [diaryId, setDiaryId] = useState("0");
   const [isLoaded, setIsLoaded] = useState(false);
-  const [keywords, setKeywords] = useState([]);
+  const [keywords, setKeywords] = useState<string[]>([]);
   const [styles, setStyles] = useState<Styles | null>(null);
   const [diaryInfo, setDiaryInfo] = useState<NewDiaryInfo>({
     date: getTodayDate(),
@@ -122,15 +123,22 @@ const DiaryFlow = () => {
   const renderStep = () => {
     switch (currentStep) {
       case "write":
-        return <Write />;
+        return <Write diaryInfo={diaryInfo} setDiaryInfo={setDiaryInfo} />;
       case "style":
-        return <Style />;
+        return (
+          <Style
+            diaryInfo={diaryInfo}
+            setDiaryInfo={setDiaryInfo}
+            styles={styles}
+            setStyles={setStyles}
+          />
+        );
       case "review":
-        return <Review />;
+        return <Review diaryInfo={diaryInfo} setKeywords={setKeywords} />;
       case "done":
-        return <Draw />;
+        return <Draw isLoaded={isLoaded} styles={styles} diaryInfo={diaryInfo} />;
       default:
-        return <Write />;
+        return <Write diaryInfo={diaryInfo} setDiaryInfo={setDiaryInfo} />;
     }
   };
 

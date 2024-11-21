@@ -1,10 +1,14 @@
-import { useOutletContext } from "react-router-dom";
-import dummy from "../../assets/dummy/_Image.png";
+import dummy from "@/assets/dummy/_Image.png";
 import { FADEINANIMATION } from "../../../styles/animations";
-import { ContextProps } from "../../../pages/write/Layout/DiaryWriteFlowLayout";
+import { NewDiaryInfo, Styles } from "@/types/types";
 
-const Draw = () => {
-  const { isLoaded, styles, diaryInfo } = useOutletContext<ContextProps>();
+interface DrawProps {
+  isLoaded: boolean;
+  styles: Styles | null;
+  diaryInfo: NewDiaryInfo;
+}
+
+const Draw = ({ isLoaded, styles, diaryInfo }: DrawProps) => {
   const matchingStyle = styles?.styles.find((style) => style.name === diaryInfo.style);
   const imageUrl = matchingStyle ? matchingStyle.imageUrl : "";
 

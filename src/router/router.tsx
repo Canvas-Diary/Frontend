@@ -4,10 +4,10 @@ import ROUTE_PATH from "../constants/ROUTE_PATH";
 import GlobalFallback from "../pages/fallback/GlobalFallback";
 import Layout from "../pages/Layout/Layout";
 import PageFallback from "../pages/fallback/PageFallback";
-import DiaryWriteFlowLayout from "../pages/write/Layout/DiaryWriteFlowLayout";
 import { ErrorBoundary } from "react-error-boundary";
 import AlbumFallback from "../components/pages/album/fallback/AlbumFallback";
 import DiaryFallback from "../pages/diary/Fallback/DiaryFallback";
+import DiaryFlow from "@/pages/DiaryFlow";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
@@ -107,7 +107,7 @@ const routes: RouteObject[] = [
         path: ROUTE_PATH.DIARY,
         element: (
           <Suspense fallback={<GlobalFallback />}>
-            <DiaryWriteFlowLayout />
+            <DiaryFlow />
           </Suspense>
         ),
       },

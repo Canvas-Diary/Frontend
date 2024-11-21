@@ -23,7 +23,7 @@ const Write = ({ diaryInfo, setDiaryInfo }: WriteProps) => {
    * 마운트 시 date, content 반영
    */
   useEffect(() => {
-    setDiaryInfo({ ...diaryInfo, date: date });
+    if (date) setDiaryInfo({ ...diaryInfo, date: date });
     if (editorRef.current) {
       editorRef.current.textContent = diaryInfo.content;
     }
