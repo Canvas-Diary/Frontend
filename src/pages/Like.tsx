@@ -1,13 +1,13 @@
 import { getLikedDiaries } from "@/api/api";
 import Appbar from "@/components/common/Appbar";
 import ThumbnailGrid from "@/components/common/ThumbnailGrid";
-import RoutePaths from "@/constants/routePath";
+import ROUTE_PATH from "@/constants/ROUTE_PATH";
 import useInView from "@/hooks/useInView";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Liked = () => {
+const Like = () => {
   const { isInView, elementRef } = useInView<HTMLDivElement>(0.7);
   const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ const Liked = () => {
   }, [isInView]);
 
   const onClickThumbnail = (diaryId: string) => {
-    navigate(`${RoutePaths.diary}/${diaryId}`);
+    navigate(`${ROUTE_PATH.DIARY}/${diaryId}`);
   };
 
   return (
@@ -74,4 +74,4 @@ const Liked = () => {
   );
 };
 
-export default Liked;
+export default Like;
