@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 import Calendar from "../components/pages/home/Calendar";
-import RoutePaths from "../constants/routePath";
+import ROUTE_PATH from "../constants/ROUTE_PATH";
 import { formatDate, getTodayDate } from "../utils/util";
 import { useEffect, useState } from "react";
 import { getMonthlyDiariesByDate } from "../api/api";
@@ -17,11 +17,11 @@ const Home = () => {
   const [activeToday, setActiveToday] = useState(true);
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
-    navigate(RoutePaths.diaryWrite, { state: { date: getTodayDate() } });
+    navigate(ROUTE_PATH.DIARY, { state: { date: getTodayDate() } });
   };
 
   const onClickDate = (id: string) => {
-    navigate(`${RoutePaths.diary}/${id}`);
+    navigate(`${ROUTE_PATH.DIARY}/${id}`);
   };
 
   const updateCalander = async (currentDate: Date) => {
@@ -77,7 +77,7 @@ const Home = () => {
     } else {
       const token = localStorage.getItem("access_token");
       if (!token) {
-        navigate(RoutePaths.login);
+        navigate(ROUTE_PATH.LOGIN);
         return;
       }
     }

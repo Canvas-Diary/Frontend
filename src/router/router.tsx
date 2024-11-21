@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
-import RoutePaths from "../constants/routePath";
+import ROUTE_PATH from "../constants/ROUTE_PATH";
 import GlobalFallback from "../pages/fallback/GlobalFallback";
 import Layout from "../pages/Layout/Layout";
 import PageFallback from "../pages/fallback/PageFallback";
@@ -8,7 +8,6 @@ import DiaryWriteFlowLayout from "../pages/write/Layout/DiaryWriteFlowLayout";
 import { ErrorBoundary } from "react-error-boundary";
 import AlbumFallback from "../components/pages/album/fallback/AlbumFallback";
 import DiaryFallback from "../pages/diary/Fallback/DiaryFallback";
-import StatsFallback from "@/pages/stats/Fallback/StatsFallback";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const ExplorePage = lazy(() => import("../pages/Explore"));
@@ -17,25 +16,25 @@ const Mypage = lazy(() => import("../pages/Mypage"));
 const Login = lazy(() => import("../pages/Login"));
 
 const StatsLayout = lazy(() => import("@/pages/stats/Layout/StatsLayout"));
-const EmotionStatsLayout = lazy(() => import("@/pages/stats/Layout/EmotionStatsLayout"));
-const KeywordStatsLayout = lazy(() => import("@/pages/stats/Layout/KeywordStatsLayout"));
-const LikedPage = lazy(() => import("@/pages/Liked"));
+const LikedPage = lazy(() => import("@/pages/Like"));
 
 const DiaryLayout = lazy(() => import("../pages/diary/Layout/DiaryLayout"));
-const DiaryModifyFlowLayout = lazy(() => import("@/pages/write/Layout/DiaryModifyFlowLayout"));
-
-const Draw = lazy(() => import("../pages/write/Draw"));
-const Review = lazy(() => import("../pages/write/Review"));
-const Style = lazy(() => import("../pages/write/Style"));
-const Write = lazy(() => import("../pages/write/Write"));
-const Modify = lazy(() => import("@/pages/write/Modify"));
 
 const ErrorPage = lazy(() => import("../pages/error/Error"));
 const NotFoundErrorPage = lazy(() => import("../pages/error/NotFoundError"));
 
 const routes: RouteObject[] = [
   {
-    path: RoutePaths.home,
+    path: ROUTE_PATH.LOGIN,
+    element: (
+      <Suspense fallback={<PageFallback />}>
+        <Login />
+      </Suspense>
+    ),
+  },
+
+  {
+    path: ROUTE_PATH.INDEX,
     element: (
       <ErrorBoundary FallbackComponent={ErrorPage}>
         <Suspense fallback={<GlobalFallback />}>
@@ -45,7 +44,7 @@ const routes: RouteObject[] = [
     ),
     children: [
       {
-        index: true,
+        path: ROUTE_PATH.HOME,
         element: (
           <Suspense fallback={<PageFallback />}>
             <HomePage />
@@ -53,7 +52,7 @@ const routes: RouteObject[] = [
         ),
       },
       {
-        path: RoutePaths.explore,
+        path: ROUTE_PATH.EXPLORE,
         element: (
           <Suspense fallback={<PageFallback />}>
             <ExplorePage />
@@ -61,7 +60,7 @@ const routes: RouteObject[] = [
         ),
       },
       {
-        path: RoutePaths.album,
+        path: ROUTE_PATH.ALBUM,
         element: (
           <Suspense fallback={<AlbumFallback />}>
             <AlbumPage />
@@ -69,140 +68,46 @@ const routes: RouteObject[] = [
         ),
       },
       {
-        path: RoutePaths.mypage,
+        path: ROUTE_PATH.MYPAGE,
         element: (
           <Suspense fallback={<PageFallback />}>
             <Mypage />
           </Suspense>
         ),
       },
+
       {
-        path: `${RoutePaths.mypage}/stats`,
+        path: ROUTE_PATH.STAT,
         element: (
           <Suspense fallback={<PageFallback />}>
             <StatsLayout />
           </Suspense>
         ),
-        children: [
-          {
-            path: `emotion`,
-            element: (
-              <Suspense fallback={<StatsFallback />}>
-                <EmotionStatsLayout />
-              </Suspense>
-            ),
-          },
-          {
-            path: `keyword`,
-            element: (
-              <Suspense fallback={<StatsFallback />}>
-                <KeywordStatsLayout />
-              </Suspense>
-            ),
-          },
-        ],
       },
+
       {
-        path: `${RoutePaths.mypage}/liked`,
+        path: ROUTE_PATH.LIKE,
         element: (
           <Suspense fallback={<PageFallback />}>
             <LikedPage />
           </Suspense>
         ),
       },
-    ],
-  },
-  {
-    path: `${RoutePaths.diary}/:diaryID`,
-    element: (
-      <Suspense fallback={<DiaryFallback />}>
-        <DiaryLayout />
-      </Suspense>
-    ),
-  },
-  {
-    path: RoutePaths.diary,
-    element: (
-      <ErrorBoundary FallbackComponent={ErrorPage}>
-        <Suspense fallback={<GlobalFallback />}>
-          <DiaryWriteFlowLayout />
-        </Suspense>
-      </ErrorBoundary>
-    ),
-    children: [
+
       {
-        path: RoutePaths.diaryWrite,
+        path: `${ROUTE_PATH.DIARY}/:diaryID`,
         element: (
-          <Suspense fallback={<PageFallback />}>
-            <Write />
+          <Suspense fallback={<DiaryFallback />}>
+            <DiaryLayout />
           </Suspense>
         ),
       },
+
       {
-        path: RoutePaths.diaryStyle,
+        path: ROUTE_PATH.DIARY,
         element: (
-          <Suspense fallback={<PageFallback />}>
-            <Style />
-          </Suspense>
-        ),
-      },
-      {
-        path: RoutePaths.diaryReview,
-        element: (
-          <Suspense fallback={<PageFallback />}>
-            <Review />
-          </Suspense>
-        ),
-      },
-      {
-        path: RoutePaths.diaryDraw,
-        element: (
-          <Suspense fallback={<PageFallback />}>
-            <Draw />
-          </Suspense>
-        ),
-      },
-    ],
-  },
-  {
-    path: RoutePaths.login,
-    element: (
-      <Suspense fallback={<PageFallback />}>
-        <Login />
-      </Suspense>
-    ),
-  },
-  {
-    path: "/diary/:diaryID/modify",
-    element: (
-      <Suspense fallback={<PageFallback />}>
-        <Modify />
-      </Suspense>
-    ),
-  },
-  {
-    path: RoutePaths.diary,
-    element: (
-      <ErrorBoundary FallbackComponent={ErrorPage}>
-        <Suspense fallback={<GlobalFallback />}>
-          <DiaryModifyFlowLayout />
-        </Suspense>
-      </ErrorBoundary>
-    ),
-    children: [
-      {
-        path: "/diary/:diaryID/style",
-        element: (
-          <Suspense fallback={<PageFallback />}>
-            <Style />
-          </Suspense>
-        ),
-      },
-      {
-        path: "/diary/:diaryID/draw",
-        element: (
-          <Suspense fallback={<PageFallback />}>
-            <Draw />
+          <Suspense fallback={<GlobalFallback />}>
+            <DiaryWriteFlowLayout />
           </Suspense>
         ),
       },

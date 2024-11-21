@@ -12,7 +12,7 @@ import DeleteDiarySettings from "@/components/common/BottomSheet/DeleteDiarySett
 import DiaryImageSettings from "@/components/common/BottomSheet/DiaryImageSettings";
 import DeleteImageSettings from "@/components/common/BottomSheet/DeleteImageSettings";
 import { toast, Toaster } from "sonner";
-import RoutePaths from "@/constants/routePath";
+import ROUTE_PATH from "@/constants/ROUTE_PATH";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
@@ -61,7 +61,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
   useEffect(() => {
     const handlePopstate = () => {
       browserPreventEvent(() => {
-        if (location.state && location.state.from === RoutePaths.diaryDraw) {
+        if (location.state && location.state.from === ROUTE_PATH.DIARY) {
           navigate("/");
         } else navigate(-2);
       });
@@ -102,7 +102,7 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
   };
 
   const handleBackClick = () => {
-    if (location.state && location.state.from === RoutePaths.diaryDraw) navigate("/");
+    if (location.state && location.state.from === ROUTE_PATH.DIARY) navigate("/");
     else navigate(-1);
   };
 

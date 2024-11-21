@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Appbar from "../../components/common/Appbar";
 import non from "../../assets/icon/non.png";
 import Button from "../../components/common/Button";
-import RoutePaths from "../../constants/routePath";
+import ROUTE_PATH from "../../constants/ROUTE_PATH";
 
 interface NoDiaryProps {
   date: string;
@@ -34,7 +34,7 @@ const NoDiary = ({ date }: NoDiaryProps) => {
           active={true}
           text="일기 작성하기"
           onClickHandler={() => {
-            navigate(RoutePaths.diaryWrite, { state: { date: date } });
+            navigate(ROUTE_PATH.DIARY, { state: { date: date } });
           }}
           bgColor="light"
         />

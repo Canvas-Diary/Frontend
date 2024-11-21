@@ -2,7 +2,7 @@ import ThumbnailGrid from "../components/common/ThumbnailGrid";
 import Appbar from "../components/common/Appbar";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import RoutePaths from "../constants/routePath";
+import ROUTE_PATH from "../constants/ROUTE_PATH";
 import { getExploreDiaries } from "../api/api";
 import useInView from "../hooks/useInView";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -26,7 +26,7 @@ const Explore = () => {
    * @param diaryId
    */
   const onClickThumbnail = (diaryId: string) => {
-    navigate(`${RoutePaths.diary}/${diaryId}`);
+    navigate(`${ROUTE_PATH.DIARY}/${diaryId}`);
   };
 
   /**

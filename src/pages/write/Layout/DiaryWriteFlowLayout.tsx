@@ -1,7 +1,7 @@
 import { Outlet, useBlocker, useLocation, useNavigate } from "react-router-dom";
 import Appbar from "../../../components/common/Appbar";
 import Button from "../../../components/common/Button";
-import RoutePaths from "../../../constants/routePath";
+import ROUTE_PATH from "../../../constants/ROUTE_PATH";
 import { useEffect, useState } from "react";
 import { createDiaryAndGetId, postKeyword } from "../../../api/api";
 import { useErrorBoundary } from "react-error-boundary";
@@ -19,10 +19,10 @@ import {
 import { DialogClose } from "@radix-ui/react-dialog";
 
 const pageOrder = [
-  RoutePaths.diaryWrite,
-  RoutePaths.diaryStyle,
-  RoutePaths.diaryReview,
-  RoutePaths.diaryDraw,
+  ROUTE_PATH.diaryWrite,
+  ROUTE_PATH.diaryStyle,
+  ROUTE_PATH.diaryReview,
+  ROUTE_PATH.diaryDraw,
 ];
 
 export interface ContextProps {
@@ -70,8 +70,8 @@ const DiaryWriteFlowLayout = () => {
         navigate(pageOrder[currentIndex + 1], { replace: true });
       } else navigate(pageOrder[currentIndex + 1]);
     } else {
-      navigate(`${RoutePaths.diary}/${diaryId}`, {
-        state: { from: RoutePaths.diaryDraw },
+      navigate(`${ROUTE_PATH.DIARY}/${diaryId}`, {
+        state: { from: ROUTE_PATH.diaryDraw },
         replace: true,
       });
     }
@@ -103,8 +103,8 @@ const DiaryWriteFlowLayout = () => {
     const isInternalNavigation = pageOrder.some((path) => nextLocation.pathname === path);
     const currentIndex = pageOrder.indexOf(location.pathname);
 
-    if (currentIndex === 1 && nextLocation.pathname === RoutePaths.diaryStyle) {
-      navigate(RoutePaths.diaryWrite, { replace: true });
+    if (currentIndex === 1 && nextLocation.pathname === ROUTE_PATH.diaryStyle) {
+      navigate(ROUTE_PATH.diaryWrite, { replace: true });
       return true;
     }
 

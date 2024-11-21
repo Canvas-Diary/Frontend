@@ -3,14 +3,14 @@ import Home from "../../assets/svg/home.svg?react";
 import Sns from "../../assets/svg/sns.svg?react";
 import Album from "../../assets/svg/album.svg?react";
 import Who from "../../assets/svg/who.svg?react";
-import RoutePaths from "../../constants/routePath";
+import ROUTE_PATH from "../../constants/ROUTE_PATH";
 import Navbar from "../../components/common/Navbar";
 
 const GNB = [
-  { icon: <Home />, label: "홈", path: RoutePaths.home },
-  { icon: <Sns />, label: "일기 공유", path: RoutePaths.explore },
-  { icon: <Album />, label: "앨범", path: RoutePaths.album },
-  { icon: <Who />, label: "마이페이지", path: RoutePaths.mypage },
+  { icon: <Home />, label: "홈", path: ROUTE_PATH.HOME },
+  { icon: <Sns />, label: "일기 공유", path: ROUTE_PATH.EXPLORE },
+  { icon: <Album />, label: "앨범", path: ROUTE_PATH.ALBUM },
+  { icon: <Who />, label: "마이페이지", path: ROUTE_PATH.MYPAGE },
 ];
 
 /**
@@ -21,7 +21,7 @@ const GNB = [
 const Layout = () => {
   const location = useLocation();
   const shouldDeleteNavBar = () => {
-    return location.pathname.startsWith(RoutePaths.diary);
+    return location.pathname.startsWith(ROUTE_PATH.DIARY);
   };
 
   return (

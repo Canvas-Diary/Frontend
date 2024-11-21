@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Appbar from "../components/common/Appbar";
 import { getSearchedDiaries } from "../api/api";
 import ThumbnailGrid from "../components/common/ThumbnailGrid";
-import RoutePaths from "../constants/routePath";
+import ROUTE_PATH from "../constants/ROUTE_PATH";
 import useInView from "../hooks/useInView";
 import useScrollPosition from "../hooks/useScrollPosition";
 import { createQueryParams } from "../utils/util";
@@ -142,7 +142,7 @@ const Album = () => {
   }, [isInView]);
 
   const onClickThumbnail = (diaryId: string) => {
-    navigate(`${RoutePaths.diary}/${diaryId}`);
+    navigate(`${ROUTE_PATH.DIARY}/${diaryId}`);
   };
 
   return (
