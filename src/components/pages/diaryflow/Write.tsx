@@ -1,16 +1,20 @@
-import { useLocation, useOutletContext } from "react-router-dom";
-import { formatDateWithWeek } from "../../utils/util";
-import { ContextProps } from "./Layout/DiaryWriteFlowLayout";
-import { FADEINANIMATION } from "../../styles/animations";
+import { useLocation } from "react-router-dom";
+import { formatDateWithWeek } from "../../../utils/util";
+import { FADEINANIMATION } from "../../../styles/animations";
 import { useEffect, useRef, useState } from "react";
-import Toggle from "../../components/common/Toggle";
-import Divider from "../../components/common/Divider";
+import Toggle from "../../common/Toggle";
+import Divider from "../../common/Divider";
 import KeywordTag from "@/components/common/KeywordTag";
+import { NewDiaryInfo } from "@/types/types";
 
-const Write = () => {
+interface WriteProps {
+  diaryInfo: NewDiaryInfo;
+  setDiaryInfo: React.Dispatch<React.SetStateAction<NewDiaryInfo>>;
+}
+
+const Write = ({ diaryInfo, setDiaryInfo }: WriteProps) => {
   const location = useLocation();
   const date = location.state.date;
-  const { diaryInfo, setDiaryInfo } = useOutletContext<ContextProps>();
   const editorRef = useRef<HTMLDivElement>(null);
   const [buttonPosition, setButtonPosition] = useState<{ x: number; y: number } | null>(null);
   const [selectedText, setSelectedText] = useState<Range | null>(null);

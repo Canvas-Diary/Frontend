@@ -1,10 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { formatDateWithWeek } from "../../utils/util";
-import { FADEINANIMATION } from "../../styles/animations";
+import { formatDateWithWeek } from "../../../utils/util";
+import { FADEINANIMATION } from "../../../styles/animations";
 import { useEffect, useRef, useState } from "react";
-import Divider from "../../components/common/Divider";
+import Divider from "../../common/Divider";
 import Appbar from "@/components/common/Appbar";
-import MobileLayout from "../Layout/MobileLayout";
+import MobileLayout from "../../../pages/Layout/MobileLayout";
 import Button from "@/components/common/Button";
 import { DiaryInfo } from "@/types/types";
 import { putModifiedDiary } from "@/api/api";

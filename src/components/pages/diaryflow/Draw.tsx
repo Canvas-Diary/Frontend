@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import dummy from "../../assets/dummy/_Image.png";
-import { FADEINANIMATION } from "../../styles/animations";
-import { ContextProps } from "./Layout/DiaryWriteFlowLayout";
+import { FADEINANIMATION } from "../../../styles/animations";
+import { ContextProps } from "../../../pages/write/Layout/DiaryWriteFlowLayout";
 
 const Draw = () => {
   const { isLoaded, styles, diaryInfo } = useOutletContext<ContextProps>();

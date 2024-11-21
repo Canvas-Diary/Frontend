@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import ReviewContent from "../../components/pages/write/ReviewContent";
-import { FADEINANIMATION } from "../../styles/animations";
-import { DiaryInfo } from "../../types/types";
-import { formatDateWithWeek } from "../../utils/util";
-import { getReview } from "../../api/api";
+import ReviewContent from "../write/ReviewContent";
+import { FADEINANIMATION } from "../../../styles/animations";
+import { DiaryInfo } from "../../../types/types";
+import { formatDateWithWeek } from "../../../utils/util";
+import { getReview } from "../../../api/api";
 import { useOutletContext } from "react-router-dom";
-import { ContextProps } from "./Layout/DiaryWriteFlowLayout";
+import { ContextProps } from "../../../pages/write/Layout/DiaryWriteFlowLayout";
 
 const Review = () => {
   const { diaryInfo, setKeywords } = useOutletContext<ContextProps>();
