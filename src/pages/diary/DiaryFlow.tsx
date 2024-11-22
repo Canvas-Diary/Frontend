@@ -1,4 +1,4 @@
-import { createDiaryAndGetId, postKeyword, putModifiedDiary } from "@/api/api";
+import { createDiaryAndGetId, postImageToDiary, postKeyword, putModifiedDiary } from "@/api/api";
 import { FlowDiaryInfo, Styles } from "@/types/types";
 import { getTodayDate } from "@/utils/util";
 import { useEffect, useState } from "react";
@@ -62,6 +62,7 @@ const DiaryFlow = () => {
   const currentStep = steps[currentIndex];
 
   const onClickNext = async () => {
+    console.log(diaryInfo);
     if (currentIndex < steps.length - 1) {
       if (currentStep === "style" && flow === "create") {
         createDiaryAndGetId(diaryInfo)
@@ -73,6 +74,14 @@ const DiaryFlow = () => {
           })
           .catch((error) => {
             showBoundary(error);
+          });
+      } else if (currentStep === "style" && flow === "add") {
+        postImageToDiary({ diaryId: diaryInfo.diaryId!, style: diaryInfo.style })
+          .then(() => {
+            setIsLoaded(true);
+          })
+          .catch((error) => {
+            throw error;
           });
       }
       setCurrentIndex((prev) => prev + 1);
