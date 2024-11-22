@@ -4,7 +4,6 @@ import { FADEINANIMATION } from "../../../styles/animations";
 import { useEffect, useRef, useState } from "react";
 import Divider from "../../common/Divider";
 import Appbar from "@/components/common/Appbar";
-import MobileLayout from "../../../pages/Layout/MobileLayout";
 import Button from "@/components/common/Button";
 import { DiaryInfo } from "@/types/types";
 import { putModifiedDiary } from "@/api/api";
@@ -120,7 +119,7 @@ const Modify = () => {
   }, []);
 
   return (
-    <MobileLayout>
+    <>
       <Appbar text="일기 수정" backHandler={() => navigate(-1)}></Appbar>
       <div className="flex-grow overflow-scroll px-800 py-300">
         {diaryInfo && (
@@ -186,7 +185,7 @@ const Modify = () => {
           bgColor="dark"
         />
       </div>
-    </MobileLayout>
+    </>
   );
 };
 

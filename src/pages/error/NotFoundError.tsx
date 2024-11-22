@@ -1,6 +1,5 @@
 import Button from "@/components/common/Button";
 import sad from "../../assets/icon/sad.png";
-import MobileLayout from "../Layout/MobileLayout";
 
 /**
  * 404 오류 화면
@@ -8,7 +7,7 @@ import MobileLayout from "../Layout/MobileLayout";
  */
 const NotFoundError = () => {
   return (
-    <MobileLayout>
+    <div className="flex h-dvh w-full flex-col">
       <div className="flex h-full flex-col items-center">
         <div className="flex flex-grow items-center justify-center">
           <div className="flex flex-col items-center gap-600">
@@ -26,7 +25,7 @@ const NotFoundError = () => {
           />
         </div>
       </div>
-    </MobileLayout>
+    </div>
   );
 };
 

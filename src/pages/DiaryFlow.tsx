@@ -4,7 +4,6 @@ import { getTodayDate } from "@/utils/util";
 import { useEffect, useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 import { useBlocker, useNavigate, useSearchParams } from "react-router-dom";
-import MobileLayout from "./Layout/MobileLayout";
 import Appbar from "@/components/common/Appbar";
 import Button from "@/components/common/Button";
 import {
@@ -143,7 +142,7 @@ const DiaryFlow = () => {
   };
 
   return (
-    <MobileLayout>
+    <>
       <Appbar text="일기 작성" backHandler={handleBack}></Appbar>
       <div className="flex-grow overflow-scroll px-800 py-300">{renderStep()}</div>
       <div className="my-4 flex justify-center">
@@ -199,7 +198,7 @@ const DiaryFlow = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </MobileLayout>
+    </>
   );
 };
 

@@ -43,7 +43,7 @@ const TOAST_TEXT = {
  * 일기 화면
  * @returns
  */
-const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
+const DiaryComponent = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeModal, setActiveModal] = useState<string | null>(MODAL_STATE.NONE);
@@ -268,4 +268,4 @@ const Diary = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
   );
 };
 
-export default Diary;
+export default DiaryComponent;

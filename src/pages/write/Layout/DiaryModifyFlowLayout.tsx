@@ -1,6 +1,5 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Appbar from "../../../components/common/Appbar";
-import MobileLayout from "../../Layout/MobileLayout";
 import Button from "../../../components/common/Button";
 import { useState } from "react";
 import { postImageToDiary } from "@/api/api";
@@ -35,7 +34,7 @@ const DiaryModifyFlowLayout = () => {
   };
 
   return (
-    <MobileLayout>
+    <>
       <Appbar text="이미지 추가" backHandler={() => navigate(-1)}></Appbar>
       <div className="flex-grow overflow-scroll px-800 py-300">
         <Outlet context={{ diaryInfo, setDiaryInfo, isLoaded, styles, setStyles }} />
@@ -49,7 +48,7 @@ const DiaryModifyFlowLayout = () => {
           bgColor="dark"
         />
       </div>
-    </MobileLayout>
+    </>
   );
 };
 

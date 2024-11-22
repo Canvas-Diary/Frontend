@@ -15,24 +15,15 @@ const AlbumPage = lazy(() => import("../pages/Album"));
 const Mypage = lazy(() => import("../pages/Mypage"));
 const Login = lazy(() => import("../pages/Login"));
 
-const StatsLayout = lazy(() => import("@/pages/stats/Layout/StatsLayout"));
+const StatsLayout = lazy(() => import("@/pages/Stat"));
 const LikedPage = lazy(() => import("@/pages/Like"));
 
-const DiaryLayout = lazy(() => import("../pages/diary/Layout/DiaryLayout"));
+const DiaryLayout = lazy(() => import("../pages/Diary"));
 
 const ErrorPage = lazy(() => import("../pages/error/Error"));
 const NotFoundErrorPage = lazy(() => import("../pages/error/NotFoundError"));
 
 const routes: RouteObject[] = [
-  {
-    path: ROUTE_PATH.LOGIN,
-    element: (
-      <Suspense fallback={<PageFallback />}>
-        <Login />
-      </Suspense>
-    ),
-  },
-
   {
     path: ROUTE_PATH.INDEX,
     element: (
@@ -72,6 +63,15 @@ const routes: RouteObject[] = [
         element: (
           <Suspense fallback={<PageFallback />}>
             <Mypage />
+          </Suspense>
+        ),
+      },
+
+      {
+        path: ROUTE_PATH.LOGIN,
+        element: (
+          <Suspense fallback={<PageFallback />}>
+            <Login />
           </Suspense>
         ),
       },

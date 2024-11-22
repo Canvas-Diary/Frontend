@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { DiaryInfo } from "../../../types/types";
-import { getDiaryInfoById } from "../../../api/api";
-import Diary from "../Diary";
-import NoDiary from "../NoDiary";
-import MobileLayout from "../../Layout/MobileLayout";
-import DiaryFallback from "../Fallback/DiaryFallback";
-import useMediaQuery from "../../../hooks/useMediaQuery";
+import { DiaryInfo } from "../types/types";
+import { getDiaryInfoById } from "../api/api";
+import DiaryComponent from "./diary/DiaryComponent";
+import NoDiary from "./diary/NoDiary";
+import DiaryFallback from "./diary/Fallback/DiaryFallback";
+import useMediaQuery from "../hooks/useMediaQuery";
 import { isValidDate } from "@/utils/util";
 
 /**
@@ -14,7 +13,7 @@ import { isValidDate } from "@/utils/util";
  * 로딩, 일기 화면, 일기 없는 화면 관리
  * @returns
  */
-const DiaryLayout = () => {
+const Diary = () => {
   const { diaryID } = useParams<{ diaryID: string }>();
   const [diaryInfo, setDiaryInfo] = useState<DiaryInfo | null>(null);
   const [loading, setLoading] = useState(true);
@@ -43,11 +42,11 @@ const DiaryLayout = () => {
   }, []);
 
   return (
-    <MobileLayout>
+    <>
       {loading && <DiaryFallback />}
       {!loading &&
         (diaryInfo ? (
-          <Diary
+          <DiaryComponent
             diaryInfo={diaryInfo}
             carouselHeight={calculatedHeight}
             isMyDiary={isMyDiary}
@@ -56,8 +55,8 @@ const DiaryLayout = () => {
         ) : (
           <NoDiary date={diaryID!} />
         ))}
-    </MobileLayout>
+    </>
   );
 };
 
-export default DiaryLayout;
+export default Diary;
