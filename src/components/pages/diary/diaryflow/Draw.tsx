@@ -1,5 +1,5 @@
 import dummy from "@/assets/dummy/_Image.png";
-import { FADEINANIMATION } from "../../../styles/animations";
+import { FADEINANIMATION } from "@/styles/animations";
 import { NewDiaryInfo, Styles } from "@/types/types";
 
 interface DrawProps {

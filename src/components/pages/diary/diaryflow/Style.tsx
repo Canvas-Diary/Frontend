@@ -1,8 +1,8 @@
-import StyleOptionGrid from "../write/StyleOptionGrid";
-import { FADEINANIMATION } from "../../../styles/animations";
 import { useEffect } from "react";
 import { getStyles } from "@/api/api";
 import { NewDiaryInfo, Styles } from "@/types/types";
+import { FADEINANIMATION } from "@/styles/animations";
+import StyleOptionGrid from "../../write/StyleOptionGrid";
 
 interface StyleProps {
   diaryInfo: NewDiaryInfo;

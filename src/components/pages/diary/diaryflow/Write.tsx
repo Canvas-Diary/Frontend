@@ -1,11 +1,11 @@
 import { useLocation } from "react-router-dom";
-import { formatDateWithWeek } from "../../../utils/util";
-import { FADEINANIMATION } from "../../../styles/animations";
 import { useEffect, useRef, useState } from "react";
-import Toggle from "../../common/Toggle";
-import Divider from "../../common/Divider";
 import KeywordTag from "@/components/common/KeywordTag";
 import { NewDiaryInfo } from "@/types/types";
+import { FADEINANIMATION } from "@/styles/animations";
+import { formatDateWithWeek } from "@/utils/util";
+import Toggle from "@/components/common/Toggle";
+import Divider from "@/components/common/Divider";
 
 interface WriteProps {
   diaryInfo: NewDiaryInfo;

@@ -1,4 +1,4 @@
-import useMediaQuery from "../../../../hooks/useMediaQuery";
+import useMediaQuery from "../../../../../hooks/useMediaQuery";
 
 /**
  * 일기 로딩중 스켈레톤

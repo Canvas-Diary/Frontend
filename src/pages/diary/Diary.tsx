@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DiaryInfo } from "../../types/types";
 import { getDiaryInfoById } from "../../api/api";
-import DiaryComponent from "../../components/pages/diary/DiaryComponent";
-import NoDiary from "../../components/pages/diary/NoDiary";
-import DiaryFallback from "../../components/pages/diary/Fallback/DiaryFallback";
+import DiaryComponent from "../../components/pages/diary/diary/DiaryComponent";
+import NoDiary from "../../components/pages/diary/diary/NoDiary";
+import DiaryFallback from "../../components/pages/diary/diary/Fallback/DiaryFallback";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { isValidDate } from "@/utils/util";
 

@@ -1,13 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { formatDateWithWeek } from "../../../utils/util";
-import { FADEINANIMATION } from "../../../styles/animations";
 import { useEffect, useRef, useState } from "react";
-import Divider from "../../common/Divider";
 import Appbar from "@/components/common/Appbar";
 import Button from "@/components/common/Button";
 import { DiaryInfo } from "@/types/types";
 import { putModifiedDiary } from "@/api/api";
 import KeywordTag from "@/components/common/KeywordTag";
+import { FADEINANIMATION } from "@/styles/animations";
+import { formatDateWithWeek } from "@/utils/util";
+import Divider from "@/components/common/Divider";
 
 const Modify = () => {
   const location = useLocation();

@@ -1,11 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import ImageCarousel from "./ImageCarousel";
 import Content from "./Content";
-import Appbar from "../../common/Appbar";
-import { downloadFile, formatDateWithWeek } from "../../../utils/util";
-import { DiaryImage, DiaryInfo } from "../../../types/types";
+import Appbar from "../../../common/Appbar";
+import { downloadFile, formatDateWithWeek } from "../../../../utils/util";
+import { DiaryImage, DiaryInfo } from "../../../../types/types";
 import { useEffect, useRef, useState } from "react";
-import DiaryContentSettings from "../../common/BottomSheet/DiaryContentSettings";
+import DiaryContentSettings from "../../../common/BottomSheet/DiaryContentSettings";
 import { deleteDiary, deleteImage, patchMainImage, putModifiedDiary } from "@/api/api";
 import BottomSheet from "@/components/common/BottomSheet/BottomSheet";
 import DeleteDiarySettings from "@/components/common/BottomSheet/DeleteDiarySettings";

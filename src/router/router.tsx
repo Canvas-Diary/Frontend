@@ -2,12 +2,12 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import ROUTE_PATH from "../constants/ROUTE_PATH";
 import GlobalFallback from "../components/fallback/GlobalFallback";
-import Layout from "../pages/Layout/Layout";
 import PageFallback from "../components/fallback/PageFallback";
 import { ErrorBoundary } from "react-error-boundary";
-import AlbumFallback from "../components/pages/album/fallback/AlbumFallback";
-import DiaryFallback from "../components/pages/diary/Fallback/DiaryFallback";
+import DiaryFallback from "../components/pages/diary/diary/Fallback/DiaryFallback";
 import DiaryFlow from "@/pages/diary/DiaryFlow";
+import Layout from "@/components/Layout/Layout";
+import AlbumFallback from "@/components/pages/main/album/fallback/AlbumFallback";
 
 const HomePage = lazy(() => import("../pages/main/Home"));
 const ExplorePage = lazy(() => import("../pages/main/Explore"));

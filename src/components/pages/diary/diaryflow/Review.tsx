@@ -1,9 +1,9 @@
+import { getReview } from "@/api/api";
+import { FADEINANIMATION } from "@/styles/animations";
+import { DiaryInfo, NewDiaryInfo } from "@/types/types";
 import { useEffect, useState } from "react";
-import ReviewContent from "../write/ReviewContent";
-import { FADEINANIMATION } from "../../../styles/animations";
-import { DiaryInfo, NewDiaryInfo } from "../../../types/types";
-import { formatDateWithWeek } from "../../../utils/util";
-import { getReview } from "../../../api/api";
+import ReviewContent from "../../write/ReviewContent";
+import { formatDateWithWeek } from "@/utils/util";
 
 interface ReviewProps {
   diaryInfo: NewDiaryInfo;
