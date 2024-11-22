@@ -68,13 +68,14 @@ const DiaryFlow = () => {
   const onClickNext = async () => {
     if (currentIndex < steps.length - 1) {
       if (currentStep === "style" && flow === "create") {
-        try {
-          const id = await createDiaryAndGetId(diaryInfo);
-          setDiaryId(id);
-          setIsLoaded(true);
-        } catch (error) {
-          showBoundary(error);
-        }
+        createDiaryAndGetId(diaryInfo)
+          .then((id) => {
+            setDiaryId(id);
+            setIsLoaded(true);
+          })
+          .catch((error) => {
+            showBoundary(error);
+          });
       }
       setCurrentIndex((prev) => prev + 1);
     } else {
