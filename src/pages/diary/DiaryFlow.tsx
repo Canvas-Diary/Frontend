@@ -62,7 +62,6 @@ const DiaryFlow = () => {
   const currentStep = steps[currentIndex];
 
   const onClickNext = async () => {
-    console.log(diaryInfo);
     if (currentIndex < steps.length - 1) {
       if (currentStep === "style" && flow === "create") {
         createDiaryAndGetId(diaryInfo)
@@ -105,7 +104,7 @@ const DiaryFlow = () => {
   };
 
   const handleBack = () => {
-    if (currentIndex > 0) {
+    if (currentIndex > 0 && currentIndex !== 2) {
       setCurrentIndex((prev) => prev - 1);
     } else {
       navigate(-1);
@@ -126,7 +125,7 @@ const DiaryFlow = () => {
   };
 
   const blocker = useBlocker(() => {
-    return currentIndex > 0 && currentIndex < steps.length - 1;
+    return currentIndex >= 0 && currentIndex < steps.length - 1;
   });
 
   useEffect(() => {
