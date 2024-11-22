@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../components/common/Button";
-import Calendar from "../components/pages/home/Calendar";
-import ROUTE_PATH from "../constants/ROUTE_PATH";
-import { formatDate, getTodayDate } from "../utils/util";
+import Button from "../../components/common/Button";
+import Calendar from "../../components/pages/home/Calendar";
+import ROUTE_PATH from "../../constants/ROUTE_PATH";
+import { formatDate, getTodayDate } from "../../utils/util";
 import { useEffect, useState } from "react";
-import { getMonthlyDiariesByDate } from "../api/api";
-import { Diaries } from "../types/types";
+import { getMonthlyDiariesByDate } from "../../api/api";
+import { Diaries } from "../../types/types";
 
 /**
  * 메인 화면

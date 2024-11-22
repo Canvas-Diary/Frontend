@@ -1,24 +1,24 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import ROUTE_PATH from "../constants/ROUTE_PATH";
-import GlobalFallback from "../pages/fallback/GlobalFallback";
+import GlobalFallback from "../components/fallback/GlobalFallback";
 import Layout from "../pages/Layout/Layout";
-import PageFallback from "../pages/fallback/PageFallback";
+import PageFallback from "../components/fallback/PageFallback";
 import { ErrorBoundary } from "react-error-boundary";
 import AlbumFallback from "../components/pages/album/fallback/AlbumFallback";
-import DiaryFallback from "../pages/diary/Fallback/DiaryFallback";
-import DiaryFlow from "@/pages/DiaryFlow";
+import DiaryFallback from "../components/pages/diary/Fallback/DiaryFallback";
+import DiaryFlow from "@/pages/diary/DiaryFlow";
 
-const HomePage = lazy(() => import("../pages/Home"));
-const ExplorePage = lazy(() => import("../pages/Explore"));
-const AlbumPage = lazy(() => import("../pages/Album"));
-const Mypage = lazy(() => import("../pages/Mypage"));
-const Login = lazy(() => import("../pages/Login"));
+const HomePage = lazy(() => import("../pages/main/Home"));
+const ExplorePage = lazy(() => import("../pages/main/Explore"));
+const AlbumPage = lazy(() => import("../pages/main/Album"));
+const Mypage = lazy(() => import("../pages/main/Mypage"));
+const Login = lazy(() => import("../pages/user/Login"));
 
-const StatsLayout = lazy(() => import("@/pages/Stat"));
-const LikedPage = lazy(() => import("@/pages/Like"));
+const StatsLayout = lazy(() => import("@/pages/user/Stat"));
+const LikedPage = lazy(() => import("@/pages/user/Like"));
 
-const DiaryLayout = lazy(() => import("../pages/Diary"));
+const DiaryLayout = lazy(() => import("../pages/diary/Diary"));
 
 const ErrorPage = lazy(() => import("../pages/error/Error"));
 const NotFoundErrorPage = lazy(() => import("../pages/error/NotFoundError"));

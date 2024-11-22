@@ -1,6 +1,6 @@
 import { RouterProvider } from "react-router-dom";
 import router from "./router/router";
-import GlobalFallback from "./pages/fallback/GlobalFallback";
+import GlobalFallback from "./components/fallback/GlobalFallback";
 import { useEffect } from "react";
 import { useDarkModeStore } from "./global/globalState";
 

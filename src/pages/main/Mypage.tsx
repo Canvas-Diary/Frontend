@@ -1,6 +1,6 @@
-import Appbar from "../components/common/Appbar";
-import Divider from "../components/common/Divider";
-import Toggle from "../components/common/Toggle";
+import Appbar from "../../components/common/Appbar";
+import Divider from "../../components/common/Divider";
+import Toggle from "../../components/common/Toggle";
 import { useNavigate } from "react-router-dom";
 import { useDarkModeStore } from "@/global/globalState";
 
