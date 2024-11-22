@@ -1,5 +1,5 @@
 import Button from "@/components/common/Button";
-import sad from "../../assets/icon/sad.png";
+import sad from "@/assets/icon/sad.png";
 
 /**
  * 404 오류 화면

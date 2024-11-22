@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
 import Navbar from "./Navbar";
-import Home from "../../assets/svg/home.svg?react";
-import Sns from "../../assets/svg/sns.svg?react";
-import Album from "../../assets/svg/album.svg?react";
-import Who from "../../assets/svg/who.svg?react";
-import ROUTE_PATH from "../../constants/ROUTE_PATH";
+import Home from "@/assets/svg/home.svg?react";
+import Sns from "@/assets/svg/sns.svg?react";
+import Album from "@/assets/svg/album.svg?react";
+import Who from "@/assets/svg/who.svg?react";
+import ROUTE_PATH from "@/constants/ROUTE_PATH";
 
 const meta: Meta<typeof Navbar> = {
   component: Navbar,

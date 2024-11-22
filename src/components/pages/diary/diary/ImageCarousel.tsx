@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { DiaryImage } from "../../../../types/types";
 import ImageAddFilter from "./ImageAddFilter";
-import defaultImage from "../../../assets/images/defaultImage.png";
+import defaultImage from "@/assets/images/defaultImage.png";
 
 interface ImageCarouselProps {
   images: DiaryImage[];

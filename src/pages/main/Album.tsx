@@ -1,5 +1,4 @@
 import EmotionTag from "../../components/common/EmotionTag";
-import SearchBar from "../../components/pages/album/SearchBar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Appbar from "../../components/common/Appbar";
@@ -10,6 +9,7 @@ import useInView from "../../hooks/useInView";
 import useScrollPosition from "../../hooks/useScrollPosition";
 import { createQueryParams } from "../../utils/util";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import SearchBar from "@/components/pages/main/album/SearchBar";
 
 const tags = ["기쁨", "슬픔", "분노", "공포", "혐오", "수치", "놀람", "궁금", "무난"];
 

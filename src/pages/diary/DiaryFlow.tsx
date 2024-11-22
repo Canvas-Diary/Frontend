@@ -16,10 +16,10 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
-import Write from "@/components/pages/diaryflow/Write";
-import Style from "@/components/pages/diaryflow/Style";
-import Review from "@/components/pages/diaryflow/Review";
-import Draw from "@/components/pages/diaryflow/Draw";
+import Write from "@/components/pages/diary/diaryflow/Write";
+import Style from "@/components/pages/diary/diaryflow/Style";
+import Review from "@/components/pages/diary/diaryflow/Review";
+import Draw from "@/components/pages/diary/diaryflow/Draw";
 
 export interface ContextProps {
   diaryInfo: NewDiaryInfo;

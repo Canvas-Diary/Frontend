@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
-import SearchIcon from "../../../assets/svg/search.svg?react";
+import SearchIcon from "@/assets/svg/search.svg?react";
 
 const SearchConst = {
   minSearchLength: 0,

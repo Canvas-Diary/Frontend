@@ -1,17 +1,17 @@
 import { ReactNode, useEffect, useState } from "react";
-import ArrowLeft from "../../../assets/svg/arrow_left.svg?react";
-import ArrowRight from "../../../assets/svg/arrow_right.svg?react";
-import afraid from "../../../assets/icon/afraid.png";
-import angry from "../../../assets/icon/angry.png";
-import dislike from "../../../assets/icon/dislike.png";
-import happy from "../../../assets/icon/happy.png";
-import non from "../../../assets/icon/non.png";
-import sad from "../../../assets/icon/sad.png";
-import shy from "../../../assets/icon/shy.png";
-import surprised from "../../../assets/icon/surprised.png";
-import wonder from "../../../assets/icon/wonder.png";
-import { Diaries } from "../../../types/types";
+import ArrowLeft from "@/assets/svg/arrow_left.svg?react";
+import ArrowRight from "@/assets/svg/arrow_right.svg?react";
+import afraid from "@/assets/icon/afraid.png";
+import angry from "@/assets/icon/angry.png";
+import dislike from "@/assets/icon/dislike.png";
+import happy from "@/assets/icon/happy.png";
+import non from "@/assets/icon/non.png";
+import sad from "@/assets/icon/sad.png";
+import shy from "@/assets/icon/shy.png";
+import surprised from "@/assets/icon/surprised.png";
+import wonder from "@/assets/icon/wonder.png";
 import CalendarDate from "./CalendarDate";
+import { Diaries } from "@/types/types";
 
 const emotionImages: { [key: string]: string | null } = {
   JOY: happy,

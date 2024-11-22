@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
-import dummy from "../../assets/dummy/_Image.png";
+import dummy from "@/assets/dummy/_Image.png";
 
 import ThumbnailGrid from "./ThumbnailGrid";
 

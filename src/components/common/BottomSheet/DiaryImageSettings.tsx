@@ -1,6 +1,6 @@
-import DeleteIcon from "../../../assets/svg/delete.svg?react";
-import StarIcon from "../../../assets/svg/star.svg?react";
-import DownloadIcon from "../../../assets/svg/download.svg?react";
+import DeleteIcon from "@/assets/svg/delete.svg?react";
+import StarIcon from "@/assets/svg/star.svg?react";
+import DownloadIcon from "@/assets/svg/download.svg?react";
 
 interface DiaryImageSettingsProps {
   onClickSetMain?: () => void;

@@ -1,10 +1,10 @@
 import { Outlet, useLocation } from "react-router-dom";
-import Home from "../../assets/svg/home.svg?react";
-import Sns from "../../assets/svg/sns.svg?react";
-import Album from "../../assets/svg/album.svg?react";
-import Who from "../../assets/svg/who.svg?react";
-import ROUTE_PATH from "../../constants/ROUTE_PATH";
-import Navbar from "../../components/common/Navbar";
+import Home from "@/assets/svg/home.svg?react";
+import Sns from "@/assets/svg/sns.svg?react";
+import Album from "@/assets/svg/album.svg?react";
+import Who from "@/assets/svg/who.svg?react";
+import ROUTE_PATH from "@/constants/ROUTE_PATH";
+import Navbar from "@/components/common/Navbar";
 
 const GNB = [
   { icon: <Home />, label: "홈", path: ROUTE_PATH.HOME },

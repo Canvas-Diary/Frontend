@@ -1,5 +1,5 @@
-import bgImg from "../assets/images/loginBackground.png";
-import kakao from "../assets/images/kakaoSymbol.png";
+import bgImg from "@/assets/images/loginBackground.png";
+import kakao from "@/assets/images/kakaoSymbol.png";
 
 const clientId = import.meta.env.VITE_KAKAO_REST_API_KEY;
 const redirectUrl = import.meta.env.VITE_KAKAO_REDIRECT_URL;

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import ArrowLeft from "../../assets/svg/arrow_left.svg?react";
-import ArrowRight from "../../assets/svg/arrow_right.svg?react";
-import KeywordBarChart from "@/components/pages/stats/KeywordBarChart";
-import KeywordWordCloud from "@/components/pages/stats/KeywordWordCloud";
+import ArrowLeft from "@/assets/svg/arrow_left.svg?react";
+import ArrowRight from "@/assets/svg/arrow_right.svg?react";
 import { getKeywordStats } from "@/api/api";
 import { formatDate } from "@/utils/util";
 import { KeywordData } from "@/types/types";
+import KeywordWordCloud from "./KeywordWordCloud";
+import KeywordBarChart from "./KeywordBarChart";
 
 interface KeywordStatsProps {
   value: "WEEK" | "MONTH";

@@ -1,4 +1,4 @@
-import Appbar from "../../../common/Appbar";
+import Appbar from "@/components/common/Appbar";
 
 const AlbumFallback = () => {
   return (

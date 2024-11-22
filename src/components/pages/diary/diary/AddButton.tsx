@@ -1,4 +1,4 @@
-import AddIcon from "../../../assets/svg/plus.svg?react";
+import AddIcon from "@/assets/svg/plus.svg?react";
 
 interface AddButtonProps {
   onClickHandler: () => void;

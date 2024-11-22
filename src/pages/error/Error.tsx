@@ -1,6 +1,6 @@
 import Button from "@/components/common/Button";
 import { FallbackProps } from "react-error-boundary";
-import sad from "../../assets/icon/sad.png";
+import sad from "@/assets/icon/sad.png";
 
 /**
  * 오류 화면

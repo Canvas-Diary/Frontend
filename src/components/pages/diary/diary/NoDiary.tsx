@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Appbar from "../../../common/Appbar";
-import non from "../../assets/icon/non.png";
+import non from "@/assets/icon/non.png";
 import Button from "../../../common/Button";
 import ROUTE_PATH from "../../../../constants/ROUTE_PATH";
 

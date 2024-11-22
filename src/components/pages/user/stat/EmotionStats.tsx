@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import ArrowLeft from "../../assets/svg/arrow_left.svg?react";
-import ArrowRight from "../../assets/svg/arrow_right.svg?react";
-import EmotionBarChart from "@/components/pages/stats/EmotionBarChart";
-import EmotionPieChart from "@/components/pages/stats/EmotionPieChart";
+import ArrowLeft from "@/assets/svg/arrow_left.svg?react";
+import ArrowRight from "@/assets/svg/arrow_right.svg?react";
 import { getEmotionStats } from "@/api/api";
 import { formatDate } from "@/utils/util";
 import { EmotionBarData, EmotionPieData } from "@/types/types";
+import EmotionBarChart from "./EmotionBarChart";
+import EmotionPieChart from "./EmotionPieChart";
 
 interface FormatToPropsProps {
   barData: EmotionBarData;
