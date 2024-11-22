@@ -155,7 +155,7 @@ const DiaryComponent = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryPr
   };
 
   const onClickModify = () => {
-    navigate("modify", { state: { diaryInfo } });
+    navigate(ROUTE_PATH.DIARY_FLOW.MODIFY, { state: { diaryInfo } });
   };
 
   const onClickDelete = async () => {

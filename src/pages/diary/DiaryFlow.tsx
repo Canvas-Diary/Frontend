@@ -43,15 +43,11 @@ const DiaryFlow = () => {
     modify: ["modify"],
   };
 
-  // 쿼리에서 flow, currentIndex, diaryId 값을 추출합니다.
   const urlParams = new URLSearchParams(search);
   const flow = urlParams.get("flow") || "create";
-  const initialIndex = Number(urlParams.get("currentIndex")) || 0;
-  const diaryIdFromQuery = urlParams.get("diaryId") || "0";
-  const steps = stepsByFlow[flow] || [];
+  const steps = stepsByFlow[flow] || stepsByFlow["create"];
 
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  const [diaryId, setDiaryId] = useState(diaryIdFromQuery);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [keywords, setKeywords] = useState<string[]>([]);
   const [styles, setStyles] = useState<Styles | null>(null);
@@ -70,7 +66,9 @@ const DiaryFlow = () => {
       if (currentStep === "style" && flow === "create") {
         createDiaryAndGetId(diaryInfo)
           .then((id) => {
-            setDiaryId(id);
+            setDiaryInfo((prev) => {
+              return { ...prev, diaryId: id };
+            });
             setIsLoaded(true);
           })
           .catch((error) => {
@@ -79,8 +77,7 @@ const DiaryFlow = () => {
       }
       setCurrentIndex((prev) => prev + 1);
     } else {
-      // 쿼리 파라미터로 diaryId를 전달하면서 navigate
-      navigate(`${ROUTE_PATH.DIARY}/${diaryId}?flow=${flow}&currentIndex=${currentIndex + 1}`, {
+      navigate(`${ROUTE_PATH.DIARY}/${diaryInfo.diaryId}`, {
         replace: true,
       });
     }
@@ -113,11 +110,11 @@ const DiaryFlow = () => {
 
   useEffect(() => {
     const setKeywordToDiary = async () => {
-      await postKeyword({ diaryId: diaryId, keywords: keywords });
+      if (diaryInfo.diaryId) await postKeyword({ diaryId: diaryInfo.diaryId, keywords: keywords });
     };
 
-    if (diaryId !== "0") setKeywordToDiary();
-  }, [diaryId]);
+    setKeywordToDiary();
+  }, [diaryInfo.diaryId]);
 
   const renderStep = () => {
     switch (currentStep) {

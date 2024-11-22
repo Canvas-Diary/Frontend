@@ -3,6 +3,7 @@ import { getStyles } from "@/api/api";
 import { FlowDiaryInfo, Styles } from "@/types/types";
 import { FADEINANIMATION } from "@/styles/animations";
 import StyleOptionGrid from "../../write/StyleOptionGrid";
+import { useLocation } from "react-router-dom";
 
 interface StyleProps {
   diaryInfo: FlowDiaryInfo;
@@ -12,7 +13,14 @@ interface StyleProps {
 }
 
 const Style = ({ diaryInfo, setDiaryInfo, styles, setStyles }: StyleProps) => {
+  const location = useLocation();
+  const diaryID = location.state.diaryID;
   useEffect(() => {
+    if (diaryID)
+      setDiaryInfo((prev) => {
+        return { ...prev, diaryId: diaryID };
+      });
+
     const styleInit = async () => {
       const styleData = await getStyles();
       setStyles(styleData);

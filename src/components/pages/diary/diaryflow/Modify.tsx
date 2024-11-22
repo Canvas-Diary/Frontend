@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import Appbar from "@/components/common/Appbar";
 import Button from "@/components/common/Button";
 import { FlowDiaryInfo } from "@/types/types";
 import { putModifiedDiary } from "@/api/api";
@@ -124,62 +123,60 @@ const Modify = ({ diaryInfo, setDiaryInfo }: ModifyProps) => {
 
   return (
     <>
-      <Appbar text="일기 수정" backHandler={() => navigate(-1)}></Appbar>
-      <div className="flex-grow overflow-scroll px-800 py-300">
-        {diaryInfo && (
-          <div className="flex h-full flex-col gap-600 font-Binggrae text-gray-900 dark:text-gray-50">
-            <div className={`${FADEINANIMATION[0]} font-BinggraeBold text-title-2`}>
-              {formatDateWithWeek(diaryInfo.date)}
-            </div>
-            <div className={`${FADEINANIMATION[1]} flex items-center gap-300 text-body-2`}>
-              <div className="whitespace-nowrap py-200 font-Binggrae text-gray-500">키워드</div>
-              <div className="flex gap-400 overflow-scroll">
-                {diaryInfo.weightedContents.map((keyword) => (
-                  <KeywordTag
-                    key={keyword}
-                    text={keyword}
-                    onClick={() => handleKeywordClick(keyword)}
-                  ></KeywordTag>
-                ))}
-              </div>
-            </div>
-            <Divider style={FADEINANIMATION[2]} />
-            <div className="relative flex min-h-[80px] w-full flex-grow">
-              <div
-                ref={editorRef}
-                className={`${
-                  FADEINANIMATION[3]
-                } w-full overflow-scroll rounded-md border border-input bg-background px-3 py-2 font-Binggrae text-body-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}
-                contentEditable={true}
-                suppressContentEditableWarning={true}
-                onInput={(e) => {
-                  setDiaryInfo({ ...diaryInfo, content: e.currentTarget.textContent || "" });
-                }}
-              ></div>
-              {diaryInfo.content.trim() === "" && (
-                <div
-                  className={`${FADEINANIMATION[3]} pointer-events-none absolute left-3 top-2 text-muted-foreground`}
-                >
-                  10자 이상 작성해주세요. 드래그해서 강조할 단어를 최대 5개 선택할 수 있어요.
-                </div>
-              )}
-              {buttonPosition && (
-                <button
-                  onClick={addKeyword}
-                  style={{
-                    position: "absolute",
-                    top: `${buttonPosition.y}px`,
-                    left: `${buttonPosition.x}px`,
-                  }}
-                  className={`absolute z-50 rounded-md border bg-primary-medium px-3 py-2 text-sm text-background`}
-                >
-                  강조하기
-                </button>
-              )}
+      {diaryInfo && (
+        <div className="flex h-full flex-col gap-600 font-Binggrae text-gray-900 dark:text-gray-50">
+          <div className={`${FADEINANIMATION[0]} font-BinggraeBold text-title-2`}>
+            {formatDateWithWeek(diaryInfo.date)}
+          </div>
+          <div className={`${FADEINANIMATION[1]} flex items-center gap-300 text-body-2`}>
+            <div className="whitespace-nowrap py-200 font-Binggrae text-gray-500">키워드</div>
+            <div className="flex gap-400 overflow-scroll">
+              {diaryInfo.weightedContents.map((keyword) => (
+                <KeywordTag
+                  key={keyword}
+                  text={keyword}
+                  onClick={() => handleKeywordClick(keyword)}
+                ></KeywordTag>
+              ))}
             </div>
           </div>
-        )}
-      </div>
+          <Divider style={FADEINANIMATION[2]} />
+          <div className="relative flex min-h-[80px] w-full flex-grow">
+            <div
+              ref={editorRef}
+              className={`${
+                FADEINANIMATION[3]
+              } w-full overflow-scroll rounded-md border border-input bg-background px-3 py-2 font-Binggrae text-body-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}
+              contentEditable={true}
+              suppressContentEditableWarning={true}
+              onInput={(e) => {
+                setDiaryInfo({ ...diaryInfo, content: e.currentTarget.textContent || "" });
+              }}
+            ></div>
+            {diaryInfo.content.trim() === "" && (
+              <div
+                className={`${FADEINANIMATION[3]} pointer-events-none absolute left-3 top-2 text-muted-foreground`}
+              >
+                10자 이상 작성해주세요. 드래그해서 강조할 단어를 최대 5개 선택할 수 있어요.
+              </div>
+            )}
+            {buttonPosition && (
+              <button
+                onClick={addKeyword}
+                style={{
+                  position: "absolute",
+                  top: `${buttonPosition.y}px`,
+                  left: `${buttonPosition.x}px`,
+                }}
+                className={`absolute z-50 rounded-md border bg-primary-medium px-3 py-2 text-sm text-background`}
+              >
+                강조하기
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="my-4 flex justify-center">
         <Button
           size="big"
