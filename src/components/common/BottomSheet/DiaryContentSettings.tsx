@@ -1,6 +1,6 @@
-import PeopleIcon from "../../../assets/svg/people.svg?react";
-import EditIcon from "../../../assets/svg/edit.svg?react";
-import DeleteIcon from "../../../assets/svg/delete.svg?react";
+import PeopleIcon from "@/assets/svg/people.svg?react";
+import EditIcon from "@/assets/svg/edit.svg?react";
+import DeleteIcon from "@/assets/svg/delete.svg?react";
 import Divider from "../Divider";
 import Toggle from "../Toggle";
 

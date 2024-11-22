@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import dummy from "../../../assets/dummy/_Image.png";
+import dummy from "@/assets/dummy/_Image.png";
 
 import ReviewContent from "./ReviewContent";
 

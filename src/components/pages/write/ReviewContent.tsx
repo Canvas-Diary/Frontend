@@ -1,6 +1,6 @@
 import EmotionTag from "../../common/EmotionTag";
-import ImageCarousel from "../diary/ImageCarousel";
-import HeartIcon from "../../../assets/svg/heart.svg?react";
+import ImageCarousel from "../diary/diary/ImageCarousel";
+import HeartIcon from "@/assets/svg/heart.svg?react";
 import { DiaryImage } from "../../../types/types";
 
 interface ContentProps {

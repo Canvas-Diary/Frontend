@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Circle from "../../../assets/svg/circle.svg?react";
+import Circle from "@/assets/svg/circle.svg?react";
 import { FADEINANIMATION } from "../../../styles/animations";
 
 interface StyleOptionProps {

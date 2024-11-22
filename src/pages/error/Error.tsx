@@ -1,7 +1,6 @@
 import Button from "@/components/common/Button";
 import { FallbackProps } from "react-error-boundary";
-import sad from "../../assets/icon/sad.png";
-import MobileLayout from "../Layout/MobileLayout";
+import sad from "@/assets/icon/sad.png";
 
 /**
  * 오류 화면
@@ -33,25 +32,23 @@ const Error = ({ error }: FallbackProps) => {
     }
   };
   return (
-    <MobileLayout>
-      <div className="flex h-full flex-col items-center">
-        <div className="flex flex-grow items-center justify-center">
-          <div className="flex flex-col items-center gap-600">
-            <img src={sad} alt="non" className="h-[2.75rem] w-[2.75rem]" />
-            <p>{errorMessage()}</p>
-          </div>
-        </div>
-        <div className="mb-[1.875rem]">
-          <Button
-            size="big"
-            active={true}
-            text="홈으로 돌아가기"
-            onClickHandler={() => window.location.replace("/")}
-            bgColor="light"
-          />
+    <div className="flex h-full flex-col items-center">
+      <div className="flex flex-grow items-center justify-center">
+        <div className="flex flex-col items-center gap-600">
+          <img src={sad} alt="non" className="h-[2.75rem] w-[2.75rem]" />
+          <p>{errorMessage()}</p>
         </div>
       </div>
-    </MobileLayout>
+      <div className="mb-[1.875rem]">
+        <Button
+          size="big"
+          active={true}
+          text="홈으로 돌아가기"
+          onClickHandler={() => window.location.replace("/")}
+          bgColor="light"
+        />
+      </div>
+    </div>
   );
 };
 

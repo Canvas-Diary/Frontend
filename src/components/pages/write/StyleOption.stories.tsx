@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-import dummy from "../../../assets/dummy/_Image.png";
+import dummy from "@/assets/dummy/_Image.png";
 
 import StyleOption from "./StyleOption";
 
