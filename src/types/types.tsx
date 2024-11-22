@@ -10,8 +10,9 @@ export type Diary = {
   emotion: string;
 };
 
-//일기 생성 정보
-export type NewDiaryInfo = {
+//일기 생성, 수정 정보
+export type FlowDiaryInfo = {
+  diaryId?: string;
   date: string;
   content: string;
   style: string;

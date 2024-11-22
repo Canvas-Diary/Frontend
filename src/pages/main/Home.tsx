@@ -17,7 +17,7 @@ const Home = () => {
   const [activeToday, setActiveToday] = useState(true);
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
-    navigate(ROUTE_PATH.DIARY, { state: { date: getTodayDate() } });
+    navigate(ROUTE_PATH.DIARY_FLOW.CREATE, { state: { date: getTodayDate() } });
   };
 
   const onClickDate = (id: string) => {

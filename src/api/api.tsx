@@ -5,7 +5,7 @@ import {
   Emotions,
   EmotionStatsData,
   KeywordStatsData,
-  NewDiaryInfo,
+  FlowDiaryInfo,
   SearchedDiaries,
   Styles,
 } from "../types/types";
@@ -99,7 +99,7 @@ export const updatewAccessToken = async () => {
  * @param newDiaryInfo
  * @returns
  */
-export const createDiaryAndGetId = async (newDiaryInfo: NewDiaryInfo): Promise<string> => {
+export const createDiaryAndGetId = async (newDiaryInfo: FlowDiaryInfo): Promise<string> => {
   try {
     const response = await axiosInstance.post("/api/v1/diaries", newDiaryInfo);
     return response.data.diaryId;

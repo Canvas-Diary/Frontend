@@ -1,9 +1,9 @@
 import { createDiaryAndGetId, postKeyword } from "@/api/api";
-import { NewDiaryInfo, Styles } from "@/types/types";
+import { FlowDiaryInfo, Styles } from "@/types/types";
 import { getTodayDate } from "@/utils/util";
 import { useEffect, useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
-import { useBlocker, useNavigate, useSearchParams } from "react-router-dom";
+import { useBlocker, useNavigate, useLocation } from "react-router-dom";
 import Appbar from "@/components/common/Appbar";
 import Button from "@/components/common/Button";
 import {
@@ -20,10 +20,11 @@ import Write from "@/components/pages/diary/diaryflow/Write";
 import Style from "@/components/pages/diary/diaryflow/Style";
 import Review from "@/components/pages/diary/diaryflow/Review";
 import Draw from "@/components/pages/diary/diaryflow/Draw";
+import Modify from "@/components/pages/diary/diaryflow/Modify";
 
 export interface ContextProps {
-  diaryInfo: NewDiaryInfo;
-  setDiaryInfo: React.Dispatch<React.SetStateAction<NewDiaryInfo>>;
+  diaryInfo: FlowDiaryInfo;
+  setDiaryInfo: React.Dispatch<React.SetStateAction<FlowDiaryInfo>>;
   isLoaded: boolean;
   keywords: string[];
   setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
@@ -32,19 +33,29 @@ export interface ContextProps {
   styles: Styles | null;
 }
 const DiaryFlow = () => {
+  const { search } = useLocation(); // 쿼리 파라미터를 읽어옵니다
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
   const { showBoundary } = useErrorBoundary();
 
-  const steps = ["write", "style", "review", "done"];
-  const currentStep = searchParams.get("step") || "write";
-  const currentIndex = steps.indexOf(currentStep);
+  const stepsByFlow: Record<string, string[]> = {
+    create: ["write", "style", "review", "draw"],
+    add: ["style", "draw"],
+    modify: ["modify"],
+  };
 
-  const [diaryId, setDiaryId] = useState("0");
+  // 쿼리에서 flow, currentIndex, diaryId 값을 추출합니다.
+  const urlParams = new URLSearchParams(search);
+  const flow = urlParams.get("flow") || "create";
+  const initialIndex = Number(urlParams.get("currentIndex")) || 0;
+  const diaryIdFromQuery = urlParams.get("diaryId") || "0";
+  const steps = stepsByFlow[flow] || [];
+
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [diaryId, setDiaryId] = useState(diaryIdFromQuery);
   const [isLoaded, setIsLoaded] = useState(false);
   const [keywords, setKeywords] = useState<string[]>([]);
   const [styles, setStyles] = useState<Styles | null>(null);
-  const [diaryInfo, setDiaryInfo] = useState<NewDiaryInfo>({
+  const [diaryInfo, setDiaryInfo] = useState<FlowDiaryInfo>({
     date: getTodayDate(),
     content: "",
     isPublic: true,
@@ -52,11 +63,11 @@ const DiaryFlow = () => {
     weightedContents: [],
   });
 
+  const currentStep = steps[currentIndex];
+
   const onClickNext = async () => {
     if (currentIndex < steps.length - 1) {
-      const nextStep = steps[currentIndex + 1];
-
-      if (currentStep === "style") {
+      if (currentStep === "style" && flow === "create") {
         try {
           const id = await createDiaryAndGetId(diaryInfo);
           setDiaryId(id);
@@ -65,11 +76,10 @@ const DiaryFlow = () => {
           showBoundary(error);
         }
       }
-
-      setSearchParams({ step: nextStep }); // 다음 스텝으로 이동
+      setCurrentIndex((prev) => prev + 1);
     } else {
-      navigate(`${ROUTE_PATH.DIARY}/${diaryId}`, {
-        state: { from: ROUTE_PATH.DIARY },
+      // 쿼리 파라미터로 diaryId를 전달하면서 navigate
+      navigate(`${ROUTE_PATH.DIARY}/${diaryId}?flow=${flow}&currentIndex=${currentIndex + 1}`, {
         replace: true,
       });
     }
@@ -77,10 +87,9 @@ const DiaryFlow = () => {
 
   const handleBack = () => {
     if (currentIndex > 0) {
-      const prevStep = steps[currentIndex - 1];
-      setSearchParams({ step: prevStep }); // 이전 스텝으로 이동
+      setCurrentIndex((prev) => prev - 1);
     } else {
-      navigate(-1); // 첫 스텝에서 뒤로가기
+      navigate(-1);
     }
   };
 
@@ -97,18 +106,8 @@ const DiaryFlow = () => {
     }
   };
 
-  const blocker = useBlocker(({ nextLocation, historyAction }) => {
-    const isInternalNavigation = steps.some((path) => nextLocation.search.includes(`step=${path}`));
-
-    if (historyAction === "PUSH" || (historyAction === "REPLACE" && isInternalNavigation)) {
-      return false;
-    }
-
-    if (historyAction === "POP") {
-      return currentIndex > 0;
-    }
-
-    return true;
+  const blocker = useBlocker(() => {
+    return currentIndex > 0;
   });
 
   useEffect(() => {
@@ -134,10 +133,12 @@ const DiaryFlow = () => {
         );
       case "review":
         return <Review diaryInfo={diaryInfo} setKeywords={setKeywords} />;
-      case "done":
+      case "draw":
         return <Draw isLoaded={isLoaded} styles={styles} diaryInfo={diaryInfo} />;
+      case "modify":
+        return <Modify diaryInfo={diaryInfo} setDiaryInfo={setDiaryInfo} />;
       default:
-        return <Write diaryInfo={diaryInfo} setDiaryInfo={setDiaryInfo} />;
+        return null;
     }
   };
 

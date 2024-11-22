@@ -2,23 +2,27 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Appbar from "@/components/common/Appbar";
 import Button from "@/components/common/Button";
-import { DiaryInfo } from "@/types/types";
+import { FlowDiaryInfo } from "@/types/types";
 import { putModifiedDiary } from "@/api/api";
 import KeywordTag from "@/components/common/KeywordTag";
 import { FADEINANIMATION } from "@/styles/animations";
 import { formatDateWithWeek } from "@/utils/util";
 import Divider from "@/components/common/Divider";
 
-const Modify = () => {
+interface ModifyProps {
+  diaryInfo: FlowDiaryInfo;
+  setDiaryInfo: React.Dispatch<React.SetStateAction<FlowDiaryInfo>>;
+}
+
+const Modify = ({ diaryInfo, setDiaryInfo }: ModifyProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [diaryInfo, setDiaryInfo] = useState<DiaryInfo | null>(null);
   const [selectedText, setSelectedText] = useState<Range | null>(null);
   const editorRef = useRef<HTMLDivElement>(null);
   const [buttonPosition, setButtonPosition] = useState<{ x: number; y: number } | null>(null);
 
   const onClickModify = async () => {
-    if (diaryInfo) {
+    if (diaryInfo && diaryInfo.diaryId) {
       try {
         await putModifiedDiary({
           diaryId: diaryInfo.diaryId,

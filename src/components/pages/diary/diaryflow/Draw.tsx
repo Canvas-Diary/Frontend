@@ -1,11 +1,11 @@
 import dummy from "@/assets/dummy/_Image.png";
 import { FADEINANIMATION } from "@/styles/animations";
-import { NewDiaryInfo, Styles } from "@/types/types";
+import { FlowDiaryInfo, Styles } from "@/types/types";
 
 interface DrawProps {
   isLoaded: boolean;
   styles: Styles | null;
-  diaryInfo: NewDiaryInfo;
+  diaryInfo: FlowDiaryInfo;
 }
 
 const Draw = ({ isLoaded, styles, diaryInfo }: DrawProps) => {

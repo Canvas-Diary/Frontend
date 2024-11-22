@@ -108,7 +108,7 @@ const routes: RouteObject[] = [
       },
 
       {
-        path: `${ROUTE_PATH.DIARY}/:flow`,
+        path: ROUTE_PATH.DIARY,
         element: (
           <Suspense fallback={<GlobalFallback />}>
             <DiaryFlowPage />

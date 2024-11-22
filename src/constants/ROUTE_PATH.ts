@@ -6,6 +6,11 @@ const ROUTE_PATH = {
   MYPAGE: "/my",
   LOGIN: "/login",
   DIARY: "/diary",
+  DIARY_FLOW: {
+    CREATE: "/diary?flow=create",
+    ADD: "/diary?flow=add",
+    MODIFY: "/diary?flow=modify",
+  },
   STAT: "/stat",
   LIKE: "/like",
 };

@@ -1,12 +1,12 @@
 import { getReview } from "@/api/api";
 import { FADEINANIMATION } from "@/styles/animations";
-import { DiaryInfo, NewDiaryInfo } from "@/types/types";
+import { DiaryInfo, FlowDiaryInfo } from "@/types/types";
 import { useEffect, useState } from "react";
 import ReviewContent from "../../write/ReviewContent";
 import { formatDateWithWeek } from "@/utils/util";
 
 interface ReviewProps {
-  diaryInfo: NewDiaryInfo;
+  diaryInfo: FlowDiaryInfo;
   setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
