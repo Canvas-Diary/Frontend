@@ -1,8 +1,6 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import Button from "@/components/common/Button";
 import { FlowDiaryInfo } from "@/types/types";
-import { putModifiedDiary } from "@/api/api";
 import KeywordTag from "@/components/common/KeywordTag";
 import { FADEINANIMATION } from "@/styles/animations";
 import { formatDateWithWeek } from "@/utils/util";
@@ -15,26 +13,9 @@ interface ModifyProps {
 
 const Modify = ({ diaryInfo, setDiaryInfo }: ModifyProps) => {
   const location = useLocation();
-  const navigate = useNavigate();
   const [selectedText, setSelectedText] = useState<Range | null>(null);
   const editorRef = useRef<HTMLDivElement>(null);
   const [buttonPosition, setButtonPosition] = useState<{ x: number; y: number } | null>(null);
-
-  const onClickModify = async () => {
-    if (diaryInfo && diaryInfo.diaryId) {
-      try {
-        await putModifiedDiary({
-          diaryId: diaryInfo.diaryId,
-          content: diaryInfo.content,
-          isPublic: diaryInfo.isPublic,
-          weightedContents: diaryInfo.weightedContents,
-        });
-        navigate(`/diary/${diaryInfo.diaryId}`, { state: { isModified: true }, replace: true });
-      } catch (error) {
-        throw error;
-      }
-    }
-  };
 
   /**
    * 선택된 텍스트를 키워드로 추가하는 함수
@@ -176,16 +157,6 @@ const Modify = ({ diaryInfo, setDiaryInfo }: ModifyProps) => {
           </div>
         </div>
       )}
-
-      <div className="my-4 flex justify-center">
-        <Button
-          size="big"
-          active={true}
-          text="수정 완료"
-          onClickHandler={onClickModify}
-          bgColor="dark"
-        />
-      </div>
     </>
   );
 };

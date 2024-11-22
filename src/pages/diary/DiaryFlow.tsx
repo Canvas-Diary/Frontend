@@ -1,4 +1,4 @@
-import { createDiaryAndGetId, postKeyword } from "@/api/api";
+import { createDiaryAndGetId, postKeyword, putModifiedDiary } from "@/api/api";
 import { FlowDiaryInfo, Styles } from "@/types/types";
 import { getTodayDate } from "@/utils/util";
 import { useEffect, useState } from "react";
@@ -77,6 +77,18 @@ const DiaryFlow = () => {
       }
       setCurrentIndex((prev) => prev + 1);
     } else {
+      if (flow === "modify" && diaryInfo.diaryId) {
+        try {
+          await putModifiedDiary({
+            diaryId: diaryInfo.diaryId,
+            content: diaryInfo.content,
+            isPublic: diaryInfo.isPublic,
+            weightedContents: diaryInfo.weightedContents,
+          });
+        } catch (error) {
+          showBoundary(error);
+        }
+      }
       navigate(`${ROUTE_PATH.DIARY}/${diaryInfo.diaryId}`, {
         replace: true,
       });
@@ -97,7 +109,7 @@ const DiaryFlow = () => {
         return diaryInfo.content.length >= 10;
       case "style":
         return diaryInfo.style !== "";
-      case "review":
+      case "draw":
         return isLoaded;
       default:
         return true;
@@ -105,7 +117,7 @@ const DiaryFlow = () => {
   };
 
   const blocker = useBlocker(() => {
-    return currentIndex > 0;
+    return currentIndex > 0 && currentIndex < steps.length - 1;
   });
 
   useEffect(() => {
