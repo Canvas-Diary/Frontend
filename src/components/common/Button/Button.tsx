@@ -1,8 +1,11 @@
-interface ButtonProps {
+import { ButtonHTMLAttributes } from "react";
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size: "big" | "small";
   active: boolean;
   text: string;
   bgColor: "light" | "dark" | "gray";
+  className?: string;
   onClickHandler: () => void;
 }
 
@@ -22,11 +25,20 @@ const bgColorStyle = {
  * @param onClickHandler 버튼 클릭 콜백 함수
  * @returns
  */
-const Button = ({ size, active, text, bgColor, onClickHandler }: ButtonProps) => {
+const Button = ({
+  size,
+  active,
+  text,
+  bgColor,
+  className,
+  onClickHandler,
+  ...props
+}: ButtonProps) => {
   return (
     <button
-      className={`${size === "big" ? "w-[20.4375rem]" : "w-[9.6875rem]"} ${active ? bgColorStyle[bgColor] : `${bgColorStyle.non} pointer-events-none`} rounded-200 py-600 font-Binggrae text-body-1 font-regular transition duration-200`}
+      className={`${size === "big" ? "w-[20.4375rem]" : "w-[9.6875rem]"} ${active ? bgColorStyle[bgColor] : `${bgColorStyle.non} pointer-events-none`} ${className && className} rounded-200 py-600 font-Binggrae text-body-1 font-regular transition duration-200`}
       onClick={onClickHandler}
+      {...props} // ...props는 추가적인 속성들을 전달
     >
       {text}
     </button>
