@@ -13,12 +13,14 @@ const GNB = [
   { icon: <Who />, label: "마이페이지", path: ROUTE_PATH.MYPAGE },
 ];
 
+const NO_NAVBAR_PAGE = [ROUTE_PATH.DIARY, ROUTE_PATH.LOGIN, ROUTE_PATH.NO_DIARY];
+
 /**
  * Content + Navbar(선택) 로 이루어진 기본 layout
  * @returns
  */
 const Layout = () => {
-  const shouldHideNavBar = useShouldHideNavBar([ROUTE_PATH.DIARY]);
+  const shouldHideNavBar = useShouldHideNavBar(NO_NAVBAR_PAGE);
 
   return (
     <div className="flex h-dvh w-full flex-col">
