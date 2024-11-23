@@ -1,15 +1,15 @@
-import EmotionTag from "../../components/common/EmotionTag";
+import EmotionTag from "../../components/common/tag/EmotionTag";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Appbar from "../../components/common/appbar/Appbar";
 import { getSearchedDiaries } from "../../api/api";
-import ThumbnailGrid from "../../components/common/ThumbnailGrid";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";
 import useInView from "../../hooks/useInView";
 import useScrollPosition from "../../hooks/useScrollPosition";
 import { createQueryParams } from "../../utils/util";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import SearchBar from "@/components/pages/main/album/SearchBar";
+import { ThumbnailGrid } from "@/components/common/thumbnail";
 
 const tags = ["기쁨", "슬픔", "분노", "공포", "혐오", "수치", "놀람", "궁금", "무난"];
 

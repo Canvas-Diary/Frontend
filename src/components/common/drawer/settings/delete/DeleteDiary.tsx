@@ -1,4 +1,4 @@
-import Button from "../../../Button";
+import Button from "../../../button/Button";
 
 interface DeleteDiaryProps {
   onClickCancle: () => void;

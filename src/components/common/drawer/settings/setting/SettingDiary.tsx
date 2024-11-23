@@ -1,8 +1,8 @@
 import PeopleIcon from "@/assets/svg/people.svg?react";
 import EditIcon from "@/assets/svg/edit.svg?react";
 import DeleteIcon from "@/assets/svg/delete.svg?react";
-import Toggle from "../../../Toggle";
-import Divider from "../../../Divider";
+import Toggle from "@/components/common/toggle/Toggle";
+import Divider from "@/components/common/divider/Divider";
 
 interface SettingDiaryProps {
   isChecked: boolean;

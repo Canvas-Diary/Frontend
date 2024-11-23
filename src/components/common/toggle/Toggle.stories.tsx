@@ -12,5 +12,5 @@ export default meta;
 type Story = StoryObj<typeof Toggle>;
 
 export const Primary: Story = {
-  args: { onClickHandler: fn() },
+  args: { onClickHandler: fn(), isChecked: true },
 };

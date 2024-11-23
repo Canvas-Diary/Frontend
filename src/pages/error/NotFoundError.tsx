@@ -1,4 +1,4 @@
-import Button from "@/components/common/Button";
+import Button from "@/components/common/button/Button";
 import sad from "@/assets/icon/sad.png";
 
 /**

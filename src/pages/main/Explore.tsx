@@ -1,4 +1,3 @@
-import ThumbnailGrid from "../../components/common/ThumbnailGrid";
 import Appbar from "../../components/common/appbar/Appbar";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +5,7 @@ import ROUTE_PATH from "../../constants/ROUTE_PATH";
 import { getExploreDiaries } from "../../api/api";
 import useInView from "../../hooks/useInView";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { ThumbnailGrid } from "@/components/common/thumbnail";
 
 const buttonPositions = {
   LATEST: "left-0",

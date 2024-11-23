@@ -1,6 +1,6 @@
 import { getLikedDiaries } from "@/api/api";
 import Appbar from "@/components/common/appbar/Appbar";
-import ThumbnailGrid from "@/components/common/ThumbnailGrid";
+import ThumbnailGrid from "@/components/common/thumbnail/ThumbnailGrid";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
 import useInView from "@/hooks/useInView";
 import { useInfiniteQuery } from "@tanstack/react-query";
