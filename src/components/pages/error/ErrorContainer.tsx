@@ -8,6 +8,10 @@ interface ErrorContainerProps {
   onClickHandler: () => void;
 }
 
+/**
+ * 에러 페이지 구성
+ * @returns
+ */
 const ErrorContainer = ({ message, buttonText, onClickHandler }: ErrorContainerProps) => {
   return (
     <ScrollLayout>
