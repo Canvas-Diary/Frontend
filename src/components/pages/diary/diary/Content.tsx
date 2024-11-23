@@ -1,4 +1,4 @@
-import EmotionTag from "../../../common/tag/EmotionTag";
+import EmotionTag from "../../../common/EmotionTag/EmotionTag";
 import HeartIcon from "@/assets/svg/heart.svg?react";
 import { useEffect, useRef, useState } from "react";
 import { addLike, removeLike } from "../../../../api/api";

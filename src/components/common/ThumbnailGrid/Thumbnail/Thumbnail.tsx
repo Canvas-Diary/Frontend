@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ThumbnailSkeleton from "../skeleton/ThumbnailSkeleton";
 
 interface ThumbnailProps {
   src: string;
@@ -18,9 +19,7 @@ const Thumbnail = ({ src, alt, onClickHandler }: ThumbnailProps) => {
 
   return (
     <div className="relative h-[11.125rem] w-[6.375rem] cursor-pointer" onClick={onClickHandler}>
-      {!isLoaded && (
-        <div className="absolute left-0 top-0 h-full w-full rounded bg-gray-100 dark:bg-gray-600"></div>
-      )}
+      {!isLoaded && <ThumbnailSkeleton />}
 
       <img
         src={src}

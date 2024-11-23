@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import KeywordTag from "@/components/common/tag/KeywordTag";
+import KeywordTag from "@/components/common/KeywordTag/KeywordTag";
 import { FlowDiaryInfo } from "@/types/types";
 import { FADEINANIMATION } from "@/styles/animations";
 import { formatDateWithWeek } from "@/utils/util";
