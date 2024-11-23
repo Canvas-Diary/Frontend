@@ -6,10 +6,15 @@ import { downloadFile, formatDateWithWeek } from "../../../../utils/util";
 import { DiaryImage, DiaryInfo } from "../../../../types/types";
 import { useEffect, useRef, useState } from "react";
 import { deleteDiary, deleteImage, patchMainImage, putModifiedDiary } from "@/api/api";
-import BottomSheet from "@/components/common/drawer/BottomSheet";
+import BottomSheet from "@/components/common/BottomSheet/BottomSheet";
 import { toast, Toaster } from "sonner";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
-import { DeleteDiary, DeleteImage, SettingDiary, SettingImage } from "@/components/common/drawer";
+import {
+  DeleteDiary,
+  DeleteImage,
+  SettingDiary,
+  SettingImage,
+} from "@/components/common/BottomSheet";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;

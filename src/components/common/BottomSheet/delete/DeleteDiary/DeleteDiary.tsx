@@ -1,4 +1,4 @@
-import DeleteContainer from "../DeleteContainer/DeleteContainer";
+import DeleteContainer from "../../container/DeleteContainer";
 import DeleteFooter from "../DeleteFooter/DeleteFooter";
 
 interface DeleteDiaryProps {

@@ -3,6 +3,8 @@ import EditIcon from "@/assets/svg/edit.svg?react";
 import DeleteIcon from "@/assets/svg/delete.svg?react";
 import Toggle from "@/components/common/Toggle/Toggle";
 import Divider from "@/components/common/Divider/Divider";
+import SettingContainer from "../../container/SettingContainer";
+import SettingItem from "../SettingItem/SettingItem";
 
 interface SettingDiaryProps {
   isChecked: boolean;
@@ -22,7 +24,7 @@ const SettingDiary = ({
   onChangeToggle,
 }: SettingDiaryProps) => {
   return (
-    <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-700 dark:text-gray-200">
+    <SettingContainer>
       <div className="flex items-center gap-500">
         <PeopleIcon />
         <span>공개 여부</span>
@@ -33,16 +35,15 @@ const SettingDiary = ({
       </div>
       <Divider />
       <div className="flex h-full flex-col gap-900">
-        <button className="flex gap-500 text-start" onClick={onClickModify}>
-          <EditIcon />
-          <span>일기 수정하기</span>
-        </button>
-        <button className="flex gap-500 text-start text-status-negative" onClick={onClickDelete}>
-          <DeleteIcon />
-          <span>일기 삭제하기</span>
-        </button>
+        <SettingItem icon={<EditIcon />} text={"일기 수정하기"} onClick={onClickModify} />
+        <SettingItem
+          icon={<DeleteIcon />}
+          text={"일기 삭제하기"}
+          onClick={onClickDelete}
+          className="text-status-negative"
+        />
       </div>
-    </div>
+    </SettingContainer>
   );
 };
 
