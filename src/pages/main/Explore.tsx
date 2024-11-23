@@ -1,5 +1,5 @@
 import ThumbnailGrid from "../../components/common/ThumbnailGrid";
-import Appbar from "../../components/common/Appbar";
+import Appbar from "../../components/common/appbar/Appbar";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";

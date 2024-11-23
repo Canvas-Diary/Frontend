@@ -1,7 +1,7 @@
 import EmotionTag from "../../components/common/EmotionTag";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Appbar from "../../components/common/Appbar";
+import Appbar from "../../components/common/appbar/Appbar";
 import { getSearchedDiaries } from "../../api/api";
 import ThumbnailGrid from "../../components/common/ThumbnailGrid";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";

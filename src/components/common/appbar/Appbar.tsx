@@ -1,5 +1,6 @@
 import BackIcon from "@/assets/svg/back-button.svg?react";
 import MenuIcon from "@/assets/svg/menu-dots.svg?react";
+import { ReactNode } from "react";
 
 interface AppBarProps {
   text?: string;
@@ -17,23 +18,24 @@ interface AppBarProps {
 const Appbar = ({ text, backHandler, menuHandler }: AppBarProps) => {
   return (
     <div className="relative z-50 flex w-full items-center justify-between bg-transparent px-500 py-300">
-      <button
-        className={`h-7 w-8 ${backHandler ? "visible" : "invisible"} text-white`}
-        onClick={backHandler}
-      >
-        <BackIcon />
-      </button>
-
+      <div>{backHandler && <AppbarButton icon={<BackIcon />} onClickHandler={backHandler} />}</div>
       {text && <span className="font-Binggrae text-body-1 font-regular">{text}</span>}
-
-      <button
-        className={`h-7 w-8 ${menuHandler ? "visible" : "invisible"} text-white`}
-        onClick={menuHandler}
-      >
-        <MenuIcon />
-      </button>
+      <div>{menuHandler && <AppbarButton icon={<MenuIcon />} onClickHandler={menuHandler} />}</div>
     </div>
   );
 };
 
 export default Appbar;
+
+interface AppbarButtonProps {
+  icon: ReactNode;
+  onClickHandler: () => void;
+}
+
+const AppbarButton = ({ icon, onClickHandler }: AppbarButtonProps) => {
+  return (
+    <button className="text-white" onClick={onClickHandler}>
+      {icon}
+    </button>
+  );
+};

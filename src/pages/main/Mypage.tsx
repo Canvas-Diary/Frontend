@@ -1,4 +1,4 @@
-import Appbar from "../../components/common/Appbar";
+import Appbar from "../../components/common/appbar/Appbar";
 import Divider from "../../components/common/Divider";
 import Toggle from "../../components/common/Toggle";
 import { useNavigate } from "react-router-dom";
