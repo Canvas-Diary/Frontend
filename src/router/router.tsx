@@ -19,6 +19,7 @@ const LikedPage = lazy(() => import("@/pages/user/Like"));
 
 /* Diary */
 const DiaryPage = lazy(() => import("@/pages/diary/Diary"));
+const NoDiaryPage = lazy(() => import("@/pages/diary/NoDiary"));
 const DiaryFlowPage = lazy(() => import("@/pages/diary/DiaryFlow"));
 
 /* Error */
@@ -101,6 +102,14 @@ const routes: RouteObject[] = [
         element: (
           <Suspense fallback={<PageFallback />}>
             <DiaryPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: `${ROUTE_PATH.NO_DIARY}/:date`,
+        element: (
+          <Suspense fallback={<PageFallback />}>
+            <NoDiaryPage />
           </Suspense>
         ),
       },

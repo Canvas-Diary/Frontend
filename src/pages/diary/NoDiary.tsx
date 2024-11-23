@@ -1,18 +1,15 @@
-import { useNavigate } from "react-router-dom";
-import Appbar from "../../../common/Appbar/Appbar";
+import { useNavigate, useParams } from "react-router-dom";
 import non from "@/assets/icon/non.png";
-import Button from "../../../common/Button/Button";
-import ROUTE_PATH from "../../../../constants/ROUTE_PATH";
-
-interface NoDiaryProps {
-  date: string;
-}
+import Appbar from "@/components/common/Appbar/Appbar";
+import Button from "@/components/common/Button/Button";
+import ROUTE_PATH from "@/constants/ROUTE_PATH";
 
 /**
  * 아직 작성한 일기가 없는 경우
  * @returns
  */
-const NoDiary = ({ date }: NoDiaryProps) => {
+const NoDiary = () => {
+  const { date } = useParams();
   const navigate = useNavigate();
 
   return (

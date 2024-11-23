@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { DiaryInfo } from "../../types/types";
 import { getDiaryInfoById } from "../../api/api";
 import DiaryComponent from "../../components/pages/diary/diary/DiaryComponent";
-import NoDiary from "../../components/pages/diary/diary/NoDiary";
 import DiaryFallback from "../../components/pages/diary/diary/Fallback/DiaryFallback";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { isValidDate } from "@/utils/util";
@@ -44,17 +43,13 @@ const Diary = () => {
   return (
     <>
       {loading && <DiaryFallback />}
-      {!loading &&
-        (diaryInfo ? (
-          <DiaryComponent
-            diaryInfo={diaryInfo}
-            carouselHeight={calculatedHeight}
-            isMyDiary={isMyDiary}
-            retry={fetchDiary}
-          />
-        ) : (
-          <NoDiary date={diaryId!} />
-        ))}
+
+      <DiaryComponent
+        diaryInfo={diaryInfo!}
+        carouselHeight={calculatedHeight}
+        isMyDiary={isMyDiary}
+        retry={fetchDiary}
+      />
     </>
   );
 };
