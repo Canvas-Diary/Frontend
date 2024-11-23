@@ -11,8 +11,8 @@ const ROUTE_PATH = {
     ADD: "/diary?flow=add",
     MODIFY: "/diary?flow=modify",
   },
-  STAT: "/stat",
-  LIKE: "/like",
+  STAT: "/my/stat",
+  LIKE: "/my/like",
 };
 
 export default ROUTE_PATH;
