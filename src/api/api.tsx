@@ -354,7 +354,7 @@ interface PostKeywordProps {
 }
 
 /**
- * diaryID에 키워드 저장...
+ * diaryId에 키워드 저장...
  * @param param0
  * @returns
  */
