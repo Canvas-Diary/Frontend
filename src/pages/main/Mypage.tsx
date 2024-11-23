@@ -1,8 +1,8 @@
-import Appbar from "../../components/common/appbar/Appbar";
-import Divider from "../../components/common/divider/Divider";
+import Appbar from "../../components/common/Appbar/Appbar";
+import Divider from "../../components/common/Divider/Divider";
 import { useNavigate } from "react-router-dom";
 import { useDarkModeStore } from "@/global/globalState";
-import Toggle from "@/components/common/toggle/Toggle";
+import Toggle from "@/components/common/Toggle/Toggle";
 
 /**
  * 마이페이지 화면

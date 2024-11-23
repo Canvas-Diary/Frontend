@@ -4,7 +4,7 @@ import Sns from "@/assets/svg/sns.svg?react";
 import Album from "@/assets/svg/album.svg?react";
 import Who from "@/assets/svg/who.svg?react";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
-import Navbar from "@/components/common/navbar/Navbar";
+import Navbar from "@/components/common/Navbar/Navbar";
 
 const GNB = [
   { icon: <Home />, label: "홈", path: ROUTE_PATH.HOME },
@@ -15,21 +15,27 @@ const GNB = [
 
 /**
  * Content + Navbar(선택) 로 이루어진 기본 layout
- * location.pathname 으로 경로를 가져와 Navbar 렌더링 여부를 선택함
  * @returns
  */
 const Layout = () => {
-  const location = useLocation();
-  const shouldDeleteNavBar = () => {
-    return location.pathname.startsWith(ROUTE_PATH.DIARY);
-  };
+  const shouldHideNavBar = useShouldHideNavBar([ROUTE_PATH.DIARY]);
 
   return (
     <div className="flex h-dvh w-full flex-col">
       <Outlet />
-      {!shouldDeleteNavBar() && <Navbar NavList={GNB} />}
+      {!shouldHideNavBar && <Navbar NavList={GNB} />}
     </div>
   );
 };
 
 export default Layout;
+
+/**
+ * 특정 경로 배열에 대해, 현재 경로가 그 중 하나인지 확인
+ * @param paths - 숨기고 싶은 경로 배열
+ * @returns 현재 경로가 배열에 포함되면 true
+ */
+const useShouldHideNavBar = (paths: string[]) => {
+  const location = useLocation();
+  return paths.some((path) => location.pathname.startsWith(path));
+};

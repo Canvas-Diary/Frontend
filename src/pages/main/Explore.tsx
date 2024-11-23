@@ -1,4 +1,4 @@
-import Appbar from "../../components/common/appbar/Appbar";
+import Appbar from "../../components/common/Appbar/Appbar";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";

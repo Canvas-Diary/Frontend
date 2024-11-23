@@ -4,7 +4,7 @@ import { FlowDiaryInfo } from "@/types/types";
 import KeywordTag from "@/components/common/tag/KeywordTag";
 import { FADEINANIMATION } from "@/styles/animations";
 import { formatDateWithWeek } from "@/utils/util";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/common/Divider/Divider";
 
 interface ModifyProps {
   diaryInfo: FlowDiaryInfo;

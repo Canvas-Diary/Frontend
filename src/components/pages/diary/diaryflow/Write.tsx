@@ -4,8 +4,8 @@ import KeywordTag from "@/components/common/tag/KeywordTag";
 import { FlowDiaryInfo } from "@/types/types";
 import { FADEINANIMATION } from "@/styles/animations";
 import { formatDateWithWeek } from "@/utils/util";
-import Divider from "@/components/common/divider/Divider";
-import Toggle from "@/components/common/toggle/Toggle";
+import Divider from "@/components/common/Divider/Divider";
+import Toggle from "@/components/common/Toggle/Toggle";
 
 interface WriteProps {
   diaryInfo: FlowDiaryInfo;

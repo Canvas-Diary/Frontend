@@ -1,5 +1,5 @@
 import { getLikedDiaries } from "@/api/api";
-import Appbar from "@/components/common/appbar/Appbar";
+import Appbar from "@/components/common/Appbar/Appbar";
 import ThumbnailGrid from "@/components/common/thumbnail/ThumbnailGrid";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
 import useInView from "@/hooks/useInView";

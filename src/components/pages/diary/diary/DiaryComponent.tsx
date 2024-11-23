@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import ImageCarousel from "./ImageCarousel";
 import Content from "./Content";
-import Appbar from "../../../common/appbar/Appbar";
+import Appbar from "../../../common/Appbar/Appbar";
 import { downloadFile, formatDateWithWeek } from "../../../../utils/util";
 import { DiaryImage, DiaryInfo } from "../../../../types/types";
 import { useEffect, useRef, useState } from "react";

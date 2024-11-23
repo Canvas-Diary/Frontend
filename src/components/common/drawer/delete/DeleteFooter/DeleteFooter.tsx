@@ -1,21 +1,18 @@
-import Button from "../../../button/Button";
+import Button from "@/components/common/Button/Button";
 
-interface DeleteDiaryProps {
+interface DeleteFooterProps {
   onClickCancle: () => void;
   onClickDelete: () => void;
   date: string;
 }
 
 /**
- * 일기 삭제 확인 모달
+ * 삭제 확인 창 Footer
  * @returns
  */
-const DeleteDiary = ({ onClickCancle, onClickDelete, date }: DeleteDiaryProps) => {
+const DeleteFooter = ({ onClickCancle, onClickDelete, date }: DeleteFooterProps) => {
   return (
-    <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-900 dark:text-gray-50">
-      <div className="text-start text-heading-2 font-regular">
-        일기를 <span className="text-primary-medium">삭제</span>하시겠어요?
-      </div>
+    <>
       <div className="text-start font-BinggraeBold text-body-1">{date}</div>
       <div className="flex justify-between">
         <Button
@@ -33,8 +30,8 @@ const DeleteDiary = ({ onClickCancle, onClickDelete, date }: DeleteDiaryProps) =
           bgColor="dark"
         />
       </div>
-    </div>
+    </>
   );
 };
 
-export default DeleteDiary;
+export default DeleteFooter;
