@@ -1,10 +1,10 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { FlowDiaryInfo } from "@/types/types";
-import KeywordTag from "@/components/common/KeywordTag";
+import KeywordTag from "@/components/common/KeywordTag/KeywordTag";
 import { FADEINANIMATION } from "@/styles/animations";
 import { formatDateWithWeek } from "@/utils/util";
-import Divider from "@/components/common/Divider";
+import Divider from "@/components/common/Divider/Divider";
 
 interface ModifyProps {
   diaryInfo: FlowDiaryInfo;

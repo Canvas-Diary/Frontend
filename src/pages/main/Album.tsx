@@ -1,15 +1,15 @@
-import EmotionTag from "../../components/common/EmotionTag";
+import EmotionTag from "../../components/common/EmotionTag/EmotionTag";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Appbar from "../../components/common/Appbar";
+import Appbar from "../../components/common/Appbar/Appbar";
 import { getSearchedDiaries } from "../../api/api";
-import ThumbnailGrid from "../../components/common/ThumbnailGrid";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";
 import useInView from "../../hooks/useInView";
 import useScrollPosition from "../../hooks/useScrollPosition";
 import { createQueryParams } from "../../utils/util";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import SearchBar from "@/components/pages/main/album/SearchBar";
+import { ThumbnailGrid, ThumbnailGridSkeleton } from "@/components/common/ThumbnailGrid";
 
 const tags = ["기쁨", "슬픔", "분노", "공포", "혐오", "수치", "놀람", "궁금", "무난"];
 
@@ -170,13 +170,7 @@ const Album = () => {
           className="grid -translate-y-600 grid-cols-3 place-items-center gap-300 pb-800"
           ref={elementRef}
         >
-          {hasNextPage && (
-            <>
-              <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-              <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-              <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-            </>
-          )}
+          {hasNextPage && <ThumbnailGridSkeleton />}
         </div>
       </div>
     </div>

@@ -1,11 +1,11 @@
-import ThumbnailGrid from "../../components/common/ThumbnailGrid";
-import Appbar from "../../components/common/Appbar";
+import Appbar from "../../components/common/Appbar/Appbar";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";
 import { getExploreDiaries } from "../../api/api";
 import useInView from "../../hooks/useInView";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { ThumbnailGrid, ThumbnailGridSkeleton } from "@/components/common/ThumbnailGrid";
 
 const buttonPositions = {
   LATEST: "left-0",
@@ -166,13 +166,7 @@ const Explore = () => {
           className="grid -translate-y-600 grid-cols-3 place-items-center gap-300 pb-800"
           ref={elementRef}
         >
-          {hasNextPage && (
-            <>
-              <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-              <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-              <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-            </>
-          )}
+          {hasNextPage && <ThumbnailGridSkeleton />}
         </div>
       </div>
     </div>

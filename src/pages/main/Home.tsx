@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/common/Button";
+import Button from "../../components/common/Button/Button";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";
 import { formatDate, getTodayDate } from "../../utils/util";
 import { useEffect, useState } from "react";

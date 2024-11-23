@@ -1,6 +1,7 @@
-import Appbar from "@/components/common/Appbar";
+import Appbar from "@/components/common/Appbar/Appbar";
+import EmotionStatsLayout from "@/components/pages/user/stat/Layout/EmotionStatsLayout";
+import KeywordStatsLayout from "@/components/pages/user/stat/Layout/KeywordStatsLayout";
 import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
 
 const buttonPositions = {
   emotion: "left-0",
@@ -8,11 +9,9 @@ const buttonPositions = {
 };
 
 const Stat = () => {
-  const navigate = useNavigate();
   const [selected, setSelected] = useState("emotion");
   const handleChangeSelected = (selected: string) => {
     setSelected(selected);
-    navigate(`${selected}`);
   };
 
   return (
@@ -51,7 +50,7 @@ const Stat = () => {
         <div className="absolute bottom-0 -z-10 h-[1px] w-full bg-gray-100 dark:bg-gray-500" />
       </div>
 
-      <Outlet />
+      {selected === "emotion" ? <EmotionStatsLayout /> : <KeywordStatsLayout />}
     </div>
   );
 };

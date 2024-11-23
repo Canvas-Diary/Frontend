@@ -1,8 +1,9 @@
-import Appbar from "../../components/common/Appbar";
-import Divider from "../../components/common/Divider";
-import Toggle from "../../components/common/Toggle";
+import Appbar from "../../components/common/Appbar/Appbar";
+import Divider from "../../components/common/Divider/Divider";
 import { useNavigate } from "react-router-dom";
 import { useDarkModeStore } from "@/global/globalState";
+import Toggle from "@/components/common/Toggle/Toggle";
+import ROUTE_PATH from "@/constants/ROUTE_PATH";
 
 /**
  * 마이페이지 화면
@@ -24,11 +25,11 @@ const Mypage = () => {
           />
         </div>
         <Divider />
-        <button className="w-full text-start" onClick={() => navigate("stats/emotion")}>
+        <button className="w-full text-start" onClick={() => navigate(ROUTE_PATH.STAT)}>
           통계
         </button>
         <Divider />
-        <button className="w-full text-start" onClick={() => navigate("liked")}>
+        <button className="w-full text-start" onClick={() => navigate(ROUTE_PATH.LIKE)}>
           좋아요
         </button>
         <Divider />

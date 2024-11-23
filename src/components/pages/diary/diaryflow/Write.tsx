@@ -1,11 +1,11 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import KeywordTag from "@/components/common/KeywordTag";
+import KeywordTag from "@/components/common/KeywordTag/KeywordTag";
 import { FlowDiaryInfo } from "@/types/types";
 import { FADEINANIMATION } from "@/styles/animations";
 import { formatDateWithWeek } from "@/utils/util";
-import Toggle from "@/components/common/Toggle";
-import Divider from "@/components/common/Divider";
+import Divider from "@/components/common/Divider/Divider";
+import Toggle from "@/components/common/Toggle/Toggle";
 
 interface WriteProps {
   diaryInfo: FlowDiaryInfo;

@@ -1,6 +1,6 @@
 import { getLikedDiaries } from "@/api/api";
-import Appbar from "@/components/common/Appbar";
-import ThumbnailGrid from "@/components/common/ThumbnailGrid";
+import Appbar from "@/components/common/Appbar/Appbar";
+import { ThumbnailGrid, ThumbnailGridSkeleton } from "@/components/common/ThumbnailGrid";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
 import useInView from "@/hooks/useInView";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -60,13 +60,7 @@ const Like = () => {
             className="grid -translate-y-600 grid-cols-3 place-items-center gap-300 pb-800"
             ref={elementRef}
           >
-            {hasNextPage && (
-              <>
-                <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-                <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-                <div className="h-[11.125rem] w-[6.375rem] rounded bg-gray-100"></div>
-              </>
-            )}
+            {hasNextPage && <ThumbnailGridSkeleton />}
           </div>
         </div>
       </div>

@@ -12,6 +12,8 @@ type Story = StoryObj<typeof BottomSheet>;
 
 export const Primary: Story = {
   args: {
+    children: <div></div>,
     onClose: () => {},
+    isOpen: true,
   },
 };

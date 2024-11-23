@@ -1,5 +1,5 @@
-import { SearchedDiary } from "../../types/types";
-import Thumbnail from "./Thumbnail";
+import { SearchedDiary } from "@/types/types";
+import Thumbnail from "./Thumbnail/Thumbnail";
 
 interface ThumbnailGridProps {
   diaries: SearchedDiary[];

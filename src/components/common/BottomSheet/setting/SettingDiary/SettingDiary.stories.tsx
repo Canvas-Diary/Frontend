@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import DiaryContentSettings from "./DiaryContentSettings";
+import SettingDiary from "./SettingDiary";
 
-const meta: Meta<typeof DiaryContentSettings> = {
-  component: DiaryContentSettings,
+const meta: Meta<typeof SettingDiary> = {
+  component: SettingDiary,
   tags: ["autodocs"],
 };
 
 export default meta;
-type Story = StoryObj<typeof DiaryContentSettings>;
+type Story = StoryObj<typeof SettingDiary>;
 
 export const Primary: Story = {
   args: {

@@ -16,6 +16,8 @@ interface BottomSheetProps {
 /**
  * 바텀 시트 레이아웃
  * @param children 바텀 시트 구성 요소들
+ * @param onClose
+ * @param isOpen
  * @returns
  */
 const BottomSheet = ({ children, onClose, isOpen }: BottomSheetProps) => {

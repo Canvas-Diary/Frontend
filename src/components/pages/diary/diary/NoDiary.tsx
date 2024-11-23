@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import Appbar from "../../../common/Appbar";
+import Appbar from "../../../common/Appbar/Appbar";
 import non from "@/assets/icon/non.png";
-import Button from "../../../common/Button";
+import Button from "../../../common/Button/Button";
 import ROUTE_PATH from "../../../../constants/ROUTE_PATH";
 
 interface NoDiaryProps {

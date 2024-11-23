@@ -5,8 +5,6 @@ import ROUTE_PATH from "@/constants/ROUTE_PATH";
 import Layout from "@/components/Layout/Layout";
 import GlobalFallback from "@/components/fallback/GlobalFallback";
 import PageFallback from "@/components/fallback/PageFallback";
-import DiaryFallback from "@/components/pages/diary/diary/Fallback/DiaryFallback";
-import AlbumFallback from "@/components/pages/main/album/fallback/AlbumFallback";
 
 /* Main */
 const HomePage = lazy(() => import("@/pages/main/Home"));
@@ -57,7 +55,7 @@ const routes: RouteObject[] = [
       {
         path: ROUTE_PATH.ALBUM,
         element: (
-          <Suspense fallback={<AlbumFallback />}>
+          <Suspense fallback={<PageFallback />}>
             <AlbumPage />
           </Suspense>
         ),
@@ -101,7 +99,7 @@ const routes: RouteObject[] = [
       {
         path: `${ROUTE_PATH.DIARY}/:diaryID`,
         element: (
-          <Suspense fallback={<DiaryFallback />}>
+          <Suspense fallback={<PageFallback />}>
             <DiaryPage />
           </Suspense>
         ),

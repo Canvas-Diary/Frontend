@@ -1,9 +1,9 @@
-import EmotionTag from "../../../common/EmotionTag";
+import EmotionTag from "../../../common/EmotionTag/EmotionTag";
 import HeartIcon from "@/assets/svg/heart.svg?react";
 import { useEffect, useRef, useState } from "react";
 import { addLike, removeLike } from "../../../../api/api";
 import { useParams } from "react-router-dom";
-import Divider from "../../../common/Divider";
+import Divider from "../../../common/Divider/Divider";
 
 interface ContentProps {
   date: string;
