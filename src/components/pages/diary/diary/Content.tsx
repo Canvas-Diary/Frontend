@@ -42,7 +42,7 @@ const Content = ({ date, emotion, likedCount, isLiked, content, setAppbar }: Con
   const [currentIsLiked, setCurrentIsLiked] = useState(isLiked);
   const [currentLikedCount, setCurrentLikedCount] = useState(likedCount);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const { diaryID } = useParams<{ diaryID: string }>();
+  const { diaryId } = useParams<{ diaryId: string }>();
   const stickyRef = useRef<HTMLDivElement>(null);
 
   const handleOnClick = () => {
@@ -55,8 +55,8 @@ const Content = ({ date, emotion, likedCount, isLiked, content, setAppbar }: Con
 
     timeoutRef.current = setTimeout(() => {
       //업데이트 이전임
-      if (currentIsLiked) removeLike(diaryID!);
-      else addLike(diaryID!);
+      if (currentIsLiked) removeLike(diaryId!);
+      else addLike(diaryId!);
     }, debounceDelay);
   };
 

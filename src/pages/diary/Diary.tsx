@@ -14,16 +14,16 @@ import { isValidDate } from "@/utils/util";
  * @returns
  */
 const Diary = () => {
-  const { diaryID } = useParams<{ diaryID: string }>();
+  const { diaryId } = useParams<{ diaryId: string }>();
   const [diaryInfo, setDiaryInfo] = useState<DiaryInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const { calculatedHeight } = useMediaQuery();
   const [isMyDiary, setIsMyDiary] = useState(false);
 
   const fetchDiary = async () => {
-    if (!diaryID) return;
+    if (!diaryId) return;
     try {
-      const data = await getDiaryInfoById(diaryID);
+      const data = await getDiaryInfoById(diaryId);
       if (data.isMine) setIsMyDiary(true);
       else setIsMyDiary(false);
 
@@ -37,7 +37,7 @@ const Diary = () => {
   };
 
   useEffect(() => {
-    if (!isValidDate(diaryID!)) fetchDiary();
+    if (!isValidDate(diaryId!)) fetchDiary();
     else setLoading(false);
   }, []);
 
@@ -53,7 +53,7 @@ const Diary = () => {
             retry={fetchDiary}
           />
         ) : (
-          <NoDiary date={diaryID!} />
+          <NoDiary date={diaryId!} />
         ))}
     </>
   );

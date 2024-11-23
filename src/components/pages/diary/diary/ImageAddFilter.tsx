@@ -4,9 +4,9 @@ import ROUTE_PATH from "@/constants/ROUTE_PATH";
 
 const ImageAddFilter = () => {
   const navigate = useNavigate();
-  const { diaryID } = useParams<{ diaryID: string }>();
+  const { diaryId } = useParams<{ diaryId: string }>();
   const onClickAddButton = () => {
-    navigate(ROUTE_PATH.DIARY_FLOW.ADD, { state: { diaryID } });
+    navigate(ROUTE_PATH.DIARY_FLOW.ADD, { state: { diaryId } });
   };
   return (
     <div className="flex h-full w-full items-center justify-center bg-transparent bg-opacity-10 backdrop-blur-default">
