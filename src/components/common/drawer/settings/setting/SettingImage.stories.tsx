@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import DiaryImageSettings from "./DiaryImageSettings";
+import SettingImage from "./SettingImage";
 
-const meta: Meta<typeof DiaryImageSettings> = {
-  component: DiaryImageSettings,
+const meta: Meta<typeof SettingImage> = {
+  component: SettingImage,
   tags: ["autodocs"],
 };
 
 export default meta;
-type Story = StoryObj<typeof DiaryImageSettings>;
+type Story = StoryObj<typeof SettingImage>;
 
 export const Primary: Story = {
   args: {

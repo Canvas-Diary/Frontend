@@ -1,18 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import DeleteDiarySettings from "./DeleteDiarySettings";
+import DeleteImage from "./DeleteImage";
 
-const meta: Meta<typeof DeleteDiarySettings> = {
-  component: DeleteDiarySettings,
+const meta: Meta<typeof DeleteImage> = {
+  component: DeleteImage,
   tags: ["autodocs"],
 };
 
 export default meta;
-type Story = StoryObj<typeof DeleteDiarySettings>;
+type Story = StoryObj<typeof DeleteImage>;
 
 export const Primary: Story = {
   args: {
     onClickCancle: () => {},
     onClickDelete: () => {},
+    imgUrl: "",
+    date: "",
   },
 };

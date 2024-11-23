@@ -2,7 +2,7 @@ import DeleteIcon from "@/assets/svg/delete.svg?react";
 import StarIcon from "@/assets/svg/star.svg?react";
 import DownloadIcon from "@/assets/svg/download.svg?react";
 
-interface DiaryImageSettingsProps {
+interface SttingImageProps {
   onClickSetMain?: () => void;
   onClickDownload: () => void;
   onClickDelete?: () => void;
@@ -13,12 +13,12 @@ interface DiaryImageSettingsProps {
  * 일기 페이지 이미지 설정 시 나오는 모달
  * @returns
  */
-const DiaryImageSettings = ({
+const SettingImage = ({
   onClickSetMain,
   onClickDownload,
   onClickDelete,
   imgUrl,
-}: DiaryImageSettingsProps) => {
+}: SttingImageProps) => {
   return (
     <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-700 dark:text-gray-200">
       <div className="flex justify-center">
@@ -46,4 +46,4 @@ const DiaryImageSettings = ({
   );
 };
 
-export default DiaryImageSettings;
+export default SettingImage;

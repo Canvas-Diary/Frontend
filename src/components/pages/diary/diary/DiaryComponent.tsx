@@ -1,18 +1,15 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import ImageCarousel from "./ImageCarousel";
 import Content from "./Content";
-import Appbar from "../../../common/Appbar";
+import Appbar from "../../../common/appbar/Appbar";
 import { downloadFile, formatDateWithWeek } from "../../../../utils/util";
 import { DiaryImage, DiaryInfo } from "../../../../types/types";
 import { useEffect, useRef, useState } from "react";
-import DiaryContentSettings from "../../../common/BottomSheet/DiaryContentSettings";
 import { deleteDiary, deleteImage, patchMainImage, putModifiedDiary } from "@/api/api";
-import BottomSheet from "@/components/common/BottomSheet/BottomSheet";
-import DeleteDiarySettings from "@/components/common/BottomSheet/DeleteDiarySettings";
-import DiaryImageSettings from "@/components/common/BottomSheet/DiaryImageSettings";
-import DeleteImageSettings from "@/components/common/BottomSheet/DeleteImageSettings";
+import BottomSheet from "@/components/common/drawer/BottomSheet";
 import { toast, Toaster } from "sonner";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
+import { DeleteDiary, DeleteImage, SettingDiary, SettingImage } from "@/components/common/drawer";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
@@ -210,7 +207,7 @@ const DiaryComponent = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryPr
         onClose={() => setActiveModal(MODAL_STATE.NONE)}
         isOpen={activeModal === MODAL_STATE.CONTENT_SETTING}
       >
-        <DiaryContentSettings
+        <SettingDiary
           isChecked={isPublic}
           onChangeToggle={onChangeToggle}
           onClickDelete={() => setActiveModal(MODAL_STATE.CONTENT_DELETE)}
@@ -221,7 +218,7 @@ const DiaryComponent = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryPr
         onClose={() => setActiveModal(MODAL_STATE.NONE)}
         isOpen={activeModal === MODAL_STATE.CONTENT_DELETE}
       >
-        <DeleteDiarySettings
+        <DeleteDiary
           onClickCancle={() => setActiveModal(MODAL_STATE.CONTENT_SETTING)}
           onClickDelete={onClickDelete}
           date={formatDateWithWeek(diaryInfo.date)}
@@ -232,7 +229,7 @@ const DiaryComponent = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryPr
         isOpen={activeModal === MODAL_STATE.IMAGE_SETTING}
       >
         {selectedImage && (
-          <DiaryImageSettings
+          <SettingImage
             onClickDelete={() => setActiveModal(MODAL_STATE.IMAGE_DELETE)}
             onClickDownload={onClickDownloadImage}
             onClickSetMain={onClickSetMainImage}
@@ -245,7 +242,7 @@ const DiaryComponent = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryPr
         isOpen={activeModal === MODAL_STATE.IMAGE_DELETE}
       >
         {selectedImage && (
-          <DeleteImageSettings
+          <DeleteImage
             onClickCancle={() => setActiveModal(MODAL_STATE.IMAGE_SETTING)}
             onClickDelete={onClickDeleteImage}
             imgUrl={selectedImage.imageUrl}
@@ -258,10 +255,7 @@ const DiaryComponent = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryPr
         isOpen={activeModal === MODAL_STATE.IMAGE_DOWNLOAD}
       >
         {selectedImage && (
-          <DiaryImageSettings
-            onClickDownload={onClickDownloadImage}
-            imgUrl={selectedImage.imageUrl}
-          />
+          <SettingImage onClickDownload={onClickDownloadImage} imgUrl={selectedImage.imageUrl} />
         )}
       </BottomSheet>
     </div>

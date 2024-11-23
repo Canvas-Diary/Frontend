@@ -1,18 +1,17 @@
-import Button from "../Button";
+import Button from "../../../Button";
 
-interface DeleteImageSettingsProps {
+interface DeleteImageProps {
   onClickCancle: () => void;
   onClickDelete: () => void;
   imgUrl: string;
   date: string;
 }
 
-const DeleteImageSettings = ({
-  onClickCancle,
-  onClickDelete,
-  imgUrl,
-  date,
-}: DeleteImageSettingsProps) => {
+/**
+ * 이미지 삭제 확인 모달
+ * @returns
+ */
+const DeleteImage = ({ onClickCancle, onClickDelete, imgUrl, date }: DeleteImageProps) => {
   return (
     <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-900 dark:text-gray-50">
       <div className="flex justify-center">
@@ -42,4 +41,4 @@ const DeleteImageSettings = ({
   );
 };
 
-export default DeleteImageSettings;
+export default DeleteImage;

@@ -1,12 +1,16 @@
-import Button from "../Button";
+import Button from "../../../Button";
 
-interface DeleteDiarySettingsProps {
+interface DeleteDiaryProps {
   onClickCancle: () => void;
   onClickDelete: () => void;
   date: string;
 }
 
-const DeleteDiarySettings = ({ onClickCancle, onClickDelete, date }: DeleteDiarySettingsProps) => {
+/**
+ * 일기 삭제 확인 모달
+ * @returns
+ */
+const DeleteDiary = ({ onClickCancle, onClickDelete, date }: DeleteDiaryProps) => {
   return (
     <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-900 dark:text-gray-50">
       <div className="text-start text-heading-2 font-regular">
@@ -33,4 +37,4 @@ const DeleteDiarySettings = ({ onClickCancle, onClickDelete, date }: DeleteDiary
   );
 };
 
-export default DeleteDiarySettings;
+export default DeleteDiary;

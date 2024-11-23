@@ -1,10 +1,10 @@
 import PeopleIcon from "@/assets/svg/people.svg?react";
 import EditIcon from "@/assets/svg/edit.svg?react";
 import DeleteIcon from "@/assets/svg/delete.svg?react";
-import Divider from "../Divider";
-import Toggle from "../Toggle";
+import Toggle from "../../../Toggle";
+import Divider from "../../../Divider";
 
-interface DiaryContentSettingsProps {
+interface SettingDiaryProps {
   isChecked: boolean;
   onClickModify: () => void;
   onClickDelete: () => void;
@@ -15,12 +15,12 @@ interface DiaryContentSettingsProps {
  * 일기 페이지 설정 버튼 누를 시 나오는 모달
  * @returns
  */
-const DiaryContentSettings = ({
+const SettingDiary = ({
   isChecked,
   onClickModify,
   onClickDelete,
   onChangeToggle,
-}: DiaryContentSettingsProps) => {
+}: SettingDiaryProps) => {
   return (
     <div className="flex w-full flex-col gap-600 font-Binggrae text-body-2 font-regular text-gray-700 dark:text-gray-200">
       <div className="flex items-center gap-500">
@@ -46,4 +46,4 @@ const DiaryContentSettings = ({
   );
 };
 
-export default DiaryContentSettings;
+export default SettingDiary;
