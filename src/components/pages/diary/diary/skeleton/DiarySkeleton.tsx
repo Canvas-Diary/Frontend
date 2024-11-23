@@ -8,12 +8,10 @@ import useMediaQuery from "@/hooks/useMediaQuery";
 const DiarySkeleton = () => {
   const { calculatedHeight } = useMediaQuery();
 
-  const height = `h-[${calculatedHeight}px]`;
-
   return (
     <>
       <div className="relative flex h-full flex-col items-center">
-        <Skeleton className={`fixed top-0 w-full ${height}`}></Skeleton>
+        <Skeleton className="fixed top-0 w-full" style={{ height: calculatedHeight }}></Skeleton>
 
         <div
           className="absolute z-10 h-fit w-full"
