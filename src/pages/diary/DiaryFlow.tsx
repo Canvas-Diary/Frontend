@@ -97,7 +97,7 @@ const DiaryFlow = () => {
             weightedContents: diaryInfo.weightedContents,
           });
           toast(TOAST_MESSAGE.CONTENT_MODIFY);
-          queryClient.invalidateQueries({ queryKey: ["diaryInfo", diaryInfo.diaryId] });
+          queryClient.removeQueries({ queryKey: ["diaryInfo", diaryInfo.diaryId] });
         } catch (error) {
           showBoundary(error);
         }
