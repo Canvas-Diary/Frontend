@@ -12,7 +12,7 @@ const ScrollLayout = forwardRef<HTMLDivElement, ScrollLayoutProps>(
     return (
       <div
         ref={ref || null}
-        className={`flex flex-grow flex-col overflow-scroll ${className || ""}`}
+        className={`flex flex-grow flex-col overflow-scroll ${className}`}
         {...props}
       >
         {children}
