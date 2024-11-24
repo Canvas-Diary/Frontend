@@ -11,10 +11,5 @@ export default meta;
 type Story = StoryObj<typeof SettingImage>;
 
 export const Primary: Story = {
-  args: {
-    onClickSetMain: () => {},
-    onClickDownload: () => {},
-    onClickDelete: () => {},
-    imgUrl: "",
-  },
+  args: {},
 };

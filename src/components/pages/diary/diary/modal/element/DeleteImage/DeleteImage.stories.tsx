@@ -11,10 +11,5 @@ export default meta;
 type Story = StoryObj<typeof DeleteImage>;
 
 export const Primary: Story = {
-  args: {
-    onClickCancle: () => {},
-    onClickDelete: () => {},
-    imgUrl: "",
-    date: "",
-  },
+  args: {},
 };

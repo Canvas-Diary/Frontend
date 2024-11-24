@@ -5,6 +5,7 @@ import Album from "@/assets/svg/album.svg?react";
 import Who from "@/assets/svg/who.svg?react";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
 import Navbar from "@/components/common/Navbar/Navbar";
+import { Toaster } from "sonner";
 
 const GNB = [
   { icon: <Home />, label: "홈", path: ROUTE_PATH.HOME },
@@ -24,6 +25,13 @@ const Layout = () => {
 
   return (
     <div className="flex h-dvh w-full flex-col">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          className:
+            "flex w-fit justify-center rounded-full border-none bg-primary-normal px-600 py-300 font-Binggrae text-body-2 text-white",
+        }}
+      />
       <Outlet />
       {!shouldHideNavBar && <Navbar NavList={GNB} />}
     </div>

@@ -105,3 +105,10 @@ export type KeywordData = {
   name: string;
   value: number;
 };
+
+//모달 상태 관리 정보
+export type ModalManager = {
+  activeModal: string | null;
+  openModal: (state: string) => void;
+  closeModal: () => void;
+};

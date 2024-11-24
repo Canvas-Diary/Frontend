@@ -2,188 +2,60 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ImageCarousel from "./ImageCarousel";
 import Content from "./Content";
 import Appbar from "../../../common/Appbar/Appbar";
-import { downloadFile, formatDateWithWeek } from "../../../../utils/util";
+import { formatDateWithWeek } from "../../../../utils/util";
 import { DiaryImage, DiaryInfo } from "../../../../types/types";
-import { useEffect, useRef, useState } from "react";
-import { deleteDiary, deleteImage, patchMainImage, putModifiedDiary } from "@/api/api";
-import BottomSheet from "@/components/common/BottomSheet/BottomSheet";
-import { toast, Toaster } from "sonner";
-import ROUTE_PATH from "@/constants/ROUTE_PATH";
-import {
-  DeleteDiary,
-  DeleteImage,
-  SettingDiary,
-  SettingImage,
-} from "@/components/common/BottomSheet";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import useModalManager from "@/hooks/modal/useModalManager";
+import { MODAL_STATE } from "@/constants/MODAL_STATE";
+import { TOAST_MESSAGE } from "@/constants/TOAST_MESSAGE";
+import { Modal } from "./modal";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 interface DiaryProps {
   diaryInfo: DiaryInfo;
-  carouselHeight: number;
   isMyDiary: boolean;
   retry: () => void;
 }
-
-const debounceDelay = 300;
-
-const MODAL_STATE = {
-  NONE: null,
-  CONTENT_SETTING: "DiaryContentSettings",
-  IMAGE_SETTING: "DiaryImageSettings",
-  CONTENT_DELETE: "DeleteDiarySettings",
-  IMAGE_DELETE: "DeleteImageSettings",
-  IMAGE_DOWNLOAD: "DiaryImageDownload",
-};
-
-const TOAST_TEXT = {
-  IMAGE_DOWNLOAD: "이미지가 다운로드 되었어요",
-  IMAGE_MAIN: "메인 이미지로 설정되었어요",
-  IMAGE_DELETE: "이미지가 삭제되었어요",
-  CONTENT_MODIFY: "일기가 수정되었어요",
-};
 
 /**
  * 일기 화면
  * @returns
  */
-const DiaryComponent = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryProps) => {
+const DiaryComponent = ({ diaryInfo, isMyDiary, retry }: DiaryProps) => {
+  const { modalManager } = useModalManager();
+  const { openModal } = modalManager;
+  const { calculatedHeight } = useMediaQuery();
+
   const navigate = useNavigate();
   const location = useLocation();
-  const [activeModal, setActiveModal] = useState<string | null>(MODAL_STATE.NONE);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [isPublic, setIsPublic] = useState(diaryInfo.isPublic);
   const [selectedImage, setSelectedImage] = useState<DiaryImage | null>(null);
-  const [currentHeight] = useState(carouselHeight - 50);
+  const [currentHeight] = useState(calculatedHeight - 50);
   const [isAppbarVisible, setIsAppbarVisible] = useState(true);
 
-  const browserPreventEvent = (event: () => void) => {
-    history.pushState(null, "", location.pathname);
-    event();
-  };
-
-  useEffect(() => {
-    const handlePopstate = () => {
-      browserPreventEvent(() => {
-        if (location.state && location.state.from === ROUTE_PATH.DIARY) {
-          navigate("/");
-        } else navigate(-2);
-      });
-    };
-    history.pushState(null, "", location.pathname);
-    window.addEventListener("popstate", handlePopstate);
-    return () => {
-      window.removeEventListener("popstate", handlePopstate);
-    };
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
-
-  const onClickDownloadImage = () => {
-    if (selectedImage) {
-      downloadFile(selectedImage?.imageUrl, selectedImage?.imageId);
-      toast(TOAST_TEXT.IMAGE_DOWNLOAD);
-      setActiveModal(MODAL_STATE.NONE);
-    }
-  };
-
-  const onClickSetMainImage = async () => {
-    if (selectedImage) {
-      try {
-        await patchMainImage({ diaryId: diaryInfo.diaryId, imageId: selectedImage.imageId });
-        toast(TOAST_TEXT.IMAGE_MAIN);
-        setActiveModal(MODAL_STATE.NONE);
-      } catch (error) {
-        throw error;
-      }
-    }
-  };
-
   const handleBackClick = () => {
-    if (location.state && location.state.from === ROUTE_PATH.DIARY) navigate("/");
-    else navigate(-1);
+    navigate(-1);
   };
 
   const handleMenuClick = () => {
-    setActiveModal(MODAL_STATE.CONTENT_SETTING);
+    console.log("HI");
+    openModal(MODAL_STATE.CONTENT_SETTING);
   };
 
   const handleLongPress = (image: DiaryImage) => {
     setSelectedImage(image);
-    if (isMyDiary) setActiveModal(MODAL_STATE.IMAGE_SETTING);
-    else setActiveModal(MODAL_STATE.IMAGE_DOWNLOAD);
-  };
-
-  const onClickDeleteImage = async () => {
-    if (selectedImage) {
-      try {
-        await deleteImage({ diaryId: diaryInfo.diaryId, imageId: selectedImage.imageId });
-        toast(TOAST_TEXT.IMAGE_DELETE);
-        setActiveModal(MODAL_STATE.NONE);
-        retry();
-      } catch (error) {
-        throw error;
-      }
-    }
-  };
-
-  const onChangeToggle = () => {
-    setIsPublic((prev) => {
-      const newIsPublic = !prev;
-
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      timeoutRef.current = setTimeout(async () => {
-        try {
-          await putModifiedDiary({
-            diaryId: diaryInfo.diaryId,
-            content: diaryInfo.content,
-            isPublic: newIsPublic,
-            weightedContents: diaryInfo.weightedContents,
-          });
-        } catch (error) {
-          throw error;
-        }
-      }, debounceDelay);
-
-      return newIsPublic;
-    });
-  };
-
-  const onClickModify = () => {
-    navigate(ROUTE_PATH.DIARY_FLOW.MODIFY, { state: { diaryInfo } });
-  };
-
-  const onClickDelete = async () => {
-    try {
-      await deleteDiary(diaryInfo.diaryId);
-      navigate("/");
-    } catch (error) {
-      throw error;
-    }
+    if (isMyDiary) openModal(MODAL_STATE.IMAGE_SETTING);
+    else openModal(MODAL_STATE.IMAGE_DOWNLOAD);
   };
 
   useEffect(() => {
     if (location.state?.isModified) {
-      toast(TOAST_TEXT.CONTENT_MODIFY);
+      toast(TOAST_MESSAGE.CONTENT_MODIFY);
     }
   }, [location.state]);
 
   return (
     <div className="flex h-full flex-col">
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          className:
-            "flex w-fit justify-center rounded-full border-none bg-primary-normal px-600 py-300 font-Binggrae text-body-2 text-white",
-        }}
-      />
       {isAppbarVisible && (
         <div className={`fixed top-0 z-50 w-full animate-fadeInSlideDown`}>
           <Appbar
@@ -207,62 +79,12 @@ const DiaryComponent = ({ diaryInfo, carouselHeight, isMyDiary, retry }: DiaryPr
           setAppbar={setIsAppbarVisible}
         />
       </div>
-
-      <BottomSheet
-        onClose={() => setActiveModal(MODAL_STATE.NONE)}
-        isOpen={activeModal === MODAL_STATE.CONTENT_SETTING}
-      >
-        <SettingDiary
-          isChecked={isPublic}
-          onChangeToggle={onChangeToggle}
-          onClickDelete={() => setActiveModal(MODAL_STATE.CONTENT_DELETE)}
-          onClickModify={onClickModify}
-        />
-      </BottomSheet>
-      <BottomSheet
-        onClose={() => setActiveModal(MODAL_STATE.NONE)}
-        isOpen={activeModal === MODAL_STATE.CONTENT_DELETE}
-      >
-        <DeleteDiary
-          onClickCancle={() => setActiveModal(MODAL_STATE.CONTENT_SETTING)}
-          onClickDelete={onClickDelete}
-          date={formatDateWithWeek(diaryInfo.date)}
-        />
-      </BottomSheet>
-      <BottomSheet
-        onClose={() => setActiveModal(MODAL_STATE.NONE)}
-        isOpen={activeModal === MODAL_STATE.IMAGE_SETTING}
-      >
-        {selectedImage && (
-          <SettingImage
-            onClickDelete={() => setActiveModal(MODAL_STATE.IMAGE_DELETE)}
-            onClickDownload={onClickDownloadImage}
-            onClickSetMain={onClickSetMainImage}
-            imgUrl={selectedImage.imageUrl}
-          />
-        )}
-      </BottomSheet>
-      <BottomSheet
-        onClose={() => setActiveModal(MODAL_STATE.NONE)}
-        isOpen={activeModal === MODAL_STATE.IMAGE_DELETE}
-      >
-        {selectedImage && (
-          <DeleteImage
-            onClickCancle={() => setActiveModal(MODAL_STATE.IMAGE_SETTING)}
-            onClickDelete={onClickDeleteImage}
-            imgUrl={selectedImage.imageUrl}
-            date={formatDateWithWeek(diaryInfo.date)}
-          />
-        )}
-      </BottomSheet>
-      <BottomSheet
-        onClose={() => setActiveModal(MODAL_STATE.NONE)}
-        isOpen={activeModal === MODAL_STATE.IMAGE_DOWNLOAD}
-      >
-        {selectedImage && (
-          <SettingImage onClickDownload={onClickDownloadImage} imgUrl={selectedImage.imageUrl} />
-        )}
-      </BottomSheet>
+      <Modal
+        diaryInfo={diaryInfo}
+        retry={retry}
+        selectedImage={selectedImage}
+        modalManager={modalManager}
+      />
     </div>
   );
 };

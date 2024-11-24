@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import useFetchDiary from "@/hooks/query/useGetDiaryInfo";
-import useMediaQuery from "@/hooks/useMediaQuery";
 import DiaryComponent from "@/components/pages/diary/diary/DiaryComponent";
 
 /**
@@ -11,16 +10,8 @@ import DiaryComponent from "@/components/pages/diary/diary/DiaryComponent";
 const Diary = () => {
   const { diaryId } = useParams<{ diaryId: string }>();
   const { diaryInfo, refetch } = useFetchDiary(diaryId!);
-  const { calculatedHeight } = useMediaQuery();
 
-  return (
-    <DiaryComponent
-      diaryInfo={diaryInfo}
-      carouselHeight={calculatedHeight}
-      isMyDiary={diaryInfo.isMine}
-      retry={refetch}
-    />
-  );
+  return <DiaryComponent diaryInfo={diaryInfo} isMyDiary={diaryInfo.isMine} retry={refetch} />;
 };
 
 export default Diary;
