@@ -6,6 +6,7 @@ const ROUTE_PATH = {
   MYPAGE: "/my",
   LOGIN: "/login",
   DIARY: "/diary",
+  NO_DIARY: "/no-diary",
   DIARY_FLOW: {
     CREATE: "/diary?flow=create",
     ADD: "/diary?flow=add",

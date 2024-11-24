@@ -21,6 +21,8 @@ import Style from "@/components/pages/diary/diaryflow/Style";
 import Review from "@/components/pages/diary/diaryflow/Review";
 import Draw from "@/components/pages/diary/diaryflow/Draw";
 import Modify from "@/components/pages/diary/diaryflow/Modify";
+import { TOAST_MESSAGE } from "@/constants/TOAST_MESSAGE";
+import { toast } from "sonner";
 
 export interface ContextProps {
   diaryInfo: FlowDiaryInfo;
@@ -93,6 +95,7 @@ const DiaryFlow = () => {
             isPublic: diaryInfo.isPublic,
             weightedContents: diaryInfo.weightedContents,
           });
+          toast(TOAST_MESSAGE.CONTENT_MODIFY);
         } catch (error) {
           showBoundary(error);
         }

@@ -5,6 +5,7 @@ import Album from "@/assets/svg/album.svg?react";
 import Who from "@/assets/svg/who.svg?react";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
 import Navbar from "@/components/common/Navbar/Navbar";
+import { Toaster } from "sonner";
 
 const GNB = [
   { icon: <Home />, label: "홈", path: ROUTE_PATH.HOME },
@@ -13,15 +14,24 @@ const GNB = [
   { icon: <Who />, label: "마이페이지", path: ROUTE_PATH.MYPAGE },
 ];
 
+const NO_NAVBAR_PAGE = [ROUTE_PATH.DIARY, ROUTE_PATH.LOGIN, ROUTE_PATH.NO_DIARY];
+
 /**
  * Content + Navbar(선택) 로 이루어진 기본 layout
  * @returns
  */
 const Layout = () => {
-  const shouldHideNavBar = useShouldHideNavBar([ROUTE_PATH.DIARY]);
+  const shouldHideNavBar = useShouldHideNavBar(NO_NAVBAR_PAGE);
 
   return (
     <div className="flex h-dvh w-full flex-col">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          className:
+            "flex w-fit justify-center rounded-full border-none bg-primary-normal px-600 py-300 font-Binggrae text-body-2 text-white",
+        }}
+      />
       <Outlet />
       {!shouldHideNavBar && <Navbar NavList={GNB} />}
     </div>

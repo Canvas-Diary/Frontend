@@ -5,6 +5,7 @@ import ROUTE_PATH from "@/constants/ROUTE_PATH";
 import Layout from "@/components/Layout/Layout";
 import GlobalFallback from "@/components/fallback/GlobalFallback";
 import PageFallback from "@/components/fallback/PageFallback";
+import { DiarySkeleton } from "@/components/pages/diary/diary";
 
 /* Main */
 const HomePage = lazy(() => import("@/pages/main/Home"));
@@ -19,6 +20,7 @@ const LikedPage = lazy(() => import("@/pages/user/Like"));
 
 /* Diary */
 const DiaryPage = lazy(() => import("@/pages/diary/Diary"));
+const NoDiaryPage = lazy(() => import("@/pages/diary/NoDiary"));
 const DiaryFlowPage = lazy(() => import("@/pages/diary/DiaryFlow"));
 
 /* Error */
@@ -97,10 +99,18 @@ const routes: RouteObject[] = [
       },
 
       {
-        path: `${ROUTE_PATH.DIARY}/:diaryID`,
+        path: `${ROUTE_PATH.DIARY}/:diaryId`,
+        element: (
+          <Suspense fallback={<DiarySkeleton />}>
+            <DiaryPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: `${ROUTE_PATH.NO_DIARY}/:date`,
         element: (
           <Suspense fallback={<PageFallback />}>
-            <DiaryPage />
+            <NoDiaryPage />
           </Suspense>
         ),
       },

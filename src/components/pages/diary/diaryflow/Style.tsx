@@ -14,11 +14,11 @@ interface StyleProps {
 
 const Style = ({ diaryInfo, setDiaryInfo, styles, setStyles }: StyleProps) => {
   const location = useLocation();
-  const diaryID = location.state.diaryID;
+  const diaryId = location.state.diaryId;
   useEffect(() => {
-    if (diaryID)
+    if (diaryId)
       setDiaryInfo((prev) => {
-        return { ...prev, diaryId: diaryID };
+        return { ...prev, diaryId: diaryId };
       });
 
     const styleInit = async () => {

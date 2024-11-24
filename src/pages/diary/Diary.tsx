@@ -1,60 +1,56 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { DiaryInfo } from "../../types/types";
-import { getDiaryInfoById } from "../../api/api";
-import DiaryComponent from "../../components/pages/diary/diary/DiaryComponent";
-import NoDiary from "../../components/pages/diary/diary/NoDiary";
-import DiaryFallback from "../../components/pages/diary/diary/Fallback/DiaryFallback";
-import useMediaQuery from "../../hooks/useMediaQuery";
-import { isValidDate } from "@/utils/util";
+import { useNavigate, useParams } from "react-router-dom";
+import useFetchDiary from "@/hooks/query/useGetDiaryInfo";
+import useMediaQuery from "@/hooks/useMediaQuery";
+import { useState } from "react";
+import { MODAL_STATE } from "@/constants/MODAL_STATE";
+import Appbar from "@/components/common/Appbar/Appbar";
+import { useModalManager, useSelectedImage } from "@/hooks/diary";
+import { Content, ImageCarousel, ModalContainer } from "@/components/pages/diary/diary";
 
 /**
- * 일기 화면 레이아웃
- * 로딩, 일기 화면, 일기 없는 화면 관리
+ * 일기 화면
  * @returns
  */
 const Diary = () => {
-  const { diaryID } = useParams<{ diaryID: string }>();
-  const [diaryInfo, setDiaryInfo] = useState<DiaryInfo | null>(null);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const { diaryId } = useParams<{ diaryId: string }>();
+  const { diaryInfo, refetch } = useFetchDiary(diaryId);
+  const { modalManager } = useModalManager();
   const { calculatedHeight } = useMediaQuery();
-  const [isMyDiary, setIsMyDiary] = useState(false);
 
-  const fetchDiary = async () => {
-    if (!diaryID) return;
-    try {
-      const data = await getDiaryInfoById(diaryID);
-      if (data.isMine) setIsMyDiary(true);
-      else setIsMyDiary(false);
+  const [isAppbarVisible, setIsAppbarVisible] = useState(true);
+  const { selectedImage, handleLongPress } = useSelectedImage(diaryInfo, modalManager);
 
-      setDiaryInfo(data);
-    } catch (error) {
-      setDiaryInfo(null);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
+  const handleBackClick = () => navigate(-1);
 
-  useEffect(() => {
-    if (!isValidDate(diaryID!)) fetchDiary();
-    else setLoading(false);
-  }, []);
+  const handleMenuClick = () => modalManager.openModal(MODAL_STATE.CONTENT_SETTING);
 
   return (
     <>
-      {loading && <DiaryFallback />}
-      {!loading &&
-        (diaryInfo ? (
-          <DiaryComponent
-            diaryInfo={diaryInfo}
-            carouselHeight={calculatedHeight}
-            isMyDiary={isMyDiary}
-            retry={fetchDiary}
-          />
-        ) : (
-          <NoDiary date={diaryID!} />
-        ))}
+      {isAppbarVisible && (
+        <Appbar
+          className="fixed top-0 animate-fadeInSlideDown"
+          backHandler={handleBackClick}
+          menuHandler={diaryInfo.isMine ? handleMenuClick : undefined}
+        />
+      )}
+
+      <ImageCarousel
+        className="fixed top-0 w-full"
+        images={diaryInfo.images}
+        canAdd={diaryInfo.isMine}
+        onLongPress={handleLongPress}
+      />
+
+      <div className="flex-shrink-0" style={{ height: calculatedHeight - 50 }} />
+      <Content className="z-20 flex-grow" diaryInfo={diaryInfo} setAppbar={setIsAppbarVisible} />
+
+      <ModalContainer
+        diaryInfo={diaryInfo}
+        refetch={refetch}
+        selectedImage={selectedImage}
+        modalManager={modalManager}
+      />
     </>
   );
 };
