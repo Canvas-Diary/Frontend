@@ -1,16 +1,14 @@
-import EmotionTag from "../../../common/EmotionTag/EmotionTag";
+import EmotionTag from "../../../../common/EmotionTag/EmotionTag";
 import HeartIcon from "@/assets/svg/heart.svg?react";
 import { useEffect, useRef, useState } from "react";
-import { addLike, removeLike } from "../../../../api/api";
+import { addLike, removeLike } from "../../../../../api/api";
 import { useParams } from "react-router-dom";
-import Divider from "../../../common/Divider/Divider";
+import Divider from "../../../../common/Divider/Divider";
+import { DiaryInfo } from "@/types/types";
+import { formatDateWithWeek } from "@/utils/util";
 
-interface ContentProps {
-  date: string;
-  emotion: string;
-  likedCount: number;
-  isLiked: boolean;
-  content: string;
+interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  diaryInfo: DiaryInfo;
   setAppbar: (value: boolean) => void;
 }
 
@@ -38,7 +36,12 @@ const tagsMap: { [key: string]: string } = {
  * @param setAppbar
  * @returns
  */
-const Content = ({ date, emotion, likedCount, isLiked, content, setAppbar }: ContentProps) => {
+const Content = ({
+  diaryInfo: { date, emotion, likedCount, isLiked, content },
+  setAppbar,
+  className,
+  ...props
+}: ContentProps) => {
   const [currentIsLiked, setCurrentIsLiked] = useState(isLiked);
   const [currentLikedCount, setCurrentLikedCount] = useState(likedCount);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -81,14 +84,17 @@ const Content = ({ date, emotion, likedCount, isLiked, content, setAppbar }: Con
   }, []);
 
   return (
-    <div className="flex h-full flex-col items-center gap-600 rounded-t-400 bg-background px-800 pb-10 font-Binggrae shadow-default">
+    <div
+      className={`flex h-full flex-col items-center gap-600 rounded-t-400 bg-background px-800 pb-10 font-Binggrae shadow-default ${className}`}
+      {...props}
+    >
       <div
         className="sticky top-0 flex w-full flex-col gap-600 bg-background pt-700"
         ref={stickyRef}
       >
         <div className="flex w-full items-center justify-between">
           <div className="flex flex-col gap-300">
-            <div className="font-BinggraeBold text-title-2">{date}</div>
+            <div className="font-BinggraeBold text-title-2">{formatDateWithWeek(date)}</div>
             <div>
               <EmotionTag text={tagsMap[emotion]} selected={true}></EmotionTag>
             </div>

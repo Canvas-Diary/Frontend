@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import ImageCarousel from "./ImageCarousel";
+import ImageCarousel from ".";
 import img from "@/assets/dummy/_Image.png";
 
 const meta: Meta<typeof ImageCarousel> = {

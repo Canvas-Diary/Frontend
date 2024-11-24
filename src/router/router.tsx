@@ -5,7 +5,7 @@ import ROUTE_PATH from "@/constants/ROUTE_PATH";
 import Layout from "@/components/Layout/Layout";
 import GlobalFallback from "@/components/fallback/GlobalFallback";
 import PageFallback from "@/components/fallback/PageFallback";
-import DiarySkeleton from "@/components/pages/diary/diary/skeleton/DiarySkeleton";
+import { DiarySkeleton } from "@/components/pages/diary/diary";
 
 /* Main */
 const HomePage = lazy(() => import("@/pages/main/Home"));

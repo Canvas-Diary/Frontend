@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import { DiaryImage } from "../../../../types/types";
-import ImageAddFilter from "./ImageAddFilter";
+import { DiaryImage } from "../../../../../types/types";
+import ImageAddFilter from "./element/ImageAddFilter";
 import defaultImage from "@/assets/images/defaultImage.png";
 
-interface ImageCarouselProps {
+interface ImageCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   images: DiaryImage[];
   canAdd: boolean;
   onLongPress?: (image: DiaryImage) => void;
@@ -14,7 +14,13 @@ interface ImageCarouselProps {
  * @param images 이미지 {id, url} 배열
  * @returns
  */
-const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
+const ImageCarousel = ({
+  images,
+  canAdd,
+  onLongPress,
+  className,
+  ...props
+}: ImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -73,9 +79,9 @@ const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
   }, []);
 
   return (
-    <div>
+    <div className={`flex flex-col items-center justify-end ${className}`} {...props}>
       {images.length > 0 ? (
-        <div className="flex flex-col items-center justify-end">
+        <>
           <div className="flex w-full snap-x snap-mandatory overflow-x-scroll" ref={containerRef}>
             {images.map((img) => (
               <div
@@ -98,7 +104,7 @@ const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
             {canAdd && (
               <div className="relative h-auto w-full flex-shrink-0 snap-start">
                 <div className="absolute left-0 top-0 h-full w-full">
-                  <ImageAddFilter></ImageAddFilter>
+                  <ImageAddFilter />
                 </div>
                 {!isLoaded && (
                   <div className="absolute left-0 top-0 h-full w-full bg-gray-100 dark:bg-gray-500"></div>
@@ -130,14 +136,14 @@ const ImageCarousel = ({ images, canAdd, onLongPress }: ImageCarouselProps) => {
               ></li>
             )}
           </ol>
-        </div>
+        </>
       ) : (
-        <div className="relative h-auto w-full flex-shrink-0">
+        <>
           <div className="absolute left-0 top-0 h-full w-full">
-            <ImageAddFilter></ImageAddFilter>
+            <ImageAddFilter />
           </div>
           <img src={defaultImage} alt="canvas-diary" className="inset-0 h-full w-full" />
-        </div>
+        </>
       )}
     </div>
   );
