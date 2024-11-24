@@ -115,7 +115,7 @@ export type ReviewDiaryInfo = {
   isLiked: boolean;
   date: string;
   images: DiaryImage[];
-  type: string;
+  type: "YEAR" | "MONTH" | "KEYWORD";
 };
 
 //모달 상태 관리 정보
