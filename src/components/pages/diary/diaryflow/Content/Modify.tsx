@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { FlowDiaryInfo } from "@/types/types";
 import KeywordTag from "@/components/common/KeywordTag/KeywordTag";
@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { useErrorBoundary } from "react-error-boundary";
 import { useQueryClient } from "@tanstack/react-query";
 import { TOAST_MESSAGE } from "@/constants/TOAST_MESSAGE";
+import ROUTE_PATH from "@/constants/ROUTE_PATH";
 
 interface ModifyProps {
   diaryInfo: FlowDiaryInfo;
@@ -22,6 +23,7 @@ interface ModifyProps {
 const Modify = ({ diaryInfo, setDiaryInfo, onClickNext }: ModifyProps) => {
   const { showBoundary } = useErrorBoundary();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const location = useLocation();
   const [selectedText, setSelectedText] = useState<Range | null>(null);
   const editorRef = useRef<HTMLDivElement>(null);
@@ -38,6 +40,9 @@ const Modify = ({ diaryInfo, setDiaryInfo, onClickNext }: ModifyProps) => {
         });
         toast(TOAST_MESSAGE.CONTENT_MODIFY);
         queryClient.removeQueries({ queryKey: ["diaryInfo", diaryInfo.diaryId] });
+        navigate(`${ROUTE_PATH.DIARY}/${diaryInfo.diaryId}`, {
+          replace: true,
+        });
         onClickNext();
       } else throw new Error();
     } catch (error) {
