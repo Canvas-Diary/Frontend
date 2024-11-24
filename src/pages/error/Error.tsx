@@ -1,12 +1,11 @@
-import Button from "@/components/common/Button/Button";
 import { FallbackProps } from "react-error-boundary";
-import sad from "@/assets/icon/sad.png";
+import ErrorContainer from "@/components/pages/error/ErrorContainer";
 
 /**
  * 오류 화면
  * @returns
  */
-const Error = ({ error }: FallbackProps) => {
+const Error = ({ error, resetErrorBoundary }: FallbackProps) => {
   const errorMessage = () => {
     switch (error.status) {
       case 400:
@@ -32,22 +31,12 @@ const Error = ({ error }: FallbackProps) => {
     }
   };
   return (
-    <div className="flex h-full flex-col items-center">
-      <div className="flex flex-grow items-center justify-center">
-        <div className="flex flex-col items-center gap-600">
-          <img src={sad} alt="non" className="h-[2.75rem] w-[2.75rem]" />
-          <p>{errorMessage()}</p>
-        </div>
-      </div>
-      <div className="mb-[1.875rem]">
-        <Button
-          size="big"
-          active={true}
-          text="홈으로 돌아가기"
-          onClickHandler={() => window.location.replace("/")}
-          bgColor="light"
-        />
-      </div>
+    <div className="flex h-dvh w-full flex-col">
+      <ErrorContainer
+        message={errorMessage()}
+        buttonText="홈으로 돌아가기"
+        onClickHandler={() => resetErrorBoundary()}
+      />
     </div>
   );
 };
