@@ -11,9 +11,5 @@ export default meta;
 type Story = StoryObj<typeof DeleteDiary>;
 
 export const Primary: Story = {
-  args: {
-    onClickCancle: () => {},
-    onClickDelete: () => {},
-    date: "2024-11-11",
-  },
+  args: {},
 };

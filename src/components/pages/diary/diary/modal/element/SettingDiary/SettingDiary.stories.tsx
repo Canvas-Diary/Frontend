@@ -11,10 +11,5 @@ export default meta;
 type Story = StoryObj<typeof SettingDiary>;
 
 export const Primary: Story = {
-  args: {
-    isChecked: true,
-    onClickModify: () => {},
-    onClickDelete: () => {},
-    onChangeToggle: () => {},
-  },
+  args: {},
 };

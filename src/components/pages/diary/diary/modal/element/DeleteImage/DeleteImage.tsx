@@ -7,10 +7,10 @@ import { formatDateWithWeek } from "@/utils/util";
 import { toast } from "sonner";
 
 interface DeleteImageProps {
-  selectedImage: DiaryImage;
+  selectedImage: DiaryImage | null;
   modalManager: ModalManager;
   diaryInfo: DiaryInfo;
-  retry: () => void;
+  refetch: () => void;
 }
 
 /**
@@ -20,7 +20,7 @@ interface DeleteImageProps {
 const DeleteImage = ({
   selectedImage,
   diaryInfo,
-  retry,
+  refetch,
   modalManager: { closeModal, openModal },
 }: DeleteImageProps) => {
   const onClickCancle = () => {
@@ -33,7 +33,7 @@ const DeleteImage = ({
         await deleteImage({ diaryId: diaryInfo.diaryId, imageId: selectedImage.imageId });
         toast(TOAST_MESSAGE.IMAGE_DELETE);
         closeModal();
-        retry();
+        refetch();
       } catch (error) {
         throw error;
       }
@@ -42,7 +42,7 @@ const DeleteImage = ({
 
   return (
     <DeleteContainer>
-      <ImageContainer imgUrl={selectedImage.imageUrl} />
+      {selectedImage && <ImageContainer imgUrl={selectedImage.imageUrl} />}
       <div className="text-start text-heading-2 font-regular">
         이미지를 <span className="text-primary-medium">삭제</span>하시겠어요?
       </div>

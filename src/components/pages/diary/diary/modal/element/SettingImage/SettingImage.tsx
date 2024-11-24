@@ -11,7 +11,7 @@ import { toast } from "sonner";
 
 interface SttingImageProps {
   diaryInfo: DiaryInfo;
-  selectedImage: DiaryImage;
+  selectedImage: DiaryImage | null;
   modalManager: ModalManager;
 }
 
@@ -50,7 +50,7 @@ const SettingImage = ({
 
   return (
     <SettingContainer>
-      <ImageContainer imgUrl={selectedImage.imageUrl} />
+      {selectedImage && <ImageContainer imgUrl={selectedImage.imageUrl} />}
       <div className="flex h-full flex-col gap-900">
         {diaryInfo.isMine && (
           <SettingItem

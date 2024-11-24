@@ -2,7 +2,7 @@ import { deleteDiary } from "@/api/api";
 import { DeleteContainer, DeleteFooter } from "@/components/common/BottomSheet";
 import { MODAL_STATE } from "@/constants/MODAL_STATE";
 import { DiaryInfo, ModalManager } from "@/types/types";
-import { formatDate, formatDateWithWeek } from "@/utils/util";
+import { formatDateWithWeek } from "@/utils/util";
 import { useNavigate } from "react-router-dom";
 
 interface DeleteDiaryProps {

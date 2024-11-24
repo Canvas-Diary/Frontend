@@ -2,10 +2,15 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getDiaryInfoById } from "@/api/api";
 import { DiaryInfo } from "@/types/types";
 
-const useFetchDiary = (diaryId: string) => {
+const useFetchDiary = (diaryId?: string) => {
   const diaryInfoOption = {
     queryKey: ["diaryInfo", diaryId],
-    queryFn: () => getDiaryInfoById(diaryId),
+    queryFn: () => {
+      if (!diaryId) {
+        throw new Error("undefined diaryId");
+      }
+      return getDiaryInfoById(diaryId);
+    },
   };
 
   const { data: diaryInfo, refetch } = useSuspenseQuery<DiaryInfo>(diaryInfoOption);
