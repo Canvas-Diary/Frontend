@@ -106,6 +106,18 @@ export type KeywordData = {
   value: number;
 };
 
+//회고 일기 정보
+export type ReviewDiaryInfo = {
+  diaryId: string;
+  content: string;
+  emotion: string;
+  likedCount: number;
+  isLiked: boolean;
+  date: string;
+  images: DiaryImage[];
+  type: "YEAR" | "MONTH" | "KEYWORD";
+};
+
 //모달 상태 관리 정보
 export type ModalManager = {
   activeModal: string | null;

@@ -55,7 +55,7 @@ const Explore = () => {
     },
     select: (data) => (data.pages ?? []).flatMap((page) => page.content),
     initialPageParam: 0,
-    staleTime: 1000 * 60 * 5, // 데이터가 5분 동안은 최신 상태로 간주하여 캐시된 데이터를 재사용
+    staleTime: 1000 * 60 * 5,
   });
 
   /**

@@ -1,7 +1,7 @@
-import { createDiaryAndGetId, postImageToDiary, postKeyword, putModifiedDiary } from "@/api/api";
+import { createDiaryAndGetId, postImageToDiary, putModifiedDiary } from "@/api/api";
 import { FlowDiaryInfo, Styles } from "@/types/types";
 import { getTodayDate } from "@/utils/util";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 import { useBlocker, useNavigate, useLocation } from "react-router-dom";
 import Appbar from "@/components/common/Appbar/Appbar";
@@ -23,6 +23,7 @@ import Draw from "@/components/pages/diary/diaryflow/Draw";
 import Modify from "@/components/pages/diary/diaryflow/Modify";
 import { TOAST_MESSAGE } from "@/constants/TOAST_MESSAGE";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 
 export interface ContextProps {
   diaryInfo: FlowDiaryInfo;
@@ -35,9 +36,10 @@ export interface ContextProps {
   styles: Styles | null;
 }
 const DiaryFlow = () => {
-  const { search } = useLocation(); // 쿼리 파라미터를 읽어옵니다
+  const { search } = useLocation();
   const navigate = useNavigate();
   const { showBoundary } = useErrorBoundary();
+  const queryClient = useQueryClient();
 
   const stepsByFlow: Record<string, string[]> = {
     create: ["write", "style", "review", "draw"],
@@ -51,7 +53,6 @@ const DiaryFlow = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [keywords, setKeywords] = useState<string[]>([]);
   const [styles, setStyles] = useState<Styles | null>(null);
   const [diaryInfo, setDiaryInfo] = useState<FlowDiaryInfo>({
     date: getTodayDate(),
@@ -96,6 +97,7 @@ const DiaryFlow = () => {
             weightedContents: diaryInfo.weightedContents,
           });
           toast(TOAST_MESSAGE.CONTENT_MODIFY);
+          queryClient.invalidateQueries({ queryKey: ["diaryInfo", diaryInfo.diaryId] });
         } catch (error) {
           showBoundary(error);
         }
@@ -131,14 +133,6 @@ const DiaryFlow = () => {
     return currentIndex >= 0 && currentIndex < steps.length - 1;
   });
 
-  useEffect(() => {
-    const setKeywordToDiary = async () => {
-      if (diaryInfo.diaryId) await postKeyword({ diaryId: diaryInfo.diaryId, keywords: keywords });
-    };
-
-    setKeywordToDiary();
-  }, [diaryInfo.diaryId]);
-
   const renderStep = () => {
     switch (currentStep) {
       case "write":
@@ -153,7 +147,7 @@ const DiaryFlow = () => {
           />
         );
       case "review":
-        return <Review diaryInfo={diaryInfo} setKeywords={setKeywords} />;
+        return <Review diaryInfo={diaryInfo} />;
       case "draw":
         return <Draw isLoaded={isLoaded} styles={styles} diaryInfo={diaryInfo} />;
       case "modify":

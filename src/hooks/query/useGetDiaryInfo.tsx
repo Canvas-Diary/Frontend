@@ -11,6 +11,7 @@ const useFetchDiary = (diaryId?: string) => {
       }
       return getDiaryInfoById(diaryId);
     },
+    staleTime: 1000 * 60 * 5,
   };
 
   const { data: diaryInfo, refetch } = useSuspenseQuery<DiaryInfo>(diaryInfoOption);
