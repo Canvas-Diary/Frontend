@@ -5,7 +5,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active: boolean;
   text: string;
   bgColor: "light" | "dark" | "gray";
-  className?: string;
   onClickHandler: () => void;
 }
 
@@ -36,7 +35,7 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={`${size === "big" ? "w-[20.4375rem]" : "w-[9.6875rem]"} ${active ? bgColorStyle[bgColor] : `${bgColorStyle.non} pointer-events-none`} ${className && className} rounded-200 py-600 font-Binggrae text-body-1 font-regular transition duration-200`}
+      className={`${size === "big" ? "w-[20.4375rem]" : "w-[9.6875rem]"} ${active ? bgColorStyle[bgColor] : `${bgColorStyle.non} pointer-events-none`} ${className} rounded-200 py-600 font-Binggrae text-body-1 font-regular transition duration-200`}
       onClick={onClickHandler}
       {...props} // ...props는 추가적인 속성들을 전달
     >
