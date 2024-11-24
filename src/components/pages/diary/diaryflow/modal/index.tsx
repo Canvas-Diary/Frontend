@@ -17,8 +17,10 @@ interface DiaryFlowModalContainerProps {
 }
 
 const DiaryFlowModalContainer = ({ currentStep, currentIndex }: DiaryFlowModalContainerProps) => {
-  const blocker = useBlocker(() => {
-    return currentIndex === 0 || currentIndex === 2;
+  const blocker = useBlocker(({ historyAction }) => {
+    if (historyAction === "REPLACE") return false;
+    if (historyAction === "POP") return currentIndex === 0 || currentIndex === 2;
+    return false;
   });
   return (
     <Dialog open={blocker.state === "blocked"}>
