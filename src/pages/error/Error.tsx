@@ -1,11 +1,12 @@
 import { FallbackProps } from "react-error-boundary";
 import ErrorContainer from "@/components/pages/error/ErrorContainer";
+import ROUTE_PATH from "@/constants/ROUTE_PATH";
 
 /**
  * 오류 화면
  * @returns
  */
-const Error = ({ error, resetErrorBoundary }: FallbackProps) => {
+const Error = ({ error }: FallbackProps) => {
   const errorMessage = () => {
     switch (error.status) {
       case 400:
@@ -35,7 +36,7 @@ const Error = ({ error, resetErrorBoundary }: FallbackProps) => {
       <ErrorContainer
         message={errorMessage()}
         buttonText="홈으로 돌아가기"
-        onClickHandler={() => resetErrorBoundary()}
+        onClickHandler={() => (window.location.href = ROUTE_PATH.HOME)}
       />
     </div>
   );
