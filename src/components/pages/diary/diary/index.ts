@@ -1,4 +1,4 @@
-export { default as ModalContainer } from "./modal";
+export { default as DiaryModalContainer } from "./modal";
 export { default as ImageCarousel } from "./ImageCarousel";
-export { default as Content } from "./Content";
+export { default as DiaryContent } from "./Content";
 export * from "./skeleton";

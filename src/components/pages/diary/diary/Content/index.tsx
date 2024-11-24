@@ -36,7 +36,7 @@ const tagsMap: { [key: string]: string } = {
  * @param setAppbar
  * @returns
  */
-const Content = ({
+const DiaryContent = ({
   diaryInfo: { date, emotion, likedCount, isLiked, content },
   setAppbar,
   className,
@@ -116,4 +116,4 @@ const Content = ({
   );
 };
 
-export default Content;
+export default DiaryContent;
