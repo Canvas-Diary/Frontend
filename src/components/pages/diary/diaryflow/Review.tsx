@@ -1,24 +1,22 @@
 import { getReview } from "@/api/api";
 import { FADEINANIMATION } from "@/styles/animations";
-import { DiaryInfo, FlowDiaryInfo } from "@/types/types";
+import { FlowDiaryInfo, ReviewDiaryInfo } from "@/types/types";
 import { useEffect, useState } from "react";
 import ReviewContent from "../../write/ReviewContent";
 import { formatDateWithWeek } from "@/utils/util";
 
 interface ReviewProps {
   diaryInfo: FlowDiaryInfo;
-  setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const Review = ({ diaryInfo, setKeywords }: ReviewProps) => {
-  const [reviewDiaryInfo, setReviewDiaryInfo] = useState<DiaryInfo | null>(null);
+const Review = ({ diaryInfo }: ReviewProps) => {
+  const [reviewDiaryInfo, setReviewDiaryInfo] = useState<ReviewDiaryInfo | null>(null);
 
   useEffect(() => {
     const fetchDiary = async () => {
       try {
         const data = await getReview({ content: diaryInfo!.content, date: diaryInfo!.date });
-        setReviewDiaryInfo(data.diaryInfo);
-        setKeywords(data.keywords);
+        setReviewDiaryInfo(data);
       } catch (error) {
         setReviewDiaryInfo(null);
       }

@@ -8,6 +8,7 @@ import {
   FlowDiaryInfo,
   SearchedDiaries,
   Styles,
+  ReviewDiaryInfo,
 } from "../types/types";
 
 const BASE_URL = "https://api.canvas-diary.kro.kr";
@@ -339,30 +340,9 @@ interface GetReviewProps {
  * 회고 조회
  * @param param0
  */
-export const getReview = async ({ content, date }: GetReviewProps) => {
+export const getReview = async ({ content, date }: GetReviewProps): Promise<ReviewDiaryInfo> => {
   try {
     const response = await axiosInstance.post("/api/v1/diaries/reminiscence", { content, date });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-interface PostKeywordProps {
-  diaryId: string;
-  keywords: string[];
-}
-
-/**
- * diaryId에 키워드 저장...
- * @param param0
- * @returns
- */
-export const postKeyword = async ({ diaryId, keywords }: PostKeywordProps) => {
-  try {
-    const response = await axiosInstance.post(`/api/v1/diaries/${diaryId}/reminiscence`, {
-      keywords,
-    });
     return response.data;
   } catch (error) {
     throw error;
