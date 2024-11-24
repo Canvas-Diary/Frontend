@@ -5,6 +5,7 @@ import DiaryFlowLayout from "../Layout";
 import Button from "@/components/common/Button/Button";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface DrawProps {
   isLoaded: boolean;
@@ -17,8 +18,10 @@ const Draw = ({ isLoaded, styles, diaryInfo, onClickNext }: DrawProps) => {
   const matchingStyle = styles?.styles.find((style) => style.name === diaryInfo.style);
   const imageUrl = matchingStyle ? matchingStyle.imageUrl : "";
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const onClickNextHandler = () => {
+    queryClient.removeQueries({ queryKey: ["diaryInfo", diaryInfo.diaryId] });
     navigate(`${ROUTE_PATH.DIARY}/${diaryInfo.diaryId}`, {
       replace: true,
     });
