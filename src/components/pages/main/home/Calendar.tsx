@@ -105,8 +105,11 @@ const Calendar = ({
           onClickDate={
             !isFutureDate
               ? matchingDiary
-                ? () => navigate(`${ROUTE_PATH.DIARY}/${calendarDataInfo.date}`)
-                : () => navigate(`${ROUTE_PATH.NO_DIARY}/${calendarDataInfo.diaryId}`)
+                ? () => navigate(`${ROUTE_PATH.DIARY}/${calendarDataInfo.diaryId}`)
+                : () =>
+                    navigate(
+                      `${ROUTE_PATH.NO_DIARY}/${`${year}-${month + 1}-${String(day).padStart(2, "0")}`}`
+                    )
               : undefined
           }
           calendarDataInfo={calendarDataInfo}
