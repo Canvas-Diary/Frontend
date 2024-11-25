@@ -85,7 +85,7 @@ const DiaryContent = ({
 
   return (
     <div
-      className={`flex h-full flex-col items-center gap-600 rounded-t-400 bg-background px-800 pb-10 font-Binggrae shadow-default ${className}`}
+      className={`flex h-fit flex-col items-center gap-600 rounded-t-400 bg-background px-800 pb-10 font-Binggrae shadow-default ${className}`}
       {...props}
     >
       <div
