@@ -18,7 +18,7 @@ const Diary = () => {
   const { diaryInfo, refetch } = useFetchDiary(diaryId);
 
   const { modalManager } = useModalManager();
-  const { calculatedHeight } = useMediaQuery();
+  const { carouselHeight } = useMediaQuery();
   const { selectedImage, handleLongPress } = useSelectedImage(diaryInfo, modalManager);
 
   const handleBackClick = () => navigate(-1);
@@ -42,7 +42,7 @@ const Diary = () => {
         onLongPress={handleLongPress}
       />
 
-      <div className="flex-shrink-0" style={{ height: calculatedHeight - 50 }} />
+      <div className="flex-shrink-0" style={{ height: carouselHeight }} />
       <DiaryContent
         className="z-20 flex-grow"
         diaryInfo={diaryInfo}
