@@ -20,11 +20,6 @@ const Home = () => {
     navigate(ROUTE_PATH.DIARY_FLOW.CREATE, { state: { date: getTodayDate() } });
   };
 
-  const onClickDate = (id: string) => {
-    if (!isValidDate(id)) navigate(`${ROUTE_PATH.DIARY}/${id}`);
-    else navigate(`${ROUTE_PATH.NO_DIARY}/${id}`);
-  };
-
   const updateCalander = async (currentDate: Date) => {
     const diaries = await getMonthlyDiariesByDate(formatDate(currentDate));
     setCalendarData(diaries);
@@ -89,7 +84,6 @@ const Home = () => {
   return (
     <div className="flex h-full flex-grow flex-col justify-between overflow-scroll">
       <Calendar
-        onClickDate={onClickDate}
         calendarData={calendarData}
         currentDate={currentDate}
         handlePrevMonth={handlePrevMonth}
