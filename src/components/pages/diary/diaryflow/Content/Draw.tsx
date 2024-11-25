@@ -21,7 +21,7 @@ const Draw = ({ isLoaded, styles, diaryInfo, onClickNext }: DrawProps) => {
   const queryClient = useQueryClient();
 
   const onClickNextHandler = () => {
-    queryClient.removeQueries({ queryKey: ["diaryInfo", diaryInfo.diaryId] });
+    queryClient.clear();
     navigate(`${ROUTE_PATH.DIARY}/${diaryInfo.diaryId}`, {
       replace: true,
     });
