@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button/Button";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";
-import { formatDate, getTodayDate, isValidDate } from "../../utils/util";
+import { formatDate, getTodayDate } from "../../utils/util";
 import { useEffect, useState } from "react";
 import { getMonthlyDiariesByDate } from "../../api/api";
 import { Diaries } from "../../types/types";
