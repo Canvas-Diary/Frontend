@@ -181,7 +181,7 @@ export default {
   },
   plugins: [
     function ({ addUtilities }) {
-      const animationDelays = Array.from({ length: 20 }, (_, i) => i + 1).reduce((acc, num) => {
+      const animationDelays = Array.from({ length: 10 }, (_, i) => i + 1).reduce((acc, num) => {
         acc[`.ani-delay-${num}00`] = { animationDelay: `${num * 100}ms`, opacity: 0 };
         return acc;
       }, {});
