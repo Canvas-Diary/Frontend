@@ -6,13 +6,16 @@ import { useEffect, useState } from "react";
 
 import Calendar from "@/components/pages/main/home/Calendar";
 import useCalendarData from "@/hooks/query/useCalendarData";
-
+const STORAGE_KEY = "currentDate";
 /**
  * 메인 화면
  * @returns
  */
 const Home = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(() => {
+    const storedDate = sessionStorage.getItem(STORAGE_KEY);
+    return storedDate ? new Date(storedDate) : new Date();
+  });
   const { calendarData, isActiveToday } = useCalendarData(currentDate);
 
   const navigate = useNavigate();
@@ -33,6 +36,10 @@ const Home = () => {
       return nextMonth;
     });
   };
+
+  useEffect(() => {
+    sessionStorage.setItem(STORAGE_KEY, currentDate.toISOString());
+  }, [currentDate]);
 
   useEffect(() => {
     // URL의 쿼리 문자열에서 access_token과 refresh_token을 획득
