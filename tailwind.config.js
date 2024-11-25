@@ -161,6 +161,14 @@ export default {
         "0%, 100%": { opacity: 1 },
         "50%": { opacity: 0.5 },
       },
+      customSpin: {
+        "0%": {
+          transform: "rotate(0deg)",
+        },
+        "100%": {
+          transform: "rotate(360deg)",
+        },
+      },
       fade: {
         "0%, 100%": { opacity: 1 },
         "50%": { opacity: 0 },
@@ -174,6 +182,7 @@ export default {
       pulse: "customPulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       fade1: "fade 4s infinite",
       fade2: "fade 4s infinite 2s",
+      spin: "customSpin 1s linear infinite",
     },
     backdropBlur: {
       default: "25px",
