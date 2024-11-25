@@ -22,7 +22,7 @@ const NoDiary = () => {
         message={"아직 일기를 작성하지 않았어요"}
         buttonText={"일기 작성하기"}
         onClickHandler={() => {
-          navigate(ROUTE_PATH.DIARY, { state: { date: date } });
+          navigate(ROUTE_PATH.DIARY_FLOW.CREATE, { state: { date: date }, replace: true });
         }}
       />
     </>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { MODAL_STATE } from "@/constants/MODAL_STATE";
 import Appbar from "@/components/common/Appbar/Appbar";
 import { useModalManager, useSelectedImage } from "@/hooks/diary";
-import { Content, ImageCarousel, ModalContainer } from "@/components/pages/diary/diary";
+import { DiaryContent, ImageCarousel, DiaryModalContainer } from "@/components/pages/diary/diary";
 
 /**
  * 일기 화면
@@ -14,11 +14,11 @@ import { Content, ImageCarousel, ModalContainer } from "@/components/pages/diary
 const Diary = () => {
   const navigate = useNavigate();
   const { diaryId } = useParams<{ diaryId: string }>();
+  const [isAppbarVisible, setIsAppbarVisible] = useState(true);
   const { diaryInfo, refetch } = useFetchDiary(diaryId);
+
   const { modalManager } = useModalManager();
   const { calculatedHeight } = useMediaQuery();
-
-  const [isAppbarVisible, setIsAppbarVisible] = useState(true);
   const { selectedImage, handleLongPress } = useSelectedImage(diaryInfo, modalManager);
 
   const handleBackClick = () => navigate(-1);
@@ -43,9 +43,13 @@ const Diary = () => {
       />
 
       <div className="flex-shrink-0" style={{ height: calculatedHeight - 50 }} />
-      <Content className="z-20 flex-grow" diaryInfo={diaryInfo} setAppbar={setIsAppbarVisible} />
+      <DiaryContent
+        className="z-20 flex-grow"
+        diaryInfo={diaryInfo}
+        setAppbar={setIsAppbarVisible}
+      />
 
-      <ModalContainer
+      <DiaryModalContainer
         diaryInfo={diaryInfo}
         refetch={refetch}
         selectedImage={selectedImage}

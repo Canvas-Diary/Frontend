@@ -1,55 +1,25 @@
-import { createDiaryAndGetId, postImageToDiary, putModifiedDiary } from "@/api/api";
 import { FlowDiaryInfo, Styles } from "@/types/types";
 import { getTodayDate } from "@/utils/util";
 import { useState } from "react";
-import { useErrorBoundary } from "react-error-boundary";
-import { useBlocker, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Appbar from "@/components/common/Appbar/Appbar";
-import Button from "@/components/common/Button/Button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogFooter,
-  DialogHeader,
-} from "@/components/ui/dialog";
-import ROUTE_PATH from "@/constants/ROUTE_PATH";
-import Write from "@/components/pages/diary/diaryflow/Write";
-import Style from "@/components/pages/diary/diaryflow/Style";
-import Review from "@/components/pages/diary/diaryflow/Review";
-import Draw from "@/components/pages/diary/diaryflow/Draw";
-import Modify from "@/components/pages/diary/diaryflow/Modify";
-import { TOAST_MESSAGE } from "@/constants/TOAST_MESSAGE";
-import { toast } from "sonner";
-import { useQueryClient } from "@tanstack/react-query";
+import DiaryFlowModalContainer from "@/components/pages/diary/diaryflow/modal";
+import { DIARY_FLOW, DIARY_STEP, Flow, Step } from "@/constants/DIARY_FLOW";
+import DiaryFlowContent from "@/components/pages/diary/diaryflow";
 
-export interface ContextProps {
-  diaryInfo: FlowDiaryInfo;
-  setDiaryInfo: React.Dispatch<React.SetStateAction<FlowDiaryInfo>>;
-  isLoaded: boolean;
-  keywords: string[];
-  setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
-  setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
-  setStyles: React.Dispatch<React.SetStateAction<Styles>>;
-  styles: Styles | null;
-}
+const stepsByFlow = {
+  [DIARY_FLOW.CREATE]: [DIARY_STEP.WRITE, DIARY_STEP.STYLE, DIARY_STEP.REVIEW, DIARY_STEP.DRAW],
+  [DIARY_FLOW.ADD]: [DIARY_STEP.STYLE, DIARY_STEP.DRAW],
+  [DIARY_FLOW.MODIFY]: [DIARY_STEP.MODIFY],
+};
+
 const DiaryFlow = () => {
   const { search } = useLocation();
   const navigate = useNavigate();
-  const { showBoundary } = useErrorBoundary();
-  const queryClient = useQueryClient();
-
-  const stepsByFlow: Record<string, string[]> = {
-    create: ["write", "style", "review", "draw"],
-    add: ["style", "draw"],
-    modify: ["modify"],
-  };
 
   const urlParams = new URLSearchParams(search);
-  const flow = urlParams.get("flow") || "create";
-  const steps = stepsByFlow[flow] || stepsByFlow["create"];
+  const flow = urlParams.get("flow") as Flow;
+  const steps = stepsByFlow[flow];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -62,50 +32,8 @@ const DiaryFlow = () => {
     weightedContents: [],
   });
 
-  const currentStep = steps[currentIndex];
-
-  const onClickNext = async () => {
-    if (currentIndex < steps.length - 1) {
-      if (currentStep === "style" && flow === "create") {
-        createDiaryAndGetId(diaryInfo)
-          .then((id) => {
-            setDiaryInfo((prev) => {
-              return { ...prev, diaryId: id };
-            });
-            setIsLoaded(true);
-          })
-          .catch((error) => {
-            showBoundary(error);
-          });
-      } else if (currentStep === "style" && flow === "add") {
-        postImageToDiary({ diaryId: diaryInfo.diaryId!, style: diaryInfo.style })
-          .then(() => {
-            setIsLoaded(true);
-          })
-          .catch((error) => {
-            throw error;
-          });
-      }
-      setCurrentIndex((prev) => prev + 1);
-    } else {
-      if (flow === "modify" && diaryInfo.diaryId) {
-        try {
-          await putModifiedDiary({
-            diaryId: diaryInfo.diaryId,
-            content: diaryInfo.content,
-            isPublic: diaryInfo.isPublic,
-            weightedContents: diaryInfo.weightedContents,
-          });
-          toast(TOAST_MESSAGE.CONTENT_MODIFY);
-          queryClient.invalidateQueries({ queryKey: ["diaryInfo", diaryInfo.diaryId] });
-        } catch (error) {
-          showBoundary(error);
-        }
-      }
-      navigate(`${ROUTE_PATH.DIARY}/${diaryInfo.diaryId}`, {
-        replace: true,
-      });
-    }
+  const onClickNext = () => {
+    if (currentIndex < steps.length) setCurrentIndex((prev) => prev + 1);
   };
 
   const handleBack = () => {
@@ -116,104 +44,24 @@ const DiaryFlow = () => {
     }
   };
 
-  const handleActive = () => {
-    switch (currentStep) {
-      case "write":
-        return diaryInfo.content.length >= 10;
-      case "style":
-        return diaryInfo.style !== "";
-      case "draw":
-        return isLoaded;
-      default:
-        return true;
-    }
-  };
-
-  const blocker = useBlocker(() => {
-    return currentIndex >= 0 && currentIndex < steps.length - 1;
-  });
-
-  const renderStep = () => {
-    switch (currentStep) {
-      case "write":
-        return <Write diaryInfo={diaryInfo} setDiaryInfo={setDiaryInfo} />;
-      case "style":
-        return (
-          <Style
-            diaryInfo={diaryInfo}
-            setDiaryInfo={setDiaryInfo}
-            styles={styles}
-            setStyles={setStyles}
-          />
-        );
-      case "review":
-        return <Review diaryInfo={diaryInfo} />;
-      case "draw":
-        return <Draw isLoaded={isLoaded} styles={styles} diaryInfo={diaryInfo} />;
-      case "modify":
-        return <Modify diaryInfo={diaryInfo} setDiaryInfo={setDiaryInfo} />;
-      default:
-        return null;
-    }
-  };
-
   return (
     <>
-      <Appbar text="일기 작성" backHandler={handleBack}></Appbar>
-      <div className="flex-grow overflow-scroll px-800 py-300">{renderStep()}</div>
-      <div className="my-4 flex justify-center">
-        <Button
-          size="big"
-          active={handleActive()}
-          text="다음으로"
-          onClickHandler={onClickNext}
-          bgColor="dark"
-        />
-      </div>
-
-      <Dialog open={blocker.state === "blocked"}>
-        <DialogContent
-          className="min-w-fit max-w-[95%] rounded-200"
-          onClick={() => {
-            blocker.state === "blocked" && blocker.reset();
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>정말 나가시겠습니까?</DialogTitle>
-            <DialogDescription>
-              {currentIndex === 2 ? "홈으로 나가집니다." : "변경사항이 저장되지 않을 수 있습니다."}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="flex w-full flex-row">
-            <DialogClose asChild>
-              <Button
-                size="small"
-                active={true}
-                text="남아있기"
-                bgColor="light"
-                onClickHandler={() => {
-                  blocker.state === "blocked" && blocker.reset();
-                }}
-              ></Button>
-            </DialogClose>
-
-            <Button
-              size="small"
-              active={true}
-              text="나가기"
-              bgColor="dark"
-              onClickHandler={() => {
-                if (blocker.state === "blocked") {
-                  if (currentIndex === 2) {
-                    blocker.reset();
-                    navigate("/", { replace: true });
-                  } else blocker.proceed();
-                }
-              }}
-            ></Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <Appbar text="일기 작성" backHandler={handleBack} />
+      <DiaryFlowContent
+        currentIndex={currentIndex}
+        steps={steps}
+        diaryInfo={diaryInfo}
+        setDiaryInfo={setDiaryInfo}
+        onClickNext={onClickNext}
+        styles={styles}
+        setStyles={setStyles}
+        isLoaded={isLoaded}
+        setIsLoaded={setIsLoaded}
+      />
+      <DiaryFlowModalContainer
+        currentIndex={currentIndex}
+        currentStep={steps[currentIndex] as Step}
+      />
     </>
   );
 };

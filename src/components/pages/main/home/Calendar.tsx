@@ -12,6 +12,8 @@ import surprised from "@/assets/icon/surprised.png";
 import wonder from "@/assets/icon/wonder.png";
 import CalendarDate from "./CalendarDate";
 import { Diaries } from "@/types/types";
+import { useNavigate } from "react-router-dom";
+import ROUTE_PATH from "@/constants/ROUTE_PATH";
 
 const emotionImages: { [key: string]: string | null } = {
   JOY: happy,
@@ -31,7 +33,6 @@ const months = [" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11"
 
 interface CalendarProps {
   calendarData: Diaries;
-  onClickDate: (id: string) => void;
   currentDate: Date;
   handlePrevMonth: () => void;
   handleNextMonth: () => void;
@@ -40,17 +41,16 @@ interface CalendarProps {
 /**
  * 메인 화면의 일기 정보를 표시하는 달력
  * @param calendarData 일기 정보
- * @param onClickDate 날짜를 눌렀을 때 실행할 콜백 함수
  * @returns
  */
 const Calendar = ({
-  onClickDate,
   calendarData,
   currentDate,
   handlePrevMonth,
   handleNextMonth,
 }: CalendarProps) => {
   const [calendarDays, setCalendarDays] = useState<ReactNode[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const calendar = generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
@@ -98,11 +98,17 @@ const Calendar = ({
         isSunday: isSunday,
       };
 
-      const isFutureDate = currentDate > today; // 미래 날짜인지 확인
+      const isFutureDate = currentDate > today;
       days.push(
         <CalendarDate
           key={calendarDataInfo.diaryId}
-          onClickDate={!isFutureDate ? onClickDate : undefined}
+          onClickDate={
+            !isFutureDate
+              ? matchingDiary
+                ? () => navigate(`${ROUTE_PATH.DIARY}/${calendarDataInfo.date}`)
+                : () => navigate(`${ROUTE_PATH.NO_DIARY}/${calendarDataInfo.diaryId}`)
+              : undefined
+          }
           calendarDataInfo={calendarDataInfo}
         />
       );

@@ -22,9 +22,13 @@ const Appbar = ({ text, backHandler, menuHandler, className, ...props }: AppBarP
       className={`z-50 flex w-full items-center justify-between bg-transparent px-500 py-300 ${className}`}
       {...props}
     >
-      <div>{backHandler && <AppbarButton icon={<BackIcon />} onClickHandler={backHandler} />}</div>
+      <div className="w-7">
+        {backHandler && <AppbarButton icon={<BackIcon />} onClickHandler={backHandler} />}
+      </div>
       {text && <span className="font-Binggrae text-body-1 font-regular">{text}</span>}
-      <div>{menuHandler && <AppbarButton icon={<MenuIcon />} onClickHandler={menuHandler} />}</div>
+      <div className="w-7">
+        {menuHandler && <AppbarButton icon={<MenuIcon />} onClickHandler={menuHandler} />}
+      </div>
     </div>
   );
 };

@@ -13,19 +13,17 @@ interface ErrorContainerProps {
  */
 const ErrorContainer = ({ message, buttonText, onClickHandler }: ErrorContainerProps) => {
   return (
-    <>
-      <div className="mb-8 flex h-full flex-col items-center">
-        <ErrorContent message={message} />
-        <Button
-          size="big"
-          active={true}
-          text={buttonText}
-          onClickHandler={onClickHandler}
-          bgColor="light"
-          className="mt-auto"
-        />
-      </div>
-    </>
+    <div className="mb-8 flex h-full flex-col items-center">
+      <ErrorContent message={message} />
+      <Button
+        size="big"
+        active={true}
+        text={buttonText}
+        onClickHandler={onClickHandler}
+        bgColor="light"
+        className="mt-auto"
+      />
+    </div>
   );
 };
 

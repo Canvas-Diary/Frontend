@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button/Button";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";
-import { formatDate, getTodayDate, isValidDate } from "../../utils/util";
+import { formatDate, getTodayDate } from "../../utils/util";
 import { useEffect, useState } from "react";
 import { getMonthlyDiariesByDate } from "../../api/api";
 import { Diaries } from "../../types/types";
@@ -18,11 +18,6 @@ const Home = () => {
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
     navigate(ROUTE_PATH.DIARY_FLOW.CREATE, { state: { date: getTodayDate() } });
-  };
-
-  const onClickDate = (id: string) => {
-    if (!isValidDate(id)) navigate(`${ROUTE_PATH.DIARY}/${id}`);
-    else navigate(`${ROUTE_PATH.NO_DIARY}/${id}`);
   };
 
   const updateCalander = async (currentDate: Date) => {
@@ -89,7 +84,6 @@ const Home = () => {
   return (
     <div className="flex h-full flex-grow flex-col justify-between overflow-scroll">
       <Calendar
-        onClickDate={onClickDate}
         calendarData={calendarData}
         currentDate={currentDate}
         handlePrevMonth={handlePrevMonth}

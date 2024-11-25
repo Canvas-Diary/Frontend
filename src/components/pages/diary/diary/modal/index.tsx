@@ -14,7 +14,7 @@ interface ModalProps {
  * 일기 설정 컨테이너
  * @returns
  */
-const ModalContainer = ({ diaryInfo, refetch, selectedImage, modalManager }: ModalProps) => {
+const DiaryModalContainer = ({ diaryInfo, refetch, selectedImage, modalManager }: ModalProps) => {
   const { closeModal, activeModal } = modalManager;
   const useModalElements = useModalElementsuseModalElements({
     diaryInfo,
@@ -34,7 +34,7 @@ const ModalContainer = ({ diaryInfo, refetch, selectedImage, modalManager }: Mod
   );
 };
 
-export default ModalContainer;
+export default DiaryModalContainer;
 
 /**
  * MODAL_STATE에 따라 Container에 채우는 컴포넌트 오브젝트

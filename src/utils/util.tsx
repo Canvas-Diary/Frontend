@@ -85,6 +85,6 @@ export const downloadFile = async (url: string, fileName?: string) => {
  * @returns
  */
 export const isValidDate = (dateStr: string) => {
-  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  const regex = /^\d{4}-\d{1,2}-\d{1,2}$/;
   return regex.test(dateStr);
 };
