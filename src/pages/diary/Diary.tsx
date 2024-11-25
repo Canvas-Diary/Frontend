@@ -18,7 +18,8 @@ const Diary = () => {
   const { diaryInfo, refetch } = useFetchDiary(diaryId);
 
   const { modalManager } = useModalManager();
-  const { carouselHeight } = useMediaQuery();
+  const { calculatedHeight } = useMediaQuery();
+  const carouselHeight = calculatedHeight - 50;
   const { selectedImage, handleLongPress } = useSelectedImage(diaryInfo, modalManager);
 
   const handleBackClick = () => navigate(-1);
