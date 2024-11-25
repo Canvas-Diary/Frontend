@@ -1,34 +1,28 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button/Button";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";
-import { formatDate, getTodayDate } from "../../utils/util";
+import { getTodayDate } from "../../utils/util";
 import { useEffect, useState } from "react";
-import { getMonthlyDiariesByDate } from "../../api/api";
-import { Diaries } from "../../types/types";
+
 import Calendar from "@/components/pages/main/home/Calendar";
+import useCalendarData from "@/hooks/query/useCalendarData";
 
 /**
  * 메인 화면
  * @returns
  */
 const Home = () => {
-  const [calendarData, setCalendarData] = useState<Diaries>({ diaries: [] });
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [activeToday, setActiveToday] = useState(true);
+  const { calendarData, isActiveToday } = useCalendarData(currentDate);
+
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
     navigate(ROUTE_PATH.DIARY_FLOW.CREATE, { state: { date: getTodayDate() } });
   };
 
-  const updateCalander = async (currentDate: Date) => {
-    const diaries = await getMonthlyDiariesByDate(formatDate(currentDate));
-    setCalendarData(diaries);
-  };
-
   const handlePrevMonth = () => {
     setCurrentDate((prev) => {
       const prevMonth = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
-      updateCalander(prevMonth);
       return prevMonth;
     });
   };
@@ -36,27 +30,9 @@ const Home = () => {
   const handleNextMonth = () => {
     setCurrentDate((prev) => {
       const nextMonth = new Date(prev.getFullYear(), prev.getMonth() + 1, 1);
-      updateCalander(nextMonth);
       return nextMonth;
     });
   };
-
-  useEffect(() => {
-    const calendarInit = async (currentDate: Date) => {
-      const diaries = await getMonthlyDiariesByDate(formatDate(currentDate));
-
-      const active = diaries.diaries.some(
-        (diary) =>
-          diary.date ===
-          `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`
-      );
-
-      setCalendarData(diaries);
-      setActiveToday(!active);
-    };
-
-    calendarInit(new Date());
-  }, []);
 
   useEffect(() => {
     // URL의 쿼리 문자열에서 access_token과 refresh_token을 획득
@@ -77,9 +53,7 @@ const Home = () => {
         return;
       }
     }
-
-    updateCalander(new Date());
-  }, [navigate]);
+  }, []);
 
   return (
     <div className="flex h-full flex-grow flex-col justify-between overflow-scroll">
@@ -92,7 +66,7 @@ const Home = () => {
       <div className="my-4 flex justify-center">
         <Button
           size="big"
-          active={activeToday}
+          active={isActiveToday}
           text="오늘 일기 작성하기"
           onClickHandler={onClickCreateDiary}
           bgColor="dark"
