@@ -19,7 +19,7 @@ const Diary = () => {
 
   const { modalManager } = useModalManager();
   const { calculatedHeight } = useMediaQuery();
-  const carouselHeight = calculatedHeight - 50;
+  const [carouselHeight] = useState(calculatedHeight - 50);
   const { selectedImage, handleLongPress } = useSelectedImage(diaryInfo, modalManager);
 
   const handleBackClick = () => navigate(-1);
