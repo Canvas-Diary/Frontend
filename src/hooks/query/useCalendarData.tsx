@@ -11,13 +11,8 @@ const useCalendarData = (currentDate: Date) => {
     staleTime: 1000 * 60 * 5,
   });
 
-  const isActiveToday = calendarData
-    ? calendarData.diaries.some(
-        (diary) =>
-          diary.date ===
-          `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`
-      )
-    : false;
+  const todayString = new Date().toISOString().split("T")[0];
+  const isActiveToday = !calendarData?.diaries.some((diary) => diary.date === todayString);
 
   return { calendarData, isActiveToday };
 };
