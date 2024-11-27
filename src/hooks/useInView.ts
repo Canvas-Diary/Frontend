@@ -17,8 +17,8 @@ const useInView = <T extends Element>(threshold: number, onViewEscape?: () => vo
           if (entry.isIntersecting) {
             setIsInView(true);
           } else {
-            setIsInView(false);
             if (onViewEscape) onViewEscape();
+            else setIsInView(false);
           }
         });
       },

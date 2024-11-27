@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 import Calendar from "@/components/pages/main/home/Calendar";
 import useCalendarData from "@/hooks/query/useCalendarData";
+import Onboarding from "../user/Onboarding";
 const STORAGE_KEY = "currentDate";
 /**
  * 메인 화면
@@ -17,6 +18,16 @@ const Home = () => {
     return storedDate ? new Date(storedDate) : new Date();
   });
   const { calendarData, isActiveToday } = useCalendarData(currentDate);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    const hasVisited = localStorage.getItem("hasVisited");
+
+    if (!hasVisited) {
+      setShowOnboarding(true);
+      localStorage.setItem("hasVisited", "true");
+    }
+  }, []);
 
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
@@ -79,6 +90,7 @@ const Home = () => {
           bgColor="dark"
         />
       </div>
+      {showOnboarding && <Onboarding onClose={() => setShowOnboarding(false)} />}
     </div>
   );
 };
