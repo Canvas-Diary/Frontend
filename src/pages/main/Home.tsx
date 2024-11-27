@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button/Button";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";
 import { getTodayDate } from "../../utils/util";
@@ -20,7 +20,6 @@ const Home = () => {
   const { calendarData, isActiveToday } = useCalendarData(currentDate);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
   const onClickCreateDiary = () => {
     navigate(ROUTE_PATH.DIARY_FLOW.CREATE, { state: { date: getTodayDate() } });
   };
