@@ -55,7 +55,7 @@ const Calendar = ({
   useEffect(() => {
     const calendar = generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
     setCalendarDays(calendar);
-  }, [calendarData, currentDate]);
+  }, [calendarData]);
 
   const generateCalendar = (year: number, month: number) => {
     const firstDayOfMonth = new Date(year, month, 1);
