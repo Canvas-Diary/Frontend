@@ -19,6 +19,8 @@ const Error = ({ error }: FallbackProps) => {
         return "요청한 페이지를 찾을 수 없습니다.";
       case 408:
         return "요청 시간이 초과되었습니다. 다시 시도해주세요.";
+      case 429:
+        return "하루에 일기 5개만 작성할 수 있어요. 추가작성은 개발자에게 문의해 주세요.";
       case 500:
         return "서버에 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
       case 502:
