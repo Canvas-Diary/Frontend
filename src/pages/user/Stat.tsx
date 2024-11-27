@@ -2,6 +2,7 @@ import Appbar from "@/components/common/Appbar/Appbar";
 import EmotionStatsLayout from "@/components/pages/user/stat/Layout/EmotionStatsLayout";
 import KeywordStatsLayout from "@/components/pages/user/stat/Layout/KeywordStatsLayout";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const buttonPositions = {
   emotion: "left-0",
@@ -10,13 +11,14 @@ const buttonPositions = {
 
 const Stat = () => {
   const [selected, setSelected] = useState("emotion");
+  const naviagte = useNavigate();
   const handleChangeSelected = (selected: string) => {
     setSelected(selected);
   };
 
   return (
     <div className="flex-grow overflow-scroll">
-      <Appbar text="통계"></Appbar>
+      <Appbar backHandler={() => naviagte(-1)} text="통계"></Appbar>
       <div className="sticky top-0 z-10 flex w-full justify-around gap-500 bg-background font-BinggraeBold text-body-2">
         <button
           className="flex w-full items-center justify-center py-400"
