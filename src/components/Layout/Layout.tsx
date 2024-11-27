@@ -62,7 +62,6 @@ const useGNB = () => {
    * 각 탭을 누르면 캐시 초기화 디바운싱
    */
   useEffect(() => {
-    console.log(debouncedActionTrigger, actionTrigger);
     if (debouncedActionTrigger === "home") {
       queryClient.removeQueries({ queryKey: ["calendarData"] });
     }
