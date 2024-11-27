@@ -90,7 +90,7 @@ const Home = () => {
           bgColor="dark"
         />
       </div>
-      {showOnboarding && <Onboarding />}
+      {showOnboarding && <Onboarding onClose={() => setShowOnboarding(false)} />}
     </div>
   );
 };
