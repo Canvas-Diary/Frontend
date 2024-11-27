@@ -19,16 +19,6 @@ const Home = () => {
   });
   const { calendarData, isActiveToday } = useCalendarData(currentDate);
   const [showOnboarding, setShowOnboarding] = useState(false);
-
-  useEffect(() => {
-    const hasVisited = localStorage.getItem("hasVisited");
-
-    if (!hasVisited) {
-      setShowOnboarding(true);
-      localStorage.setItem("hasVisited", "true");
-    }
-  }, []);
-
   const navigate = useNavigate();
   const onClickCreateDiary = () => {
     navigate(ROUTE_PATH.DIARY_FLOW.CREATE, { state: { date: getTodayDate() } });
@@ -59,17 +49,16 @@ const Home = () => {
 
     const accessToken = params.get("access");
     const refreshToken = params.get("refresh");
-
     if (accessToken && refreshToken) {
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
-      window.location.href = "/";
+      navigate(ROUTE_PATH.HOME, { replace: true });
     } else {
       const token = localStorage.getItem("access_token");
       if (!token) {
+        setShowOnboarding(true);
         navigate(ROUTE_PATH.LOGIN);
-        return;
-      }
+      } else setShowOnboarding(false);
     }
   }, []);
 
