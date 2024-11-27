@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button/Button";
 import ROUTE_PATH from "../../constants/ROUTE_PATH";
 import { getTodayDate } from "../../utils/util";
@@ -20,6 +20,7 @@ const Home = () => {
   const { calendarData, isActiveToday } = useCalendarData(currentDate);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const onClickCreateDiary = () => {
     navigate(ROUTE_PATH.DIARY_FLOW.CREATE, { state: { date: getTodayDate() } });
   };
@@ -52,13 +53,13 @@ const Home = () => {
     if (accessToken && refreshToken) {
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
-      navigate(ROUTE_PATH.HOME, { replace: true });
+      navigate(ROUTE_PATH.HOME, { replace: true, state: { isFirst: true } });
     } else {
       const token = localStorage.getItem("access_token");
+
       if (!token) {
-        setShowOnboarding(true);
         navigate(ROUTE_PATH.LOGIN);
-      } else setShowOnboarding(false);
+      } else if (location.state?.isFirst) setShowOnboarding(true);
     }
   }, []);
 
