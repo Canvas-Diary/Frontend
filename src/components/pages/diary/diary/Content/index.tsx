@@ -60,7 +60,6 @@ const DiaryContent = ({
     timeoutRef.current = setTimeout(() => {
       //업데이트 이전임
       queryClient.removeQueries({ queryKey: ["likedDiaries"] });
-      queryClient.removeQueries({ queryKey: ["diaryInfo", diaryId] });
       if (currentIsLiked) removeLike(diaryId!);
       else addLike(diaryId!);
     }, debounceDelay);
