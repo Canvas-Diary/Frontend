@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import Divider from "../../../../common/Divider/Divider";
 import { DiaryInfo } from "@/types/types";
 import { formatDateWithWeek } from "@/utils/util";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
   diaryInfo: DiaryInfo;
@@ -47,6 +48,7 @@ const DiaryContent = ({
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { diaryId } = useParams<{ diaryId: string }>();
   const stickyRef = useRef<HTMLDivElement>(null);
+  const queryClient = useQueryClient();
 
   const handleOnClick = () => {
     setCurrentIsLiked((prev) => !prev);
@@ -58,6 +60,7 @@ const DiaryContent = ({
 
     timeoutRef.current = setTimeout(() => {
       //업데이트 이전임
+      queryClient.removeQueries({ queryKey: ["likedDiaries"] });
       if (currentIsLiked) removeLike(diaryId!);
       else addLike(diaryId!);
     }, debounceDelay);
