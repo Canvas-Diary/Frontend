@@ -38,7 +38,7 @@ const tagsMap: { [key: string]: string } = {
  * @returns
  */
 const DiaryContent = ({
-  diaryInfo: { date, emotion, likedCount, isLiked, content },
+  diaryInfo: { diaryId, date, emotion, likedCount, isLiked, content },
   setAppbar,
   className,
   ...props
@@ -46,7 +46,6 @@ const DiaryContent = ({
   const [currentIsLiked, setCurrentIsLiked] = useState(isLiked);
   const [currentLikedCount, setCurrentLikedCount] = useState(likedCount);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const { diaryId } = useParams<{ diaryId: string }>();
   const stickyRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
 
@@ -61,6 +60,7 @@ const DiaryContent = ({
     timeoutRef.current = setTimeout(() => {
       //업데이트 이전임
       queryClient.removeQueries({ queryKey: ["likedDiaries"] });
+      queryClient.removeQueries({ queryKey: ["diaryInfo", diaryId] });
       if (currentIsLiked) removeLike(diaryId!);
       else addLike(diaryId!);
     }, debounceDelay);
