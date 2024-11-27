@@ -40,7 +40,7 @@ const Style = ({
           setIsLoaded(true);
         })
         .catch((error) => {
-          throw error;
+          showBoundary(error);
         });
     } else if (flow === DIARY_FLOW.CREATE) {
       createDiaryAndGetId(diaryInfo)
