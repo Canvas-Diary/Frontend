@@ -11,6 +11,7 @@ import { DiaryInfo, ModalManager } from "@/types/types";
 import { MODAL_STATE } from "@/constants/MODAL_STATE";
 import useDebounce from "@/hooks/useDebounce";
 import { putModifiedDiary } from "@/api/api";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface SettingDiaryProps {
   diaryInfo: DiaryInfo;
@@ -24,10 +25,12 @@ interface SettingDiaryProps {
 const SettingDiary = ({ diaryInfo, modalManager: { openModal } }: SettingDiaryProps) => {
   const navigate = useNavigate();
   const [isPublic, setIsPublic] = useState(diaryInfo.isPublic);
+  const queryClient = useQueryClient();
 
   const debouncedIsPublic = useDebounce<boolean>({ value: isPublic });
 
   const onChangeToggle = () => {
+    queryClient.clear();
     setIsPublic((prev: any) => !prev);
   };
 

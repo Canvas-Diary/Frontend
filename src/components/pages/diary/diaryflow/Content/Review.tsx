@@ -4,9 +4,9 @@ import ReviewContent from "../../../write/ReviewContent";
 import { formatDateWithWeek } from "@/utils/util";
 import DiaryFlowLayout from "../Layout";
 import Button from "@/components/common/Button/Button";
-import ApiBoundary from "@/components/common/boundary/ApiBoundary";
 import useGetReviewInfo from "@/hooks/query/useGetReviewInfo";
 import ReviewSkeleton from "../skeleton/ReviewSkeleton";
+import ApiBoundary from "@/components/boundary/ApiBoundary";
 
 interface ReviewProps {
   diaryInfo: FlowDiaryInfo;

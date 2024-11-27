@@ -2,10 +2,10 @@ import EmotionTag from "../../../../common/EmotionTag/EmotionTag";
 import HeartIcon from "@/assets/svg/heart.svg?react";
 import { useEffect, useRef, useState } from "react";
 import { addLike, removeLike } from "../../../../../api/api";
-import { useParams } from "react-router-dom";
 import Divider from "../../../../common/Divider/Divider";
 import { DiaryInfo } from "@/types/types";
 import { formatDateWithWeek } from "@/utils/util";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
   diaryInfo: DiaryInfo;
@@ -37,7 +37,7 @@ const tagsMap: { [key: string]: string } = {
  * @returns
  */
 const DiaryContent = ({
-  diaryInfo: { date, emotion, likedCount, isLiked, content },
+  diaryInfo: { diaryId, date, emotion, likedCount, isLiked, content },
   setAppbar,
   className,
   ...props
@@ -45,8 +45,8 @@ const DiaryContent = ({
   const [currentIsLiked, setCurrentIsLiked] = useState(isLiked);
   const [currentLikedCount, setCurrentLikedCount] = useState(likedCount);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const { diaryId } = useParams<{ diaryId: string }>();
   const stickyRef = useRef<HTMLDivElement>(null);
+  const queryClient = useQueryClient();
 
   const handleOnClick = () => {
     setCurrentIsLiked((prev) => !prev);
@@ -58,6 +58,7 @@ const DiaryContent = ({
 
     timeoutRef.current = setTimeout(() => {
       //업데이트 이전임
+      queryClient.removeQueries({ queryKey: ["likedDiaries"] });
       if (currentIsLiked) removeLike(diaryId!);
       else addLike(diaryId!);
     }, debounceDelay);
@@ -85,7 +86,7 @@ const DiaryContent = ({
 
   return (
     <div
-      className={`flex h-full flex-col items-center gap-600 rounded-t-400 bg-background px-800 pb-10 font-Binggrae shadow-default ${className}`}
+      className={`flex h-fit flex-col items-center gap-600 rounded-t-400 bg-background px-800 pb-10 font-Binggrae shadow-default ${className}`}
       {...props}
     >
       <div

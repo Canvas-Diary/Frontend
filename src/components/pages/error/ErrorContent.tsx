@@ -9,7 +9,7 @@ interface ErrorContentProps {
  */
 const ErrorContent = ({ message }: ErrorContentProps) => {
   return (
-    <div className="flex grow flex-col items-center justify-center gap-6">
+    <div className="flex grow flex-col items-center justify-center gap-6 px-800">
       <img src={non} alt="error-image" className="h-[2.75rem] w-[2.75rem]" />
       <p>{message}</p>
     </div>

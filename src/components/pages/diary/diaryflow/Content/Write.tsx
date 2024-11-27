@@ -138,7 +138,7 @@ const Write = ({ diaryInfo, setDiaryInfo, onClickNext }: WriteProps) => {
             ref={editorRef}
             className={`${
               FADEINANIMATION[4]
-            } w-full overflow-scroll rounded-md border border-input bg-background px-3 py-2 font-Binggrae text-body-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}
+            } w-full overflow-scroll whitespace-pre-wrap rounded-md border border-input bg-background px-3 py-2 font-Binggrae text-body-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}
             contentEditable={true}
             suppressContentEditableWarning={true}
             onInput={(e) => {

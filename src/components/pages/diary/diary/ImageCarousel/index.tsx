@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { DiaryImage } from "../../../../../types/types";
 import ImageAddFilter from "./element/ImageAddFilter";
 import defaultImage from "@/assets/images/defaultImage.png";
+import { useLocation } from "react-router-dom";
 
 interface ImageCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   images: DiaryImage[];
@@ -26,6 +27,23 @@ const ImageCarousel = ({
   const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const isDraggingRef = useRef(false);
+  const location = useLocation();
+
+  const scrollToIndex = (index: number) => {
+    if (containerRef.current) {
+      const imageWidth = containerRef.current.offsetWidth;
+      const scrollPosition = index * imageWidth;
+      containerRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log(location.state?.add);
+    if (location.state?.add) scrollToIndex(images.length - 1);
+  }, [location.state]);
 
   const startLongPress = (img: DiaryImage) => {
     if (onLongPress) {

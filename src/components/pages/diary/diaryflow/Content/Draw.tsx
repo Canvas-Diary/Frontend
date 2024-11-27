@@ -4,8 +4,9 @@ import { FlowDiaryInfo, Styles } from "@/types/types";
 import DiaryFlowLayout from "../Layout";
 import Button from "@/components/common/Button/Button";
 import ROUTE_PATH from "@/constants/ROUTE_PATH";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { DIARY_FLOW, Flow } from "@/constants/DIARY_FLOW";
 
 interface DrawProps {
   isLoaded: boolean;
@@ -19,12 +20,21 @@ const Draw = ({ isLoaded, styles, diaryInfo, onClickNext }: DrawProps) => {
   const imageUrl = matchingStyle ? matchingStyle.imageUrl : "";
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { search } = useLocation();
+  const urlParams = new URLSearchParams(search);
+  const flow = urlParams.get("flow") as Flow;
 
   const onClickNextHandler = () => {
     queryClient.clear();
-    navigate(`${ROUTE_PATH.DIARY}/${diaryInfo.diaryId}`, {
-      replace: true,
-    });
+    if (flow === DIARY_FLOW.ADD) {
+      navigate(`${ROUTE_PATH.DIARY}/${diaryInfo.diaryId}`, {
+        replace: true,
+        state: { add: true },
+      });
+    } else
+      navigate(`${ROUTE_PATH.DIARY}/${diaryInfo.diaryId}`, {
+        replace: true,
+      });
     onClickNext();
   };
 

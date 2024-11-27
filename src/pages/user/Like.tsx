@@ -52,7 +52,12 @@ const Like = () => {
 
   return (
     <>
-      <Appbar text="좋아요 표시한 일기"></Appbar>
+      <Appbar
+        backHandler={() => {
+          navigate(-1);
+        }}
+        text="좋아요 표시한 일기"
+      ></Appbar>
       <div className="flex flex-grow flex-col overflow-scroll">
         <div className="flex flex-col px-700">
           {data && <ThumbnailGrid diaries={data} onClickThumbnail={onClickThumbnail} />}

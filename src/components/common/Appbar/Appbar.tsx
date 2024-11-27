@@ -42,7 +42,7 @@ interface AppbarButtonProps {
 
 const AppbarButton = ({ icon, onClickHandler }: AppbarButtonProps) => {
   return (
-    <button className="text-white" onClick={onClickHandler}>
+    <button className="flex items-center justify-center text-white" onClick={onClickHandler}>
       {icon}
     </button>
   );

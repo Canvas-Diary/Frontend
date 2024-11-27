@@ -91,7 +91,7 @@ const Calendar = ({
         date: day,
         diaryId: matchingDiary
           ? matchingDiary.diaryId
-          : `${year}-${month + 1}-${String(day).padStart(2, "0")}`,
+          : `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`,
         emotion: matchingDiary ? matchingDiary.emotion : "none",
         calendarIcon: matchingDiary ? emotionImages[matchingDiary.emotion] : emotionImages.default,
         isToday: isToday,
@@ -108,7 +108,7 @@ const Calendar = ({
                 ? () => navigate(`${ROUTE_PATH.DIARY}/${calendarDataInfo.diaryId}`)
                 : () =>
                     navigate(
-                      `${ROUTE_PATH.NO_DIARY}/${`${year}-${month + 1}-${String(day).padStart(2, "0")}`}`
+                      `${ROUTE_PATH.NO_DIARY}/${`${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`}`
                     )
               : undefined
           }
