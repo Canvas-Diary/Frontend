@@ -53,13 +53,15 @@ const Home = () => {
     if (accessToken && refreshToken) {
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
-      navigate(ROUTE_PATH.HOME, { replace: true, state: { isFirst: true } });
+      navigate(ROUTE_PATH.HOME, { replace: true });
+      setShowOnboarding(true);
     } else {
       const token = localStorage.getItem("access_token");
 
       if (!token) {
         navigate(ROUTE_PATH.LOGIN);
-      } else if (location.state?.isFirst) setShowOnboarding(true);
+        return;
+      }
     }
   }, []);
 
