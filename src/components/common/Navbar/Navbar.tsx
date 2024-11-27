@@ -6,6 +6,7 @@ interface NavBarProps {
     icon: ReactNode;
     path: string;
     label: string;
+    onClick: () => void;
   }[];
 }
 
@@ -31,7 +32,11 @@ const Navbar = ({ NavList }: NavBarProps) => {
                 : "text-gray-100 dark:text-gray-700"
             }`}
           >
-            <Link to={element.path} className="flex flex-col items-center justify-center gap-200">
+            <Link
+              to={element.path}
+              className="flex flex-col items-center justify-center gap-200"
+              onClick={element.onClick}
+            >
               <div className="flex h-7 w-7 items-center justify-center">{element.icon}</div>
               <span className="font-Binggrae text-detail-2 font-regular">{element.label}</span>
             </Link>
