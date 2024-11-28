@@ -35,7 +35,7 @@ const KeywordBarChart = ({ chartData }: EmotionBarChartProps) => {
                 tickLine={false}
                 tickMargin={10}
                 axisLine={false}
-                tickFormatter={(value) => value.slice(0, 3)}
+                tickFormatter={(value) => value.slice(0, 4)}
               />
               <YAxis hide={true} domain={[0, (dataMax: string) => parseInt(dataMax) + 1]} />
               <ChartTooltip content={<ChartTooltipContent />} trigger="click" />

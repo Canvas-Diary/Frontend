@@ -60,7 +60,7 @@ const EmotionPieChart = ({ chartData }: EmotionPieChartProps) => {
   return (
     <Card>
       <CardContent className="flex-1">
-        <ChartContainer config={chartConfig} className="mx-auto min-h-[400px] w-full">
+        <ChartContainer config={chartConfig} className="mx-auto min-h-[25rem] w-full">
           <PieChart>
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} trigger="click" />
             <Pie
