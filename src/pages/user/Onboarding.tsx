@@ -21,6 +21,11 @@ const Onboarding = ({ onClose }: OnboardingProps) => {
   const { elementRef: ref4, isInView: inView4 } = useInView<HTMLDivElement>(0.7, () => {});
   const [current, setCurrent] = useState(0);
 
+  const handleActive = () => {
+    if (inView4) return true;
+    else return false;
+  };
+
   const handleSelect = () => {
     if (!api) return;
     const selectedIndex = api.selectedScrollSnap();
@@ -117,7 +122,7 @@ const Onboarding = ({ onClose }: OnboardingProps) => {
       <Button
         className="mx-auto my-4"
         size="big"
-        active={true}
+        active={handleActive()}
         text="시작하기"
         onClickHandler={onClose}
         bgColor="dark"
